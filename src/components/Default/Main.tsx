@@ -2,6 +2,7 @@ import 'antd/dist/antd.css';
 import { Carousel } from 'antd';
 import React from 'react';
 import ContentCardsMain from './ContentCardsMain';
+import MainFooter from './MainFooter';
 
 const contentStyle: React.CSSProperties = {
     height: '400px',
@@ -34,6 +35,12 @@ const Main: React.FC = () =>
         </Carousel>
 
        <ContentCardsMain/>
+        
+       <div>
+            Main
+       </div>
+
+       <MainFooter/>
     </>);
 }
 
