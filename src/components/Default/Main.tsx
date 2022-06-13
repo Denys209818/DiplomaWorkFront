@@ -36,9 +36,9 @@ const Main: React.FC = () =>
 
        <ContentCardsMain/>
         
-       <div>
-            Main
-       </div>
+       {/* Main blocks */}
+
+       {/* Slider and news */}
 
        <MainFooter/>
     </>);
