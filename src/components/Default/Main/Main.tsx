@@ -14,6 +14,13 @@ const contentStyle: React.CSSProperties = {
     width: '100%',
   };
 
+  const feedbackSliderButton : React.CSSProperties = {
+    display:'flex',
+    justifyContent:'center',
+    justifyItems:'center',
+    
+  };
+
   
 
 const Main: React.FC = () => 
@@ -41,6 +48,7 @@ const Main: React.FC = () =>
         <div></div>
        {/* Slider and news */}
         <FeedbackSlider/>
+
 
        <MainFooter/>
     </>);
