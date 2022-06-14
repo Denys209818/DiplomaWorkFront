@@ -1,5 +1,5 @@
 import 'antd/dist/antd.css';
-import { Carousel } from 'antd';
+import { Button, Carousel, Col, Row, Space } from 'antd';
 import React from 'react';
 import ContentCardsMain from './ContentCardsMain';
 import MainFooter from './MainFooter';
@@ -11,6 +11,13 @@ const contentStyle: React.CSSProperties = {
     textAlign: 'center',
     background: 'white',
     width: '100%',
+  };
+
+  const feedbackSliderButton : React.CSSProperties = {
+    display:'flex',
+    justifyContent:'center',
+    justifyItems:'center',
+    
   };
 
   
@@ -39,7 +46,23 @@ const Main: React.FC = () =>
        {/* Main blocks */}
         <div></div>
        {/* Slider and news */}
-       <div></div>
+            <Row justify="center">
+                <Col md={4} style={feedbackSliderButton}>
+                        <Button type="primary"  shape="circle">
+                            Left
+                        </Button>
+                </Col>
+                <Col md={16} xs={24} sm={24}>
+                    Text
+                </Col>
+                <Col md={4} style={feedbackSliderButton}>
+                        <Button type="primary" shape="circle">
+                            Right
+                        </Button>
+                    
+                    
+                </Col>
+            </Row>
 
        <MainFooter/>
     </>);
