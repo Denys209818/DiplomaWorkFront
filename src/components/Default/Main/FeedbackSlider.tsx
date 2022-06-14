@@ -27,11 +27,6 @@ const feedbackSliderButton: React.CSSProperties = {
 
 const FeedbackSlider: React.FC = () => {
 
-    const translateX = 0;
-    var divTranslate = 0;
-    const count = 9;
-    var currentItem = 0;
-
     const onLeftClick = () => {
         let htmlel = document.getElementsByClassName("swiper-button-prev")[0] as HTMLElement;
         htmlel.click();
@@ -43,7 +38,9 @@ const FeedbackSlider: React.FC = () => {
     }
 
     return (<>
+       <h1 className="nameOfSliderBlock">Feedbacks</h1>
         <Row justify="center" className="feedBackSliderMain">
+        
             <Col md={4} className="arrow" style={feedbackSliderButton}>
                 <Space align="center">
                     <Button type="primary" size="large" onClick={onLeftClick} shape="circle">
