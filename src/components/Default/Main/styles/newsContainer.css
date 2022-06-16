@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+
+.news-container {
+    width: 100%;
+    margin-top: 5em;
+    background-color: #27282c;
+    padding: 2em;
+    min-height: 600px;
+}
+
+.news-container-header {
+    margin:  auto;
+    text-align: center;
+    display: block;
+    width:40%
+}
+
+.news-container-out {
+    margin-top: 10em;
+}
+
+.news-container-body {
+    display: block;
+    margin-top: 3em;
+}
+
+
+.card-news {
+    margin:auto;
+    margin-top:2em;
+}
