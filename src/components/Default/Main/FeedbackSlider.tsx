@@ -71,7 +71,54 @@ const FeedbackSlider: React.FC = () => {
                     modules={[Keyboard, Scrollbar, Navigation, Pagination]}
                     className="mySwiper"
                 >
+<<<<<<< HEAD
                     
+=======
+                    {/* <SwiperSlide className="sliderEl">
+                        <CardFeedback name="Ilon Mask" year="33"
+                            description="Lorem Ipsum is simply dummy 
+        text of the printing and typesetting 
+        industry. Lorem Ipsum has been the 
+        industry's standard dummy text ever 
+        since the 1500s, when an unknown 
+        printer took a galley of type and 
+        scrambled it to make a type specimen 
+        book."/>
+                    </SwiperSlide>
+                    <SwiperSlide className="sliderEl">
+                    <CardFeedback name="Ilon Mask" year="33"
+                            description="Lorem Ipsum is simply dummy 
+        text of the printing and typesetting 
+        industry. Lorem Ipsum has been the 
+        industry's standard dummy text ever 
+        since the 1500s, when an unknown 
+        printer took a galley of type and 
+        scrambled it to make a type specimen 
+        book."/>
+                    </SwiperSlide>
+                    <SwiperSlide className="sliderEl">
+                    <CardFeedback name="Ilon Mask" year="33"
+                            description="Lorem Ipsum is simply dummy 
+        text of the printing and typesetting 
+        industry. Lorem Ipsum has been the 
+        industry's standard dummy text ever 
+        since the 1500s, when an unknown 
+        printer took a galley of type and 
+        scrambled it to make a type specimen 
+        book."/>
+                    </SwiperSlide>
+                    <SwiperSlide className="sliderEl">
+                    <CardFeedback name="Ilon Mask" year="33"
+                            description="Lorem Ipsum is simply dummy 
+        text of the printing and typesetting 
+        industry. Lorem Ipsum has been the 
+        industry's standard dummy text ever 
+        since the 1500s, when an unknown 
+        printer took a galley of type and 
+        scrambled it to make a type specimen 
+        book."/>
+                    </SwiperSlide> */}
+>>>>>>> main
                     <SwiperSlide className="sliderEl">
                     <CardFeedback name="Albert Einstein" year="107" 
                             image="https://upload.wikimedia.org/wikipedia/commons/2/2f/Albert_Einstein_%28Nobel%29.jpg"

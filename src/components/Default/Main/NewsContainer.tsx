@@ -58,8 +58,6 @@ const NewsContainer: React.FC = () => {
         var element = document.getElementsByClassName("news-container")[0];
         var position = element.getBoundingClientRect();
     
-    
-        // checking for partial visibility
         if(position.top < window.innerHeight-200 && position.bottom >= 0) {
             setVisible(true);
         }
