@@ -5,6 +5,8 @@ import ContentCardsMain from './ContentCardsMain';
 import MainFooter from './MainFooter';
 import FeedbackSlider from './FeedbackSlider';
 import CardFeedback from './customComponents/CardFeedback';
+import NewsContainer from './NewsContainer';
+
 
 const contentStyle: React.CSSProperties = {
     height: '400px',
@@ -51,6 +53,9 @@ const Main: React.FC = () =>
         <FeedbackSlider/>
 
         
+        <NewsContainer/>
+        
+
        <MainFooter/>
     </>);
 }

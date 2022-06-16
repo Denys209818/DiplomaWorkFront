@@ -64,7 +64,6 @@ const FeedbackSlider: React.FC = () => {
                             slidesPerGroup: 2,
                         },
                     }}
-                    scrollbar={true}
                     navigation={true} 
                     pagination={{
                         clickable: true,
@@ -72,6 +71,9 @@ const FeedbackSlider: React.FC = () => {
                     modules={[Keyboard, Scrollbar, Navigation, Pagination]}
                     className="mySwiper"
                 >
+<<<<<<< HEAD
+                    
+=======
                     {/* <SwiperSlide className="sliderEl">
                         <CardFeedback name="Ilon Mask" year="33"
                             description="Lorem Ipsum is simply dummy 
@@ -116,6 +118,7 @@ const FeedbackSlider: React.FC = () => {
         scrambled it to make a type specimen 
         book."/>
                     </SwiperSlide> */}
+>>>>>>> main
                     <SwiperSlide className="sliderEl">
                     <CardFeedback name="Albert Einstein" year="107" 
                             image="https://upload.wikimedia.org/wikipedia/commons/2/2f/Albert_Einstein_%28Nobel%29.jpg"
