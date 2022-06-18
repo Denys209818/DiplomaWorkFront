@@ -16,6 +16,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import GroupIcon from '@mui/icons-material/Group';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
+import CustomModalDialog from '../../../components/Default/Main/customComponents/CustomModalDialog';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -154,8 +155,15 @@ const Navbar: React.FC = () =>
     </Menu>
   );
 
+  const [modalOpen, setModalOpen] = React.useState(false);
 
-    return ( <Box sx={{ flexGrow: 1 }}>
+  const onSearchClickHandler = () => 
+  {
+    setModalOpen(true);
+  }
+
+
+    return (<> <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
             <Typography
@@ -166,7 +174,7 @@ const Navbar: React.FC = () =>
             >
               VOLONTER.IO
             </Typography>
-            <Search>
+            <Search onClick={onSearchClickHandler}>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -219,7 +227,9 @@ const Navbar: React.FC = () =>
         </AppBar>
         {renderMobileMenu}
         {renderMenu}
-      </Box>);
+      </Box>
+      {modalOpen && <CustomModalDialog visibleFunc={setModalOpen} isVisible={modalOpen} />}
+      </>);
 }
 
 export default Navbar;

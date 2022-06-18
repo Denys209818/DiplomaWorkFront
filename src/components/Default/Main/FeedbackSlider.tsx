@@ -11,7 +11,6 @@ import "swiper/css/pagination";
 import { Keyboard, Scrollbar, Navigation, Pagination } from "swiper";
 import { faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { DoorBack } from "@mui/icons-material";
 import CardFeedback from "./customComponents/CardFeedback";
 
 const iconRight = faChevronCircleRight as IconProp;
@@ -71,6 +70,7 @@ const FeedbackSlider: React.FC = () => {
                     modules={[Keyboard, Scrollbar, Navigation, Pagination]}
                     className="mySwiper"
                 >
+
                     <SwiperSlide className="sliderEl">
                     <CardFeedback name="Albert Einstein" year="107" 
                             image="https://upload.wikimedia.org/wikipedia/commons/2/2f/Albert_Einstein_%28Nobel%29.jpg"
