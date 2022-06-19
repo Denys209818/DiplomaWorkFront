@@ -3,9 +3,9 @@
 .news-container {
     width: 100%;
     margin-top: 5em;
-    background-color: #27282c;
+    background-color: rgba(166, 163, 163, 0.4);;
     padding: 2em;
-    min-height: 600px;
+    min-height: 500px;
 }
 
 .news-container-header {
@@ -21,7 +21,7 @@
 
 .news-container-body {
     display: block;
-    margin-top: 3em;
+    /* margin-top: 3em; */
 }
 
 

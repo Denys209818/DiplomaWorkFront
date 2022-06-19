@@ -174,7 +174,7 @@ const Navbar: React.FC = () =>
             >
               VOLONTER.IO
             </Typography>
-            <Search onClick={onSearchClickHandler}>
+            <Search onFocus={onSearchClickHandler}>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
