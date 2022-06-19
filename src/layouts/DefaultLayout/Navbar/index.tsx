@@ -160,6 +160,7 @@ const Navbar: React.FC = () =>
   const onSearchClickHandler = () => 
   {
     setModalOpen(true);
+   
   }
 
 
@@ -174,7 +175,7 @@ const Navbar: React.FC = () =>
             >
               VOLONTER.IO
             </Typography>
-            <Search onClick={onSearchClickHandler}>
+            <Search onFocus={onSearchClickHandler}>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
