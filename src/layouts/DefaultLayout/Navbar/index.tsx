@@ -160,7 +160,6 @@ const Navbar: React.FC = () =>
   const onSearchClickHandler = () => 
   {
     setModalOpen(true);
-   
   }
 
 
