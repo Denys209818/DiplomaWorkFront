@@ -1,3 +1,4 @@
+import './../styles/mainStyles.css';
 
 
 const Login: React.FC = () => 
