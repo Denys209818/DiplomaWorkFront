@@ -44,17 +44,17 @@ const Login: React.FC = () => {
                                 label="Запам'ятати мене"
                                 labelPlacement="end"
                             />
+
+                            <Link className='link-forgot-password' to="/auth/register">
+                                Відновити пароль
+                            </Link>
                         </div>
 
                         <div className="input-field">
                             <button className='submitButton'><p>Увійти</p></button>
                         </div>
 
-                        <div className="input-field">
-                            <Link className='link-forgot-password' to="/auth/register">
-                                    Відновити пароль
-                            </Link>
-                        </div>
+                       
 
                         
                     </form>

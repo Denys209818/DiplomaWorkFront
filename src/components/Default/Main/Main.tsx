@@ -6,6 +6,9 @@ import MainFooter from './MainFooter';
 import FeedbackSlider from './FeedbackSlider';
 import CardFeedback from './customComponents/CardFeedback';
 import NewsContainer from './NewsContainer';
+import AboutContentBlock from './customComponents/AboutContentBlock';
+import MainContentBlock from './MainContentBlock';
+import FooterContentBlock from './FooterContentBlock';
 
 
 const contentStyle: React.CSSProperties = {
@@ -45,13 +48,16 @@ const Main: React.FC = () =>
             </div>
         </Carousel>
 
+        <AboutContentBlock/>
+
        <ContentCardsMain/>
         
        {/* Main blocks */}
-        <div></div>
+        <MainContentBlock/>
        {/* Slider and news */}
         <FeedbackSlider/>
 
+        <FooterContentBlock/>
         
         <NewsContainer/>
         

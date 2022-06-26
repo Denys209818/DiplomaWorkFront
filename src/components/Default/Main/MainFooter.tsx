@@ -13,7 +13,7 @@ import PublicIcon from '@mui/icons-material/Public';
 import TranslateIcon from '@mui/icons-material/Translate';
 
 const stylesForJumbotron: React.CSSProperties = {
-    marginTop: '4em',
+    paddingTop:'5em',
     backgroundColor: '#2f3030',
     width: '100%',
     maxWidth: '100%',
