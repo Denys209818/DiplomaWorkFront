@@ -54,12 +54,6 @@ const Login: React.FC = () => {
                             <button className='submitButton'><p>Увійти</p></button>
                         </div>
 
-                        <div className="input-field">
-                            <Link className='link-forgot-password' to="/auth/register">
-                                    Відновити пароль
-                            </Link>
-                        </div>
-
                         
                     </form>
 
