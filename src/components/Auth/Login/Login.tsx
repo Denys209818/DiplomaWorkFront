@@ -44,6 +44,10 @@ const Login: React.FC = () => {
                                 label="Запам'ятати мене"
                                 labelPlacement="end"
                             />
+
+                            <Link className='link-forgot-password' to="/auth/register">
+                                Відновити пароль
+                            </Link>
                         </div>
 
                         <div className="input-field">

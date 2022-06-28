@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+
+.footer-content-block {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+}
+
+.footer-content-block-inner {
+    position: absolute;
+    top:80%;
+    transform: translateY(-60%);
+    
+}
+
+.footer-content-block-inner iframe {
+    width: 560px;
+    height: 310px;
+}
+
+@media (max-width: 1400px) {
+    .footer-content-block-inner {
+        position: absolute;
+        top:90%;
+        transform: translateY(-70%);
+        
+    }
+
+}
+
+@media (max-width: 800px) {
+    .footer-content-block-inner {
+        position: absolute;
+        top:80%;
+        transform: translateY(-80%);
+        
+    }
+
+    .footer-content-block-inner iframe {
+        
+        width: 350px;
+        height: 175px;
+    }
+}
+
+
+
+
+
