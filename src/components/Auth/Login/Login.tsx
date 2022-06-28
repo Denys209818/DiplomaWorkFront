@@ -54,8 +54,6 @@ const Login: React.FC = () => {
                             <button className='submitButton'><p>Увійти</p></button>
                         </div>
 
-                       
-
                         
                     </form>
 
