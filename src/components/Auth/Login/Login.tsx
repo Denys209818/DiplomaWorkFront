@@ -7,15 +7,23 @@ import VisibilityOffTwoToneIcon from '@mui/icons-material/VisibilityOffTwoTone';
 import { useState } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
 import {Link as LinkMui} from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
     const [passVisible, setPassVisible] = useState(false);
+    const navigation = useNavigate();
+
 
     const onShowPasswordClicked = () => {
         setPassVisible(!passVisible);
     }
 
+
+    const onLoginSubmit = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault();
+
+        navigation("/profile");
+    }
     return (<>
         <div className="container">
             <div className="forms">
@@ -51,7 +59,7 @@ const Login: React.FC = () => {
                         </div>
 
                         <div className="input-field">
-                            <button className='submitButton'><p>Увійти</p></button>
+                            <button className='submitButton' onClick={onLoginSubmit}><p>Увійти</p></button>
                         </div>
 
                         
