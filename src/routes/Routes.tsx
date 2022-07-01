@@ -4,6 +4,7 @@ import { RouteObjectType } from "./types";
 const Main = React.lazy(() => import("../components/Default/Main/Main"));
 const Login = React.lazy(() => import("../components/Auth/Login/Login"));
 const Register = React.lazy(() => import("../components/Auth/Register/Register"));
+const ProfileMain = React.lazy(() => import("../components/Profile/Main"));
 
 export const DefaultRoutes : Array<RouteObjectType>  = 
 [
@@ -15,4 +16,8 @@ export const LoginRoutes : Array<RouteObjectType> = [
     {path: '/auth/register', element: Register}
 ];
 
+
+export const ProfileRoutes : Array<RouteObjectType> = [
+    {path: '/profile', element: ProfileMain}
+];
 
