@@ -106,3 +106,19 @@ body{
         width: 450px;
     } 
 }
+
+
+
+
+
+/* small navbar */
+
+.navbar-small {
+        display: none;
+}
+
+@media (max-width: 1000px) {
+    .navbar-small {
+        display: block;
+    }
+}

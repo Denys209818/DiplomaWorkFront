@@ -6,7 +6,6 @@ import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import VisibilityOffTwoToneIcon from '@mui/icons-material/VisibilityOffTwoTone';
 import { useState } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
-import {Link as LinkMui} from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
