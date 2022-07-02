@@ -7,7 +7,6 @@ import { IFriendDataArray } from "../FriendsCard/types/friendsCardInterfaces";
 
 import { Avatar, List } from 'antd';
 import PhoneNavbar from "../PhoneNavbar";
-import ScrollToTop from "../ScrollToTop";
 
 
 
@@ -54,7 +53,6 @@ const ProfileMain: React.FC = () => {
 
     return (<>
         <section className="home-section">
-            <ScrollToTop/>
             <Row>
                 <Col md={24} xs={24} className="navbar-small"> 
 
