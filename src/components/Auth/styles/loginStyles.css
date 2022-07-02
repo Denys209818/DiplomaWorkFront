@@ -32,6 +32,10 @@
     color: #fff;
 }
 
+.submitButton p {
+    margin: 0 auto;
+}
+
 
 
 .container .form {

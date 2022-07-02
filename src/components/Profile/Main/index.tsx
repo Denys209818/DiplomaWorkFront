@@ -5,12 +5,13 @@ import Card from "../Card";
 import FriendsCard from "../FriendsCard";
 import { IFriendDataArray } from "../FriendsCard/types/friendsCardInterfaces";
 
-import { Avatar, Button, List, Skeleton } from 'antd';
+import { Avatar, List } from 'antd';
+import PhoneNavbar from "../PhoneNavbar";
+import ScrollToTop from "../ScrollToTop";
 
 
 
 const ProfileMain: React.FC = () => {
-
     const data: IFriendDataArray = {
         friends: [
             {
@@ -53,7 +54,12 @@ const ProfileMain: React.FC = () => {
 
     return (<>
         <section className="home-section">
+            <ScrollToTop/>
             <Row>
+                <Col md={24} xs={24} className="navbar-small"> 
+
+                    <PhoneNavbar/>
+                </Col>
                 <Col md={22} offset={1}
                     lg={13} xs={22}>
                     <div className="post-container-block">

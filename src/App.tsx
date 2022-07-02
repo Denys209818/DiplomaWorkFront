@@ -8,6 +8,7 @@ import { DefaultRoutes, LoginRoutes, ProfileRoutes } from './routes/Routes';
 const  App= () =>  {
   return (<Suspense fallback={<div>Loading...</div>}>
     <BrowserRouter>
+    
       <Routes>
       <Route path='/auth' element={<LoginLayout/>}>
           {LoginRoutes.map((element, index) => {
