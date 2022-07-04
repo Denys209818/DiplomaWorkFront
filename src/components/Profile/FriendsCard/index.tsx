@@ -9,6 +9,7 @@ import React from "react";
 import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import { IFriendDataArray } from './types/friendsCardInterfaces';
+import { Link } from 'react-router-dom';
 
 const FriendsCard: React.FC<IFriendDataArray> = ({ friends }) => {
 
@@ -84,6 +85,9 @@ const FriendsCard: React.FC<IFriendDataArray> = ({ friends }) => {
                         <Divider variant="inset" component="li" />
                     </div>);
                 })}
+                <ListItem>
+                        <Link className='link-in-block' to="/searchFriend">Пошук друзів</Link>
+                </ListItem>
             </List>
         </div>
     </>);
