@@ -10,7 +10,7 @@ import AboutContentBlock from './customComponents/AboutContentBlock';
 import MainContentBlock from './MainContentBlock';
 import FooterContentBlock from './FooterContentBlock';
 import Register from '../../Auth/Register/Register';
-import Blog from '../../News/Blog/Blog';
+import Blog from '../News/Blog';
 
 
 const contentStyle: React.CSSProperties = {
@@ -62,8 +62,6 @@ const Main: React.FC = () =>
     
     <NewsContainer/>
     
-
-   <MainFooter/>
 </>);
 }
 
