@@ -54,6 +54,9 @@ const Register : React.FC = () =>
 
                         <div className="input-field">
                             <LockTwoToneIcon className='lockIcon' />
+                            <input type={passVisible ? "text" : "password"} placeholder='Введіть пароль' required />
+                            {passVisible && <VisibilityTwoToneIcon className='visEye' onClick={onShowPasswordClicked} />}
+                            {!passVisible && <VisibilityOffTwoToneIcon className='noVisEye' onClick={onShowPasswordClicked} />}
 
                             <input type="password" placeholder='Введіть пароль' required />
 
