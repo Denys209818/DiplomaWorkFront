@@ -53,7 +53,6 @@ const ProfileMain: React.FC = () => {
 
     return (<>
         <section className="home-section">
-            <ScrollToTop/>
             <Row>
                 <Col md={24} xs={24} className="navbar-small"> 
 
