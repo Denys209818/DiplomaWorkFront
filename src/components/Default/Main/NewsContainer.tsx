@@ -58,7 +58,7 @@ const NewsContainer: React.FC = () => {
         var element = document.getElementsByClassName("news-container")[0];
         var position = element.getBoundingClientRect();
     
-        if(position.top < window.innerHeight-200 && position.bottom >= 0) {
+        if(position.top < window.innerHeight-200) {
             setVisible(true);
         }
         else 
@@ -67,7 +67,6 @@ const NewsContainer: React.FC = () => {
         }
     });
   return (<div className='news-container-out'>
-  <h1 className='news-container-header'>Популярне</h1>
     <div className='news-container'>
         
         <div className="news-container-body">

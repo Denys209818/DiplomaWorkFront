@@ -38,7 +38,7 @@ const FeedbackSlider: React.FC = () => {
     }
 
     return (<>
-       <h1 className="nameOfSliderBlock">Feedbacks</h1>
+       <h1 className="nameOfSliderBlock">Відгуки</h1>
         <Row justify="center" className="feedBackSliderMain">
         
             <Col md={4} className="arrow" style={feedbackSliderButton}>

@@ -6,6 +6,11 @@ import MainFooter from './MainFooter';
 import FeedbackSlider from './FeedbackSlider';
 import CardFeedback from './customComponents/CardFeedback';
 import NewsContainer from './NewsContainer';
+import AboutContentBlock from './customComponents/AboutContentBlock';
+import MainContentBlock from './MainContentBlock';
+import FooterContentBlock from './FooterContentBlock';
+import Register from '../../Auth/Register/Register';
+import Blog from '../../News/Blog/Blog';
 
 
 const contentStyle: React.CSSProperties = {
@@ -28,36 +33,38 @@ const contentStyle: React.CSSProperties = {
 
 const Main: React.FC = () => 
 {
+  return (<>
+    <Carousel effect="fade" autoplay>
+        <div>
+            <img src="/images/slider1.jpg" style={contentStyle} alt="" />
+        </div>
+        <div>
+            <img src="/images/slider2.jpg" style={contentStyle} alt="" />
+        </div>
+        <div>
+            <img src="/images/slider3.jpg" style={contentStyle} alt="" />
+        </div>
+        <div>
+            <img src="/images/slider4.jpg" style={contentStyle} alt="" />
+        </div>
+    </Carousel>
+
+    <AboutContentBlock/>
+
+   <ContentCardsMain/>
     
-    return (<>
-        <Carousel effect="fade" autoplay>
-            <div>
-                <img src="/images/slider1.jpg" style={contentStyle} alt="" />
-            </div>
-            <div>
-                <img src="/images/slider2.jpg" style={contentStyle} alt="" />
-            </div>
-            <div>
-                <img src="/images/slider3.jpg" style={contentStyle} alt="" />
-            </div>
-            <div>
-                <img src="/images/slider4.jpg" style={contentStyle} alt="" />
-            </div>
-        </Carousel>
+   {/* Main blocks */}
+    <MainContentBlock/>
+   {/* Slider and news */}
+    <FeedbackSlider/>
 
-       <ContentCardsMain/>
-        
-       {/* Main blocks */}
-        <div></div>
-       {/* Slider and news */}
-        <FeedbackSlider/>
+    <FooterContentBlock/>
+    
+    <NewsContainer/>
+    
 
-        
-        <NewsContainer/>
-        
-
-       <MainFooter/>
-    </>);
+   <MainFooter/>
+</>);
 }
 
 export default Main;
