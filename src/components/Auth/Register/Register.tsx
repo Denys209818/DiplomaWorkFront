@@ -54,11 +54,9 @@ const Register : React.FC = () =>
 
                         <div className="input-field">
                             <LockTwoToneIcon className='lockIcon' />
-<<<<<<< HEAD
                             <input type={passVisible ? "text" : "password"} placeholder='Введіть пароль' required />
                             {passVisible && <VisibilityTwoToneIcon className='visEye' onClick={onShowPasswordClicked} />}
                             {!passVisible && <VisibilityOffTwoToneIcon className='noVisEye' onClick={onShowPasswordClicked} />}
-=======
 
                             <input type="password" placeholder='Введіть пароль' required />
 
@@ -66,7 +64,6 @@ const Register : React.FC = () =>
                             {passVisible && <VisibilityTwoToneIcon className='visEye' onClick={onShowPasswordClicked} />}
                             {!passVisible && <VisibilityOffTwoToneIcon className='noVisEye' onClick={onShowPasswordClicked} />}
 
->>>>>>> main
                         </div>
 
                         <div className="input-field">
