@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body{
+    background: #E4E9F7;
+  }
+
+
+
+.about-info {
+    display: block;
+    
+}
+
+.about-info img {
+    margin: 10px auto;
+}
+
+.just-center {
+    display: flex;
+    
+    width: 100%;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+}
+
+.text-info h3 {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    font-size: 25px;
+}
+
+.text-info textarea {
+    width:100%;
+    border: 3px solid silver;
+}
+
+
+.friends-chats {
+    display: block;
+    background-color: #fff;
+    width: 350px;
+    height: 190px;
+    border-radius: 10px;
+    margin-top: 3em;
+}
+
+.friends-chats .friends-chats-title {
+    text-align: center;
+    padding-top: 1em;
+    width:80px;
+    margin: 0 auto;
+}
+
+
+
+.groups-block {
+    margin:0 auto;
+    margin-top: 15em;
+    width:350px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    height:100%;
+}
+
+.groups-block h3 {
+    text-align: center;
+}
+
+.post-container-block {
+    margin: 2em 0;
+    overflow-y: scroll;
+    height: 250vh;
+    width:100%;
+}
+
+.post-container-block::-webkit-scrollbar {
+    width:0px;
+    
+}
+
+.friends-list {
+    max-width:500px;
+}
+
+
+
+@media(min-width: 1980px) {
+    /* .post-container-block {
+        width: 450px;
+        
+    }
+
+    */
+
+    .groups-block {
+        width:450px;
+    }
+
+    .friends-chats {
+        width:450px;
+    }
+
+    .friends-list {
+        width: 450px;
+    } 
+}
+
+
+
+
+
+/* small navbar */
+
+.navbar-small {
+        display: none;
+}
+
+@media (max-width: 1000px) {
+    .navbar-small {
+        display: block;
+    }
+}

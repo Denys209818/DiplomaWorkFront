@@ -6,6 +6,8 @@ const Login = React.lazy(() => import("../components/Auth/Login/Login"));
 const Register = React.lazy(() => import("../components/Auth/Register/Register"));
 const News = React.lazy(() => import("../components/Default/News/Blog"));
 
+const ProfileMain = React.lazy(() => import("../components/Profile/Main"));
+
 export const DefaultRoutes : Array<RouteObjectType>  = 
 [
     {path: '/news', element:News },
@@ -17,4 +19,8 @@ export const LoginRoutes : Array<RouteObjectType> = [
     {path: '/auth/register', element: Register}
 ];
 
+
+export const ProfileRoutes : Array<RouteObjectType> = [
+    {path: '/profile', element: ProfileMain}
+];
 

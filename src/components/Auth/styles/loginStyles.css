@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap');
 .container {
     position: relative;
+    min-width: 50vw;
     min-width: 40vw;
     width:100%;
     background-color: #fff;
@@ -30,6 +31,10 @@
     font-family: 'Hind', sans-serif;
     font-weight: 300;
     color: #fff;
+}
+
+.submitButton p {
+    margin: 0 auto;
 }
 
 
@@ -94,7 +99,7 @@
 }
 
 
-.emailIcon, .lockIcon {
+.emailIcon, .lockIcon, .userIcon {
    position: relative;
    top: 50%;
    transform: translateY(-50%);

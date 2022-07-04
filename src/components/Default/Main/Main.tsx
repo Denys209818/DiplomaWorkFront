@@ -61,8 +61,7 @@ const Main: React.FC = () =>
     <FooterContentBlock/>
     
     <NewsContainer/>
-    
-</>);
+    </>);
 }
 
 export default Main;

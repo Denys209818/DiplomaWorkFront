@@ -2,6 +2,7 @@ import './../styles/mainStyles.css';
 import './../styles/loginStyles.css';
 import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
 import PersonOutlineTwoToneIcon from '@mui/icons-material/PersonOutlineTwoTone';
+import PersonIcon from '@mui/icons-material/Person';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import VisibilityOffTwoToneIcon from '@mui/icons-material/VisibilityOffTwoTone';
@@ -30,16 +31,19 @@ const Register : React.FC = () =>
                     <form action="#">
                         <div className="input-field">
                             <PersonOutlineTwoToneIcon className='userIcon' />
+                            <PersonIcon className='userIcon' />
                             <input type="text" placeholder='Введіть своє ім"я' required />
                         </div>
 
                         <div className="input-field">
                             <PersonOutlineTwoToneIcon className='userIcon' />
+                            <PersonIcon className='userIcon' />
                             <input type="text" placeholder='Введіть своє прізвище' required />
                         </div>
 
                         <div className="input-field">
                             <LocalPhoneTwoToneIcon className='phoneIcon' />
+                            <LocalPhoneTwoToneIcon className='userIcon' />
                             <InputMask placeholder='Введіть номер телефону' mask="+38 (999) 999-99-99" required />
                         </div>
 
@@ -50,7 +54,13 @@ const Register : React.FC = () =>
 
                         <div className="input-field">
                             <LockTwoToneIcon className='lockIcon' />
+
                             <input type="password" placeholder='Введіть пароль' required />
+
+                            <input type={passVisible ? "text" : "password"} placeholder='Введіть пароль' required />
+                            {passVisible && <VisibilityTwoToneIcon className='visEye' onClick={onShowPasswordClicked} />}
+                            {!passVisible && <VisibilityOffTwoToneIcon className='noVisEye' onClick={onShowPasswordClicked} />}
+
                         </div>
 
                         <div className="input-field">
@@ -68,8 +78,10 @@ const Register : React.FC = () =>
                                 label="Запам'ятати мене"
                                 labelPlacement="end"
                             />
-                            <Link className='link-forgot-password' to="/auth/register">
-                                Відновити пароль
+
+                            <Link className='link-forgot-password' to="/auth/login">
+                                Аккаунт вже існує?
+
                             </Link>
                         </div>
 
