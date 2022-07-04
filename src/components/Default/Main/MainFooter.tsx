@@ -18,6 +18,8 @@ const stylesForJumbotron: React.CSSProperties = {
     width: '100%',
     maxWidth: '100%',
     color: 'silver',
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+    fontSize:'14px'
   };
 
 const offTextDecoration: React.CSSProperties =  {

@@ -24,7 +24,7 @@ const Login: React.FC = () => {
         navigation("/profile");
     }
     return (<>
-        <div className="container">
+        {/* <div className="container">
             <div className="forms">
                 <div className="form login">
                     <span className="title">Вхід</span>
@@ -57,17 +57,65 @@ const Login: React.FC = () => {
                             </Link>
                         </div>
 
-                        <div className="input-field">
-                            <button className='submitButton' onClick={onLoginSubmit}><p>Увійти</p></button>
+                        <Link className='link-forgot-password' to="/auth/register">
+                            Відновити пароль
+                        </Link>
+                </div>
+
+                <div className="input-field">
+                    <button className='submitButton' onClick={onLoginSubmit}><p>Увійти</p></button>
+                </div>
+
+
+            </form>
+
+
+        </div>
+    </div>
+        </div > */}
+
+<div className="container">
+            <div className="forms">
+                <div className="form login">
+                    <span className="title">Вхід</span>
+
+                    <form action="#">
+                    <div className="input-field">
+                            <EmailTwoToneIcon className='emailIcon' />
+                            <input type="text" placeholder='Введіть електронну адресу' required />
+
                         </div>
 
-                        
-                    </form>
+                        <div className="input-field">
+                            <LockTwoToneIcon className='lockIcon' />
+                            <input type={passVisible ? "text" : "password"} placeholder='Введіть пароль' required />
+                            {passVisible && <VisibilityTwoToneIcon className='visEye' onClick={onShowPasswordClicked} />}
+                            {!passVisible && <VisibilityOffTwoToneIcon className='noVisEye' onClick={onShowPasswordClicked} />}
+                        </div>
 
+                        <div className="input-field-checkbox">
+                            <FormControlLabel
+                                id='remember'
+                                name='remember'
+                                control={<Checkbox />}
+                                label="Запам'ятати мене"
+                                labelPlacement="end"
+                            />
 
+                            
+
+                        <Link className='link-forgot-password' to="/auth/register">
+                            Відновити пароль
+                        </Link>
                 </div>
-            </div>
-        </div>
+
+                <div className="input-field">
+                    <button className='submitButton' onClick={onLoginSubmit}><p>Увійти</p></button>
+                </div>
+                    </form>
+                    </div>
+                    </div>
+                    </div>
     </>);
 }
 

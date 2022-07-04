@@ -5,6 +5,10 @@ body{
   }
 
 
+.link-in-block {
+    margin: auto;
+}
+
 
 .about-info {
     display: block;
