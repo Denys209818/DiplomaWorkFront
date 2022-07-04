@@ -7,10 +7,6 @@ import { IFriendDataArray } from "../FriendsCard/types/friendsCardInterfaces";
 
 import { Avatar, List } from 'antd';
 import PhoneNavbar from "../PhoneNavbar";
-<<<<<<< HEAD
-import ScrollToTop from "../ScrollToTop";
-=======
->>>>>>> main
 
 
 
