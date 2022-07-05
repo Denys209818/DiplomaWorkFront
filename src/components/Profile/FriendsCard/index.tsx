@@ -86,7 +86,7 @@ const FriendsCard: React.FC<IFriendDataArray> = ({ friends }) => {
                     </div>);
                 })}
                 <ListItem>
-                        <Link className='link-in-block' to="/searchFriend">Пошук друзів</Link>
+                        <Link className='link-in-block' to="/profile/searchFriends">Пошук друзів</Link>
                 </ListItem>
             </List>
         </div>
