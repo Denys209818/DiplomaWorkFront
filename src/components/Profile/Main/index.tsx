@@ -7,6 +7,7 @@ import { IFriendDataArray } from "../FriendsCard/types/friendsCardInterfaces";
 
 import { Avatar, List } from 'antd';
 import PhoneNavbar from "../PhoneNavbar";
+import { Link } from "react-router-dom";
 
 
 
@@ -52,11 +53,11 @@ const ProfileMain: React.FC = () => {
     ];
 
     return (<>
-        <section className="home-section">
+        
             <Row>
-                <Col md={24} xs={24} className="navbar-small"> 
+                <Col md={24} xs={24} className="navbar-small">
 
-                    <PhoneNavbar/>
+                    <PhoneNavbar />
                 </Col>
                 <Col md={22} offset={1}
                     lg={13} xs={22}>
@@ -68,7 +69,7 @@ const ProfileMain: React.FC = () => {
                         <PostContainer />
                         <PostContainer />
                         <PostContainer />
-                        
+
 
                     </div>
                 </Col>
@@ -98,6 +99,15 @@ const ProfileMain: React.FC = () => {
                                             />
                                         </List.Item>
                                     )}
+                                    footer={
+                                        <List.Item key="lastItem">
+                                            <Link to="/profile/createGroup" className="link-in-block">Створити групу</Link>
+
+                                            <Link to="/createGroup" className="link-in-block">Створити групу</Link>
+
+                                        </List.Item>
+                                    }
+
                                 />
                             </div>
                         </div>
@@ -107,7 +117,6 @@ const ProfileMain: React.FC = () => {
             </Row>
 
 
-        </section>
     </>);
 }
 

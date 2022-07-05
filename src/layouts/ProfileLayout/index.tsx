@@ -6,7 +6,9 @@ const ProfileLayout: React.FC = () =>
 {
     return (<>
         <Navbar/>
-        <Outlet/>
+        <section className="home-section">
+            <Outlet/>
+        </section>
     </>);
 }
 
