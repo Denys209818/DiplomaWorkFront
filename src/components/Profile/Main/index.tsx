@@ -53,7 +53,7 @@ const ProfileMain: React.FC = () => {
     ];
 
     return (<>
-        <section className="home-section">
+        
             <Row>
                 <Col md={24} xs={24} className="navbar-small">
 
@@ -101,7 +101,7 @@ const ProfileMain: React.FC = () => {
                                     )}
                                     footer={
                                         <List.Item key="lastItem">
-                                            <Link to="/createGroup" className="link-in-block">Створити групу</Link>
+                                            <Link to="/profile/createGroup" className="link-in-block">Створити групу</Link>
                                         </List.Item>
                                     }
 
@@ -114,7 +114,6 @@ const ProfileMain: React.FC = () => {
             </Row>
 
 
-        </section>
     </>);
 }
 
