@@ -135,6 +135,11 @@ const CreateGroup: React.FC = () => {
                 </div>
         </Col>
     </Row>);
+
+const CreateGroup : React.FC = () => {
+    return (<>
+        Create Group
+    </>);
 }
 
 export default CreateGroup;

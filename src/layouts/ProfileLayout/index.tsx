@@ -7,10 +7,9 @@ import { Col, Row } from "antd";
 
 const ProfileLayout: React.FC = () => {
     return (<>
-        <Navbar />
-
+        <Navbar/>
         <section className="home-section">
-            <Outlet />
+            <Outlet/>
         </section>
     </>);
 }
