@@ -1,0 +1,48 @@
+.loadImage {
+    width:100%;
+    position: relative;
+}
+
+.loadImage img {
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+.loadImage .trash-icon {
+    position: absolute;
+    left:50%;
+    top:50%;
+    display: none;
+    transition: all 0.3s ease
+}
+
+.loadImage:hover img {
+    opacity: 0.2;
+    transition: all 0.3s ease
+}
+
+.loadImage:hover .trash-icon {
+    display: block;
+    z-index: 1000;
+    transition: all 0.3s ease
+}
+
+.addImageDiv {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+}
+
+
+
+#addImage {
+    margin:auto, 0;
+    cursor: pointer;
+}
+
+#images {
+    display: none;
+}

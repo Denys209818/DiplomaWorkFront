@@ -9,9 +9,18 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { Link } from 'react-router-dom';
 
+interface SettingsData {
+    title: string,
+    link: string
+}
 
-const settings = ['Друзі', 'Групи', 'Редагувати профіль'];
+const settings: Array<SettingsData> = [{title: 'Профіль', link: '/profile'}, 
+{title: 'Друзі', link: '/profile/searchFriends'}, 
+{title:'Створити групу', link: '/profile/createGroup'}, 
+{title:'Створити пост', link: '/profile/createPost'}, 
+{title:'Редагувати профіль', link: '/profile/editProfile'}];
 
 const PhoneNavbar: React.FC = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -89,8 +98,10 @@ const PhoneNavbar: React.FC = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                <MenuItem key={setting.link+"id"} onClick={handleCloseUserMenu}>
+                                    <Link to={setting.link}>
+                                        <Typography textAlign="center">{setting.title}</Typography>
+                                    </Link>
                                 </MenuItem>
                             ))}
                         </Menu>
