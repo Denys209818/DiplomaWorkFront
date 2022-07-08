@@ -1,0 +1,8 @@
+.editor-content {
+    position: relative;
+    top:10%;
+    transform: translateX(-50%);
+    width:90%;
+    left:50%;
+    
+}

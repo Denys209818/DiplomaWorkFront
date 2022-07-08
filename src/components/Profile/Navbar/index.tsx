@@ -47,11 +47,11 @@ const Navbar: React.FC = () => {
                 </li>
 
                 <li>
-                    <Link to="#">
+                    <Link to="/profile">
                         <HomeOutlinedIcon/>
-                        <span className="links_name">Головна сторінка</span>
+                        <span className="links_name">Профіль</span>
                     </Link>
-                    <span className="tooltip">Головна сторінка</span>
+                    <span className="tooltip">Профіль</span>
                 </li>
                 <li>
                     <Link to="#">
