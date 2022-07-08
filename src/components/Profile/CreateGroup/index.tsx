@@ -134,12 +134,8 @@ const CreateGroup: React.FC = () => {
                     </Modal>
                 </div>
         </Col>
-    </Row>);
+    </Row>)};
 
-const CreateGroup : React.FC = () => {
-    return (<>
-        Create Group
-    </>);
-}
+
 
 export default CreateGroup;
