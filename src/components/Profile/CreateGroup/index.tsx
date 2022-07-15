@@ -68,14 +68,29 @@ const CreateGroup: React.FC = () => {
                 </div>
         </Col>
     </Row>);
-<<<<<<< HEAD
-=======
+}
+// =======
 
-const CreateGroup : React.FC = () => {
-    return (<>
-        Create Group
-    </>);
->>>>>>> 4c3fbfd7746cf1a520c93681293fb2c7ecc45948
+
+// const CreateGroup: React.FC = () => {
+
+//     const [cropper, setCropper] = useState<Cropper>();
+//     const imageRef = useRef<HTMLImageElement>(null);
+//     const [visible, setVisible] = useState(false);
+//     const [disabledBtn, setDisabled] = useState(false);
+
+//     const onOkHandler = () => {
+//         setDisabled(true);
+//         setVisible(false);
+
+//         let base64 = cropper?.getCroppedCanvas().toDataURL() as string;
+
+//         setImg(base64);
+//         setDisabled(false);
+//     }
+
+//     const [srcImg, setImg] = useState<string>("https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png");
+=======
 }
 // =======
 
@@ -99,6 +114,7 @@ const CreateGroup : React.FC = () => {
 
 //     const [srcImg, setImg] = useState<string>("https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png");
 
+>>>>>>> 666062815de0d5b21fc6a4bcd61992f57dcfb455
 
 //     const changeImage = async (e: ChangeEvent<HTMLInputElement>) => {
 //         await setVisible(true);
@@ -108,6 +124,17 @@ const CreateGroup : React.FC = () => {
 //         if (file) {
 //             let url = URL.createObjectURL(file);
 
+<<<<<<< HEAD
+//     const changeImage = async (e: ChangeEvent<HTMLInputElement>) => {
+//         await setVisible(true);
+//         const files = e.target.files!;
+//         let file = files[0];
+//         console.log(file);
+//         if (file) {
+//             let url = URL.createObjectURL(file);
+
+=======
+>>>>>>> 666062815de0d5b21fc6a4bcd61992f57dcfb455
 //             let crop = cropper ? cropper : new Cropper(imageRef.current as HTMLImageElement, {
 //                 aspectRatio: 1 / 1,
 //                 viewMode: 1,
