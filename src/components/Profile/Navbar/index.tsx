@@ -30,6 +30,12 @@ const Navbar: React.FC = () => {
         setOpen(!isOpen);
     }
 
+    const onCloseNavbar = () => {
+        if(isOpen) {
+            setOpen(false);
+        }
+    }
+
     return (<>
         <div className={classNames("sidebar", {"open": isOpen})}>
             <div className="logo-details">
@@ -46,36 +52,36 @@ const Navbar: React.FC = () => {
                         <span className="tooltip">Пошук</span>
                 </li>
 
-                <li>
+                <li onClick={onCloseNavbar}>
                     <Link to="/profile">
                         <HomeOutlinedIcon/>
                         <span className="links_name">Профіль</span>
                     </Link>
                     <span className="tooltip">Профіль</span>
                 </li>
-                <li>
-                    <Link to="#">
+                <li onClick={onCloseNavbar}>
+                    <Link to="/news">
                        <ContactsOutlinedIcon/>
                         <span className="links_name">Публікації</span>
                     </Link>
                     <span className="tooltip">Публікації</span>
                 </li>
-                <li>
-                    <Link to="#">
+                <li onClick={onCloseNavbar}>
+                    <Link to="/groups">
                         <GroupsOutlinedIcon/>
                         <span className="links_name">Групи</span>
                     </Link>
                     <span className="tooltip">Групи</span>
                 </li>
-                <li>
-                    <Link to="#">
+                <li onClick={onCloseNavbar}>
+                    <Link to="/profile/edit">
                         <AppRegistrationOutlinedIcon/>
                         <span className="links_name">Редагувати профіль</span>
                     </Link>
                     <span className="tooltip">Редагувати профіль</span>
                 </li>
-                <li>
-                    <Link to="#">
+                <li onClick={onCloseNavbar}>
+                    <Link to="/logout">
                         <LogoutOutlinedIcon/>
                         <span className="links_name">Вийти</span>
                     </Link>

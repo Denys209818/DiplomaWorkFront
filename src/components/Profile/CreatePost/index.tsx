@@ -19,7 +19,7 @@ const CreatePost: React.FC = () => {
         { title: 'Group 2' },
         { title: 'Group 3' },
     ]);
-    const [activeGroup, setGroup] = useState<string>();
+    const [activeGroup, setGroup] = useState<string>("Change group");
 
 
    

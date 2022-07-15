@@ -1,0 +1,26 @@
+.input-container {
+    width: 100%;
+    position: relative;
+    margin-top: 1em;
+}
+
+.input-container div {
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+    width:100%;
+}
+
+.input-container p {
+    text-align: center;
+    color: dodgerblue;
+}
+
+.input-container p:hover{
+    color:rgb(24, 77, 175);
+    cursor: pointer;
+} 
+
+.input-container input[type="file"] {
+    display: none;
+}
