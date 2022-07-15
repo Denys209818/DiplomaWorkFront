@@ -68,6 +68,14 @@ const CreateGroup: React.FC = () => {
                 </div>
         </Col>
     </Row>);
+<<<<<<< HEAD
+=======
+
+const CreateGroup : React.FC = () => {
+    return (<>
+        Create Group
+    </>);
+>>>>>>> 4c3fbfd7746cf1a520c93681293fb2c7ecc45948
 }
 // =======
 
