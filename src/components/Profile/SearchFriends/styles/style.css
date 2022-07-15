@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+.main-for-searchFriends {
+    min-height: 100vh;
+    position: relative;
+}
+
+#createFriendsRow {
+
+    background-color: #fff;
+    position: relative;
+}
+
+
+.table-of-friends {
+    min-height: 100vh;
+}
+
+.avatar-block {
+    display: flex;
+    align-items: center;
+}
+
+.command-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-block span {
+    margin-left: 2vw;
+}
+
+.avatar-block svg {
+    margin-left: 2vw;
+    color: #1890ff;
+}
+
+.message-block span {
+    font-family: 'Cormorant Infant', serif;
+    font-size: 18px;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+.message-block b {
+    
+    border-bottom: 1px solid #000;
+}
+
+.searchUser {
+    width: 70vw;
+    max-width: 500px;
+    margin: 2em;
+    position: relative;
+    left: 50%;
+    transform: translateX(-60%);
+}

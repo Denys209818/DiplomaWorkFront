@@ -1,0 +1,36 @@
+
+
+.profile-card-wrapper {
+    min-height: 100vh;
+    position: relative;
+}
+
+#profileCardRow {
+
+    background: #E4E9F7!important;
+}
+
+.card-content {
+    margin-top: 10em;
+    width:100%;
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+}
+
+.card-posts {
+    margin-top: 5em;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+}
+
+.card-posts h2 {
+    text-align: center;
+}
+
+.card-post-inner {
+    width: 80%;
+}
