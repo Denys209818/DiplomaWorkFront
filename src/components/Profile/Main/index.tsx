@@ -102,19 +102,9 @@ const ProfileMain: React.FC = () => {
                                     footer={<>
                                         <List.Item key="lastItem">
                                             <Link to="/profile/createGroup" className="link-in-block">Створити групу</Link>
-<<<<<<< HEAD
                                             
                                             <Link to="/profile/createPost" className="link-in-block">Створити пост</Link>
 
-=======
-
-                                            
-                                            <Link to="/profile/createPost" className="link-in-block">Створити пост</Link>
-
-
-                                            <Link to="/createGroup" className="link-in-block">Створити групу</Link>
-
->>>>>>> 4c3fbfd7746cf1a520c93681293fb2c7ecc45948
                                         </List.Item>
                                     </>
                                     }
