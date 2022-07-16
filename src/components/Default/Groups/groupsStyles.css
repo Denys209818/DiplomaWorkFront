@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*
+{
+    box-sizing: border-box;
+}
+
+.row {
+    width:99.8%;
+    justify-content:center;
+    padding-left: 10px;
+    border: 1px solid silver;
+    margin: 3px;
+    border-radius: 10px;
+    padding: 10px;
+    transition: 0.5s; 
+    display: flex;
+}
+
+.rows {
+    padding-left: 40px;
+}
+
+.wrapper {
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.botton:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.wrapper .card {
+    background: #fff;
+    width: 410px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    justify-content: space-between;
+    border-radius: 100px 20px 20px 100px;
+    
+}
+
+.card .coutent {
+    display: flex;
+    align-items: center;
+}
+
+.wrapper .card .img {
+    height: 103px;
+    width: 103px;
+    position: absolute;
+    left: -5px;
+    background: #fff;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+}
+
+.card .img img{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.card .detalis {
+    margin-left: 80px;
+}
+
+.detalis span{
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.card a{
+    text-decoration: none;
+    padding: 7px 18px;
+    border-radius: 25px;
+    color: #fff;
+    background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%);
+}
+
+.prokrutka {
+    height: 644px; /* высота нашего блока */
+    width: 440px; /* ширина нашего блока */
+    background: #fff; /* цвет фона, белый */
+    border: 1px solid #C1C1C1; /* размер и цвет границы блока */
+    overflow-y: scroll; /* прокрутка по вертикали */ 
+    overflow-x: hidden;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.prokrutka::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+}
+  
+.prokrutka::-webkit-scrollbar-track {
+    background: #efefef;        /* color of the tracking area */
+}
+  
+.prokrutka::-webkit-scrollbar-thumb {
+    background-color: #04e69b;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 3px solid #04e69b;  /* creates padding around scroll thumb */
+}
+
+p, small {
+    color: #8f8f8f;
+}
+
+p {
+    font-size: 0.9em;
+    line-height: 23px;
+}
+
+h1{margin: 0; color: #fff;}
+
+.skewed {
+    width: 75em;
+    color: #f1f1f1;
+    display: flex;
+    background: #111;
+    margin: 1em 0;
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+.text {
+    padding: 1.5em;
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.image {
+    width: 50%;
+    height: 21em;
+    position: relative;
+    overflow: hidden;
+}
+
+.image::before {
+    content: '';
+    position: absolute;
+    left: -6.1em;
+    top: 50%;
+    transform: translateY(-50%) rotate(20deg);
+    background: #111;
+    width: 40%;
+    height: 140%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+
+.skewed-left .image::before {
+    transform: translateY(-50%) rotate(-20deg);
+    left: initial;
+    right: -6.1em;
+}
+
+img {
+    width: 140%;
+}
+
+@media (max-width: 1385px) 
+{
+    .row {
+            height: 100%;
+            justify-content: left;
+        }
+        .rows 
+        {
+            display: none;
+        }
+}
+
+@media screen and (max-width: 1580px) {
+    .skewed {
+        display:block;
+        margin: 1em;
+        width: 20em;
+    }
+    .image, .text {
+        width: 100%;
+    }
+    img {
+        width: 160%;
+    }
+    .skewed-left::before {
+        width: 120%;
+        height: 40%;
+        top: -5em;
+        left: 50%;
+        transform: translateX(-50%) rotate(10deg);
+    }
+    .skewed-left .image::before {
+        transform: translateX(-50%) rotate(-10deg);
+        top: initial;
+        bottom: -5em;
+    }
+    .row {
+        justify-content: left;
+    }
+    .rows {
+        display: flex;
+    }
+}
+
+
+@media (max-width: 1155px) {
+
+    .row
+    {
+        justify-content: space-evenly;
+    }
+    .rows{
+        display: none;
+    }
+    .prokrutka {
+        overflow-y: scroll;
+        height: 100%;
+    }
+}
+
+
+.none-container {
+    width: 100%;
+    background: #fff;
+    border-radius: 6px;
+    padding: 20px;
+    color: #626262;
+    margin: 20px 0;
+    display: none;
+}
+
+.user-profile span {
+    font-size: 13px;
+    color: #9a9a9a;
+}
+
+.post-text {
+    color: #9a9a9a;
+    margin: 15px 0;
+    font-size: 15px;
+}
+
+.post-text span {
+    color: #626262;
+    font-weight: 500;
+}
+
+.post-text a{
+    color: #1876f2;
+    text-decoration: none;
+}
+
+.post-img {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 5;
+}

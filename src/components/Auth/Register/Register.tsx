@@ -31,19 +31,16 @@ const Register : React.FC = () =>
                     <form action="#">
                         <div className="input-field">
                             <PersonOutlineTwoToneIcon className='userIcon' />
-                            <PersonIcon className='userIcon' />
                             <input type="text" placeholder='Введіть своє ім"я' required />
                         </div>
 
                         <div className="input-field">
                             <PersonOutlineTwoToneIcon className='userIcon' />
-                            <PersonIcon className='userIcon' />
                             <input type="text" placeholder='Введіть своє прізвище' required />
                         </div>
 
                         <div className="input-field">
                             <LocalPhoneTwoToneIcon className='phoneIcon' />
-                            <LocalPhoneTwoToneIcon className='userIcon' />
                             <InputMask placeholder='Введіть номер телефону' mask="+38 (999) 999-99-99" required />
                         </div>
 
