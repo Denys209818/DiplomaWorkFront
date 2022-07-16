@@ -32,7 +32,7 @@
     transform: scale(1.1);
 }
 
-.wrapper .card {
+.wrapper .card-group {
     background: #fff;
     width: 410px;
     display: flex;
@@ -44,12 +44,12 @@
     
 }
 
-.card .coutent {
+.card-group .coutent {
     display: flex;
     align-items: center;
 }
 
-.wrapper .card .img {
+.wrapper .card-group .img {
     height: 103px;
     width: 103px;
     position: absolute;
@@ -60,14 +60,14 @@
     box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
 }
 
-.card .img img{
+.card-group .img img{
     height: 100%;
     width: 100%;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.card .detalis {
+.card-group .detalis {
     margin-left: 80px;
 }
 
@@ -76,7 +76,7 @@
     font-size: 18px;
 }
 
-.card a{
+.card-group a{
     text-decoration: none;
     padding: 7px 18px;
     border-radius: 25px;

@@ -7,7 +7,7 @@ const Groups: React.FC = () => {
         <div className="row">
             <div className="prokrutka">
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -20,7 +20,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -33,7 +33,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -46,7 +46,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -59,7 +59,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -72,7 +72,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -85,7 +85,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -98,7 +98,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -111,7 +111,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -124,7 +124,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -137,7 +137,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -150,7 +150,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -163,7 +163,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -176,7 +176,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -189,7 +189,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
@@ -202,7 +202,7 @@ const Groups: React.FC = () => {
                 </div>
 
                 <div className='wrapper'>
-                    <div className="card" >
+                    <div className="card-group" >
                         <div className='coutent'>
                             <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
                             <div className='detalis'>
