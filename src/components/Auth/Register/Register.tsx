@@ -41,6 +41,7 @@ const Register : React.FC = () =>
 
                         <div className="input-field">
                             <LocalPhoneTwoToneIcon className='phoneIcon' />
+
                             <InputMask placeholder='Введіть номер телефону' mask="+38 (999) 999-99-99" required />
                         </div>
 

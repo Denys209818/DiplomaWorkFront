@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -15,17 +16,23 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
+    "@tinymce/tinymce-react": "^4.1.0",
     "@types/jest": "^27.5.1",
     "@types/node": "^16.11.36",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.4",
+    "@types/tinymce": "^4.6.5",
     "antd": "^4.21.0",
+    "antd-img-crop": "^4.2.3",
     "classnames": "^2.3.1",
+    "cropperjs": "^1.5.12",
     "font-awesome": "^4.7.0",
     "i": "^0.3.7",
     "npm": "^8.13.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-highlight-words": "^0.18.0",
+    "react-imask": "^6.4.2",
     "react-input-mask": "^2.0.4",
     "react-native-masked-text": "^1.13.0",
     "react-router-dom": "^6.3.0",
@@ -60,6 +67,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-highlight-words": "^0.16.4",
     "@types/react-input-mask": "^3.0.1"
   }
 }

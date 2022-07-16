@@ -10,6 +10,11 @@ const Groups = React.lazy(() => import("../components/Default/Groups"));
 const ProfileMain = React.lazy(() => import("../components/Profile/Main"));
 const CreateGroup = React.lazy(() => import("../components/Profile/CreateGroup"));
 const SearchFriends = React.lazy(() => import("../components/Profile/SearchFriends"));
+const CreatePost = React.lazy(() => import("../components/Profile/CreatePost"));
+const ProfileFriends = React.lazy(() => import("../components/Profile/ProfileFriends"));
+const Edit = React.lazy(() => import("../components/Profile/Edit"));
+
+
 
 export const DefaultRoutes : Array<RouteObjectType>  = 
 [
@@ -25,8 +30,11 @@ export const LoginRoutes : Array<RouteObjectType> = [
 
 
 export const ProfileRoutes : Array<RouteObjectType> = [
+    {path: '/profile/createPost', element: CreatePost},
     {path: '/profile/searchFriends', element: SearchFriends},
     {path: '/profile/createGroup', element: CreateGroup},
+    // { path: '/profile/profileFriend', element: ProfileFriends },
+    {path: '/profile/edit', element: Edit},
     {path: '/profile', element: ProfileMain}
 ];
 

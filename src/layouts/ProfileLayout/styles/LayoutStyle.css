@@ -1,0 +1,9 @@
+.navbar-small {
+    display: none;
+}
+
+@media (max-width: 1000px) {
+.navbar-small {
+    display: block;
+}
+}
