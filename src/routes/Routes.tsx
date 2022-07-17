@@ -6,6 +6,8 @@ const Login = React.lazy(() => import("../components/Auth/Login/Login"));
 const Register = React.lazy(() => import("../components/Auth/Register/Register"));
 const News = React.lazy(() => import("../components/Default/News/Blog"));
 const Groups = React.lazy(() => import("../components/Default/Groups"));
+const Chat = React.lazy(() => import("../components/Default/Chat"));
+
 
 const ProfileMain = React.lazy(() => import("../components/Profile/Main"));
 const CreateGroup = React.lazy(() => import("../components/Profile/CreateGroup"));
@@ -20,6 +22,7 @@ export const DefaultRoutes : Array<RouteObjectType>  =
 [
     {path: '/groups', element:Groups},
     {path: '/news', element:News },
+    {path: '/chat', element:Chat },
     {path: '/', element: Main}
 ];
 
