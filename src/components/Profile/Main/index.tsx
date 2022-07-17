@@ -105,6 +105,7 @@ const ProfileMain: React.FC = () => {
                                             
                                             <Link to="/profile/createPost" className="link-in-block">Створити пост</Link>
 
+
                                         </List.Item>
                                     </>
                                     }
