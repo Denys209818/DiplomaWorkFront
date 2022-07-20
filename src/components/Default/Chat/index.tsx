@@ -1,11 +1,19 @@
 import React, {} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './../Chat/chatStyles.css';
+import 'font-awesome/less/font-awesome.less';
+import 'font-awesome/css/font-awesome.min.css';
 
 const Chat : React.FC = () => {
 
+<<<<<<< HEAD
     return (<>
     
         <div className='bootstrap-inside'>
+=======
+    return (<div className='mainContainer'>
+>>>>>>> 0447807581a7c538367dffa9d7bbeb5d24e4e38e
         <div className='coutainer-fluid h-100 retreat'>
             <div className='row justify-content-center h-100'>
                 <div className='col-md-4 col-xl-3 chat'><div className='card mb-sm-3 mb-md-0 contacts_card'>
@@ -13,7 +21,7 @@ const Chat : React.FC = () => {
                         <div className='input-group'>
                             <input type="text" placeholder='Search...' name='' className='form-control search'/>
                             <div className='input-group-prepend'>
-                                <span className='input-group-text search_btn'><i className='fas fa-search'></i></span>
+                                <span className='input-group-text search_btn'><i className="fa fa-search" aria-hidden="true"></i></span>
                             </div>
                         </div>
                     </div>
@@ -96,17 +104,17 @@ const Chat : React.FC = () => {
                                     <p>1767 Messages</p>
                                 </div>
                                 <div className='video_cam'>
-                                    <span><i className='fas fa-video'></i></span>
-                                    <span><i className='fas fa-phone'></i></span>
+                                    <span><i className="fa fa-video-camera" aria-hidden="true"></i></span>
+                                    <span><i className="fa fa-phone" aria-hidden="true"></i></span>
                                 </div>
                             </div>
-                            <span id="action_menu_btn"><i className='fas fa-ellipsis-v'></i></span>
+                            <span id="action_menu_btn"><i className="fa fa-ellipsis-v" aria-hidden="true"></i></span>
                             <div className='action_menu'>
                                 <ul>
-                                    <li><i className='fas fa-user-circle'></i> View profile</li>
-                                    <li><i className='fas fa-users'></i> Add to close friengs</li>
-                                    <li><i className='fas fa-plus'></i> Add to group</li>
-                                    <li><i className='fas fa-ban'></i> Block</li>
+                                    <li><i className="fa fa-user-circle-o" aria-hidden="true"></i> View profile</li>
+                                    <li><i className="fa fa-users" aria-hidden="true"></i> Add to close friengs</li>
+                                    <li><i className="fa fa-plus" aria-hidden="true"></i>Add to group</li>
+                                    <li><i className="fa fa-ban" aria-hidden="true"></i> Block</li>
                                 </ul>
                             </div>
                         </div>
@@ -181,11 +189,11 @@ const Chat : React.FC = () => {
                         <div className='card-footer'>
                             <div className='input-group'>
                                 <div className='input-group-append'>
-                                    <span className='input-group-text attach_btn'><i className='fas fa-paperclip'></i></span>
+                                    <span className='input-group-text attach_btn'><i className="fa fa-paperclip" aria-hidden="true"></i></span>
                                 </div>
                                 <textarea name="" className='form-control type_msg' placeholder='Type your message...'></textarea>
                                 <div className='input-group-append'>
-                                    <span className='input-group-text send_btn'><i className='fas fa-location-arrow'></i></span>
+                                    <span className='input-group-text send_btn'><i className="fa fa-location-arrow" aria-hidden="true"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -193,8 +201,12 @@ const Chat : React.FC = () => {
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
         </div>
     </>);
+=======
+    </div>);
+>>>>>>> 0447807581a7c538367dffa9d7bbeb5d24e4e38e
 }
 
 export default Chat;
