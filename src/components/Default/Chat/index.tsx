@@ -4,6 +4,8 @@ import './../Chat/chatStyles.css';
 const Chat : React.FC = () => {
 
     return (<>
+    
+        <div className='bootstrap-inside'>
         <div className='coutainer-fluid h-100 retreat'>
             <div className='row justify-content-center h-100'>
                 <div className='col-md-4 col-xl-3 chat'><div className='card mb-sm-3 mb-md-0 contacts_card'>
@@ -190,6 +192,7 @@ const Chat : React.FC = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </>);
 }

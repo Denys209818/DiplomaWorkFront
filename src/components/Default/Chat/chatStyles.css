@@ -16,6 +16,10 @@ body {
     margin-bottom: auto;
 }
 
+.bootstrap-inside {
+    @import "../node_modules/bootstrap/scss/bootstrap";
+}
+
 .card {
     height: 500px;
     border-radius: 15px !important;
