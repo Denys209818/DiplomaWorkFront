@@ -1,259 +1,89 @@
-import React from 'react';
+import { Col, Row } from 'antd';
+import React, { startTransition, useEffect, useState } from 'react';
 import './../Groups/groupsStyles.css';
+import { animated, useTransition } from 'react-spring';
+import RightColumn from './CustomComponents/RightColumn';
+import LeftColumn from './CustomComponents/LeftColumn';
+
 
 const Groups: React.FC = () => {
 
+   
+    const [isPhone, setPhone] = useState(false);
+    const [visibleRight, setVisibleRight] = useState(false);
+    const [visibleLeft, setVisibleLeft] = useState(true);
+    const [width, setWidth] = useState(window.innerWidth);
+
+
+    useEffect(() => {
+        window.addEventListener("resize", () => {
+            startTransition(() => {
+                setWidth(window.innerWidth);
+            });
+        });
+    }, []);
+
+
+    const transitionRight = useTransition(visibleRight, {
+        from: {
+            x: width,
+        },
+        enter: {
+            x: 0,
+        },
+        leave: {
+            x: width,
+        }
+    });
+
+    const transitionLeft = useTransition(visibleLeft, {
+        from: {
+            x:-(width),
+        },
+        enter: {
+            x:0,
+        },
+        leave: {
+            x: -(width),
+        }
+    });
+
+    const openLeftRightComponent = () => {
+        startTransition(() => {
+            
+                setVisibleLeft(!visibleLeft);
+                setPhone(!isPhone);
+                setVisibleRight(!visibleRight);
+       });
+    }
+
+    
+    
     return (<>
-        <div className="row">
-            <div className="prokrutka">
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
+        <div className="rows">
 
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
+            <Row id='row-with-group-names'>
+                <Col lg={12} xl={6} md={12} xs={!isPhone ? 24 : 0} >
+                    {width <= 768 ? transitionLeft((style, item) => {
+                        return (item ? <animated.div style={style}>
 
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
+                            <LeftColumn onClickLeft={openLeftRightComponent} />
 
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
+                         </animated.div> : ""); 
+                     }) : <LeftColumn onClickLeft={openLeftRightComponent} />} 
+                </Col>
+                <Col lg={12} xl={18} md={12} xs={isPhone ? 24 : 0} className="right-column">
 
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
+                    {width <= 768 ? transitionRight((style, item) => {
+                        return (item ?
+                            <animated.div style={style}>
+                                <RightColumn onClickRight={openLeftRightComponent}/>
 
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-
-                <div className='wrapper'>
-                    <div className="card-group" >
-                        <div className='coutent'>
-                            <div className='img'><img src='https://joeschmoe.io/api/v1/random' alt=''></img></div>
-                            <div className='detalis'>
-                                <span className='name'>Назва групи</span>
-                                <p>Назва міста</p>
-                            </div>
-                        </div>
-                        <a className="botton" href="#">Переглянути</a>
-                    </div>
-                </div>
-            </div>
-            <div className="rows">
-                <div className='skewed'>
-                    <div className='text'>
-                        <small>Lorem Ipsum</small>
-                        <h1>Natural Beauty</h1>
-                        <p>Lorem ipsum dolor sit amet consectetur 
-                            adipisicing elit. Et, amet at totam suscipit
-                            eaque earum consectetur quis voluptatem iste
-                            asperiores, odio ad ducimus incidunt explicabo,
-                            accusamus quam quo ipsa maiores.
-                        </p>
-                        <a href="#">Read More &rarr;</a>
-                    </div>
-                    <div className='image'>
-                        <div>
-                            <img src="https://source.unsplash.com/-f0YLss50Bs/900x500" 
-                            alt="img" />
-                        </div>
-                    </div>
-                </div> 
-                <div className='skewed skewed-left'>
-                    <div className='image'>
-                        <div>
-                            <img src="https://source.unsplash.com/cV4qkkorDFY/900x500"
-                            alt="img" />
-                        </div>
-                    </div>
-                    <div className='text'>
-                        <small>Lorem Ipsum</small>
-                        <h1>City Skylines</h1>
-                        <p>Lorem ipsum dolor sit, amet consectetur
-                            adipisicing elit. Iste ipsa quibusdam 
-                            consequatur quasi quod distinctio pariatur
-                            illum temporibus ratione veniam, corporis
-                            ab, saepe id autem harum hic a quam dignissimos.
-                        </p>
-                        <a href="#">Read More &rarr;</a>
-                    </div>
-                </div>
-            </div>
+                                
+                            </animated.div> : "")
+                    }) : <RightColumn onClickRight={openLeftRightComponent}/>}
+                </Col>
+            </Row>
         </div>
     </>);
 }
