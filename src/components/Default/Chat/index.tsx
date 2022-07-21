@@ -1,5 +1,5 @@
 import React, {} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './../Chat/chatStyles.css';
 import 'font-awesome/less/font-awesome.less';
@@ -7,13 +7,8 @@ import 'font-awesome/css/font-awesome.min.css';
 
 const Chat : React.FC = () => {
 
-<<<<<<< HEAD
     return (<>
-    
-        <div className='bootstrap-inside'>
-=======
-    return (<div className='mainContainer'>
->>>>>>> 0447807581a7c538367dffa9d7bbeb5d24e4e38e
+        <div className='mainContainer'>
         <div className='coutainer-fluid h-100 retreat'>
             <div className='row justify-content-center h-100'>
                 <div className='col-md-4 col-xl-3 chat'><div className='card mb-sm-3 mb-md-0 contacts_card'>
@@ -201,12 +196,8 @@ const Chat : React.FC = () => {
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
         </div>
     </>);
-=======
-    </div>);
->>>>>>> 0447807581a7c538367dffa9d7bbeb5d24e4e38e
 }
 
 export default Chat;
