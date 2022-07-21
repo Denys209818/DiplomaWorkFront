@@ -80,6 +80,7 @@
 }
 
 .attach_btn {
+    height: 100%;
     border-radius: 15px 0 0 15px !important;
     background-color: rgba(0, 0, 0, 0.3) !important;
     border: 0 !important;
@@ -88,6 +89,7 @@
 }
 
 .send_btn {
+    height: 100%;
     border-radius: 0 15px 15px 0 !important;
     background-color: rgba(0, 0, 0, 0.3) !important;
     border: 0 !important;
@@ -96,6 +98,7 @@
 }
 
 .search_btn{
+    height: 100%;
     border-radius: 0 15px 15px 0 !important;
     background-color: rgba(0, 0, 0, 0.3) !important;
     border: 0 !important;
