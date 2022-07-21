@@ -87,7 +87,6 @@ const CustomModalDialog: React.FC<ICustomModal> = ({ visibleFunc, isVisible }) =
                         }
                         renderItem={item => (
                             <List.Item
-                                
                                 key={item.title}
                                 actions={[
                                     <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
@@ -96,7 +95,12 @@ const CustomModalDialog: React.FC<ICustomModal> = ({ visibleFunc, isVisible }) =
                                 ]}
                             >
                                 <List.Item.Meta
-                                    avatar={<Avatar src={item.avatar} />}
+                                    avatar={<Avatar
+                                        style={{
+                                            position: 'relative',
+                                            top: '20px'
+                                        }}
+                                        src={item.avatar}/>}
                                     title={<a href={item.href}>{item.title}</a>}
                                     description={item.description}
                                 />

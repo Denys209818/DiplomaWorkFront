@@ -11,25 +11,28 @@ import { Queue } from './tools/queue';
 import { Button, CardActions } from '@mui/material';
 import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
 import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
+import ModalSpring from '../../Groups/CustomComponents/ModalSpring';
+import EditPostModal from '../../Groups/CustomComponents/EditPostModal';
 
 
 
 
-interface ICardGroup 
-{
+interface ICardGroup {
     images: Array<string>,
     title: string,
     description: string
 }
 
-const CardGroup: React.FC<ICardGroup> = ({images, title, description}) => {
+const CardGroup: React.FC<ICardGroup> = ({ images, title, description }) => {
 
     const [isOpen, setOpen] = useState<Boolean>(false);
     const [photoIndex, setPhotoIndex] = useState(0);
     const [isLiked, setLiked] = useState<Boolean>(false);
+    const [visible, setVisible] = useState(false);
 
-    const onClickImage = (e: React.MouseEvent<HTMLImageElement>) => 
-    {
+    const onClickImage = (e: React.MouseEvent<HTMLImageElement>) => {
         let img = e.target as HTMLImageElement;
         let id = img.getAttribute("id")!;
         let arr = id.split("_");
@@ -39,41 +42,73 @@ const CardGroup: React.FC<ICardGroup> = ({images, title, description}) => {
         setOpen(true);
     }
 
-    return (<>
-        <Card sx={{ maxWidth: '100%', marginTop: '3em', marginBottom:'2em' }}>
-                <Row>
-                    {new Queue(images).getForThree().map((item, index) => {
-                        
-                        let size = 8;
-                        switch(item.data.length) 
-                        {
-                            case 1: {
-                                size=24;
-                                break;
-                            }
-                            case 2: {
-                                size=12;
-                                break;
-                            }
-                            default: {
-                                size = 8;
-                                break;
-                            }
-                        }
+    const showModal = () => {
+        setVisible(true);
+    }
 
-                        return item.data.map((element, indexOfElement) => {
-                            return (<Col key={"imgLight" + index.toString() + indexOfElement.toString()} span={size}>
-                                <CardMedia
+    const handleOk = (e: React.MouseEvent<HTMLElement>) => 
+    {
+        setVisible(false);
+        console.log(e);
+    }
+    const handleCancel = (e: React.MouseEvent<HTMLElement>) => 
+    {
+        setVisible(false);
+        console.log(e);
+    }
+
+
+    const [isOpenDelete, setOpenDelete] = useState(false);
+
+    const onDelete = () => {
+        console.log("Delete Post");
+    }
+
+    return (<>
+
+        <ModalSpring title="Ви дійсно бажаєте видалити публікацію?"
+            open={isOpenDelete}
+            setOpen={setOpenDelete}
+            yesFunc={onDelete}
+        />
+
+        <EditPostModal 
+        handleCancel ={handleCancel}
+        handleOk = {handleOk}
+        visible ={visible}/>
+        <Card sx={{ maxWidth: '100%', marginTop: '3em', marginBottom: '2em' }}>
+            <Row>
+                {new Queue(images).getForThree().map((item, index) => {
+
+                    let size = 8;
+                    switch (item.data.length) {
+                        case 1: {
+                            size = 24;
+                            break;
+                        }
+                        case 2: {
+                            size = 12;
+                            break;
+                        }
+                        default: {
+                            size = 8;
+                            break;
+                        }
+                    }
+
+                    return item.data.map((element, indexOfElement) => {
+                        return (<Col key={"imgLight" + index.toString() + indexOfElement.toString()} span={size}>
+                            <CardMedia
                                 id={"imgId_" + ((3 * index) + indexOfElement).toString()}
                                 onClick={onClickImage}
-                                    component="img"
-                                    height="140"
-                                    image={element}
-                                />
-                            </Col>);
-                        });
-                    })}
-                </Row>
+                                component="img"
+                                height="140"
+                                image={element}
+                            />
+                        </Col>);
+                    });
+                })}
+            </Row>
 
 
 
@@ -86,27 +121,28 @@ const CardGroup: React.FC<ICardGroup> = ({images, title, description}) => {
                 </Typography>
             </CardContent>
             <CardActions>
-                {isLiked ?  
-                <FavoriteSharpIcon fontSize='large' onClick={() => {setLiked(!isLiked)}}/> : 
-                <FavoriteBorderSharpIcon fontSize='large' onClick={() => {setLiked(!isLiked)}}/> }
-
+                {isLiked ?
+                    <FavoriteSharpIcon className='icon-mui' fontSize='large' onClick={() => { setLiked(!isLiked) }} /> :
+                    <FavoriteBorderSharpIcon className='icon-mui' fontSize='large' onClick={() => { setLiked(!isLiked) }} />}
+                <DeleteForeverIcon onClick={() => setOpenDelete(true)} className='icon-mui' fontSize='large' />
+                <EditIcon onClick={() => showModal()} className='icon-mui' fontSize='large' />
                 <Button size="small">Перейти в коментарі</Button>
             </CardActions>
         </Card>
 
 
         {isOpen && (
-          <Lightbox
-            mainSrc={images[photoIndex]}
-            nextSrc={images[(photoIndex + 1) % images.length]}
-            prevSrc={images[(photoIndex + images.length - 1) % images.length]}
-            onCloseRequest={() => setOpen(false)}
-            onMovePrevRequest={() =>  {setPhotoIndex((photoIndex + images.length - 1) % images.length);}
-            }
-            onMoveNextRequest={() =>{
-              setPhotoIndex((photoIndex + 1) % images.length);
-            }}
-          />
+            <Lightbox
+                mainSrc={images[photoIndex]}
+                nextSrc={images[(photoIndex + 1) % images.length]}
+                prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+                onCloseRequest={() => setOpen(false)}
+                onMovePrevRequest={() => { setPhotoIndex((photoIndex + images.length - 1) % images.length); }
+                }
+                onMoveNextRequest={() => {
+                    setPhotoIndex((photoIndex + 1) % images.length);
+                }}
+            />
         )}
     </>);
 }
