@@ -8,7 +8,6 @@ import jwt_decode from "jwt-decode";
 export const LoginAction = (data: ILoginModel) => async (dispatch: Dispatch<LoginUserAction>) => 
 {
     try {
-
         var res = await axiosService.login(data);
         var token = res.data.token;
 
