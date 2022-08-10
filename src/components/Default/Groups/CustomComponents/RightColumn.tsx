@@ -3,13 +3,17 @@ import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrow
 import CardGroup from '../../Components/CardGroup';
 import { UserOutlined } from '@ant-design/icons';
 import "./componentStyles/rightColumn.css";
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import classNames from "classnames";
 
 
 interface IRightColumn {
-    onClickRight: () => void
+    onClickRight: () => void,
+    handleAvatarClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
-const RightColumn: React.FC<IRightColumn> = ({onClickRight}) => {
+const RightColumn: React.FC<IRightColumn> = ({onClickRight, handleAvatarClick }) => {
     return (<>
         <div className="navbar-of-group">
             <Row>
@@ -19,8 +23,11 @@ const RightColumn: React.FC<IRightColumn> = ({onClickRight}) => {
                     </div>
                 </Col>
                 <Col md={4} xs={4} xl={2}>
+                    <b onClick={handleAvatarClick}>
 
-                    <Avatar size="large" icon={<UserOutlined />} />
+                        <Avatar size="large"
+                            icon={<UserOutlined />} />
+                    </b>
                 </Col>
                 <Col md={20} xs={18} xl={22}>
                     <div className="title-group">
@@ -50,12 +57,6 @@ const RightColumn: React.FC<IRightColumn> = ({onClickRight}) => {
                             'https://iq-global-test.com/upload/media/default/0011/01/5934817f827d37cbc08df9a4535eeb16a8419f1f.jpeg'
                         ]} />
                 </Col>
-                {/* <Col offset={6} span={12}>
-                                <CardGroup/>
-                            </Col>
-                            <Col offset={6} span={12}>
-                                <CardGroup/>
-                            </Col> */}
                 <Col lg={{ span: 12, offset: 6 }} xs={{ span: 18, offset: 3 }}>
                     <CardGroup title='Пост 2'
                         description='Lizards are a widespread group of squamate reptiles, with over 6,000 species, 
