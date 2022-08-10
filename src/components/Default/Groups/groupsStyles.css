@@ -302,3 +302,15 @@ html {
 
 
 
+.inputEdit {
+    margin-top: 1em;
+}
+
+
+.icon-mui:hover {
+    cursor: pointer;
+}
+
+.row-for-image {
+    margin-top: 3em;
+}
