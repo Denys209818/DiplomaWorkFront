@@ -9,7 +9,18 @@ export interface IUser {
     secondName: string,
     email: string,
     phone: string,
-    id: number
+    id: number,
+    image: string
+}
+
+export interface ServerUser {
+    firstName: string,
+    secondName: string,
+    email: string,
+    phone: string,
+    id: number,
+    image: string,
+    roles: string|Array<string>
 }
 
 

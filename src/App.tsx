@@ -1,12 +1,15 @@
 import React, { Suspense } from 'react';
+import { Provider } from 'react-redux';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import DefaultLayout from './layouts/DefaultLayout';
 import LoginLayout from './layouts/LoginLayout';
 import ProfileLayout from './layouts/ProfileLayout';
+import { store } from './redux/store';
 import { DefaultRoutes, LoginRoutes, ProfileRoutes } from './routes/Routes';
 
 const  App= () =>  {
-  return (<Suspense fallback={<div>Loading...</div>}>
+  return (<Provider store={store}>
+  <Suspense fallback={<div>Loading...</div>}>
     <BrowserRouter>
     
       <Routes>
@@ -33,7 +36,9 @@ const  App= () =>  {
 
     </BrowserRouter>
 
-  </Suspense>);
+  </Suspense>
+    
+    </Provider>);
     
   
 }
