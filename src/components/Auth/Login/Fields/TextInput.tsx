@@ -1,4 +1,4 @@
-import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
+import "../Fields/styles/style.css"
 import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { useState } from 'react';
@@ -14,10 +14,13 @@ export interface ITextInput {
         muiName: string;
     }
     iconClass: string,
-    isPassword: Boolean
+    isPassword: Boolean,
+    changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    error?: null | string,
+    touched?: boolean
 }
 
-const TextInput: React.FC<ITextInput> = ({label, name, id, IconElement, iconClass, isPassword}) => {
+const TextInput: React.FC<ITextInput> = ({label, name, id, IconElement, iconClass, isPassword, changeHandler, error, touched}) => {
 
 
     const [field, meta] = useField({name, id});
@@ -38,12 +41,16 @@ const TextInput: React.FC<ITextInput> = ({label, name, id, IconElement, iconClas
     return (<>
         <div className="input-field">
                 <IconElement className={iconClass} />
-                <input type={getTypeForInput()} {...field}
-                placeholder={label} required />
+                <input type={getTypeForInput()} {...field} onChange={changeHandler}
+                placeholder={label}  />
                 
                 {isPassword && passVisible && <VisibilityTwoToneIcon className='visEye' onClick={onShowPasswordClicked} />}
                 {isPassword && !passVisible && <VisibilityOffTwoToneIcon className='noVisEye' onClick={onShowPasswordClicked} />}
+
         </div>
+        {touched && error && <div className="invalid-feedback">
+                    {error}
+            </div>}
     </>);
 }
 

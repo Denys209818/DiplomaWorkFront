@@ -47,9 +47,9 @@ const CreateGroup: React.FC = () => {
                     <div className="group-data">
                         <h2>Створити групу</h2>
                         <SelectOneImage/>
-                        <Field label='Ведіть назву групи' id='txtName' value={name} onChange={onChangeValue}/>
-                        <Field label='Ведіть мету групи' id='txtMeta' value={meta} onChange={onChangeValue}/>
-                        <Field label='Ведіть теги без #' id='txtTags' value={tags} onChange={onChangeValue}/>
+                        <Field label='Ведіть назву групи' id='txtName' touched={false} error="" name='d'  onChange={onChangeValue}/>
+                        <Field label='Ведіть мету групи' id='txtMeta' touched={false} error="" name='d'  onChange={onChangeValue}/>
+                        <Field label='Ведіть теги без #' id='txtTags' touched={false} error="" name='d' onChange={onChangeValue}/>
 
 
                     

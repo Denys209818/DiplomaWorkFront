@@ -4,28 +4,35 @@ import "./styles/style.css";
 import "./../styles/main.css";
 
 interface IPasswordField {
-    value: string,
     showPassword: boolean,
     setShowPassword: Dispatch<React.SetStateAction<boolean>>,
     onChangeValue: (e: ChangeEvent<HTMLInputElement>) => void,
     id: string,
-    label: string
+    label: string,
+    name: string,
+    error?: null | string,
+    touched?: boolean,
 }
 
-const PasswordField: React.FC<IPasswordField> = ({value, showPassword, onChangeValue, setShowPassword, id, label}) => {
-    return (
+const PasswordField: React.FC<IPasswordField> = ({ showPassword, onChangeValue, setShowPassword, id, label, name
+, touched, error}) => {
+    return (<>
         <div className="form-group">
-                            <TextField
-                                id={id}
-                                label={label}
-                                value={value}
-                                type={showPassword ? 'text' : 'password'}
-                                onChange={onChangeValue}
-                            />
-                            <span className="passwordSet" onClick={() => { setShowPassword(!showPassword) }}>
-                                {!showPassword ? "Показати пароль" : "Приховати пароль"}
-                            </span>
-                        </div>
+            <TextField
+                id={id}
+                label={label}
+                type={showPassword ? 'text' : 'password'}
+                onChange={onChangeValue}
+                name={name}
+            />
+            <span className="passwordSet" onClick={() => { setShowPassword(!showPassword) }}>
+                {!showPassword ? "Показати пароль" : "Приховати пароль"}
+            </span>
+        </div>
+
+{touched && error && <div className="invalid-feedback" style={{color:"#E64848"}}>
+{error}
+    </div>}</>
     );
 }
 

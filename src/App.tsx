@@ -8,6 +8,8 @@ import { store } from './redux/store';
 import { DefaultRoutes, LoginRoutes, ProfileRoutes } from './routes/Routes';
 
 const  App= () =>  {
+
+
   return (<Provider store={store}>
   <Suspense fallback={<div>Loading...</div>}>
     <BrowserRouter>

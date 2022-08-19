@@ -4,8 +4,15 @@ import { ChangeEvent, useRef, useState } from "react";
 import Cropper from "cropperjs";
 
 import { Col, Image, Modal, Row } from "antd";
+import { defaultImage } from '../../../../constants/defaultConsts';
 
-const SelectOneImage: React.FC = () => {
+
+export interface ISelectOneImage {
+    image?: string,
+    setBase64?: React.Dispatch<React.SetStateAction<string>>
+}
+
+const SelectOneImage: React.FC<ISelectOneImage> = ({ image, setBase64 }) => {
 
     const [disabledBtn, setDisabled] = useState(false);
 
@@ -14,30 +21,36 @@ const SelectOneImage: React.FC = () => {
         setVisible(false);
 
         let base64 = cropper?.getCroppedCanvas().toDataURL() as string;
-
+        if (setBase64) {
+            setBase64(base64!);
+        }
         setImg(base64);
         setDisabled(false);
     }
     const [cropper, setCropper] = useState<Cropper>();
     const imageRef = useRef<HTMLImageElement>(null);
     const [visible, setVisible] = useState(false);
-    const [srcImg, setImg] = useState("https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png");
+    const [srcImg, setImg] = useState(image ? image : "default.jpg");
+
+
     const changeImage = async (e: ChangeEvent<HTMLInputElement>) => {
         await setVisible(true);
-        const files = e.target.files!;
+        const files = e.target.files;
+        if(files) {
         let file = files[0];
         if (file) {
             let url = URL.createObjectURL(file);
-
             let crop = cropper ? cropper : new Cropper(imageRef.current as HTMLImageElement, {
                 aspectRatio: 1 / 1,
                 viewMode: 1,
             });
 
             crop.replace(url);
-            setCropper(crop);
+            await setCropper(crop);
 
+        
         }
+    }
     }
 
     return (<div className="input-container">
@@ -53,34 +66,37 @@ const SelectOneImage: React.FC = () => {
         </label>
         <p onClick={() => {
             (document.getElementById("selectFileAvatar") as HTMLInputElement).value = "";
-            setImg("https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png")
+            if (setBase64)
+                setBase64("default.jpg")
+
+                setImg(defaultImage +  "default.jpg");
         }}>Видалити фотографію</p>
         <input type="file" id='selectFileAvatar' multiple={false} onChange={changeImage} />
 
         <Modal
-                        title="Редагування фотографії"
-                        centered
-                        visible={visible}
-                        onOk={() => {
-                            onOkHandler()
-                        }}
-                        width={1000}
-                        closable={false}
-                        okText="Підтвердити"
-                        okButtonProps={{
-                            loading: disabledBtn,
-                            disabled: disabledBtn
-                        }
-                        }
-                        cancelButtonProps={{ disabled: true, style: { display: 'none' } }}
-                    >
-                        <Row>
-                            <Col md={24} xs={24}>
-                                <img ref={imageRef} width="100%" />
-                            </Col>
+            title="Редагування фотографії"
+            centered
+            visible={visible}
+            onOk={() => {
+                onOkHandler()
+            }}
+            width={1000}
+            closable={false}
+            okText="Підтвердити"
+            okButtonProps={{
+                loading: disabledBtn,
+                disabled: disabledBtn
+            }
+            }
+            cancelButtonProps={{ disabled: true, style: { display: 'none' } }}
+        >
+            <Row>
+                <Col md={24} xs={24}>
+                    <img ref={imageRef} width="100%" />
+                </Col>
 
-                        </Row>
-                    </Modal>
+            </Row>
+        </Modal>
     </div>);
 }
 
