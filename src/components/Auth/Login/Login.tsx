@@ -2,120 +2,149 @@ import './../styles/mainStyles.css';
 import './../styles/loginStyles.css';
 import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
-import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
-import VisibilityOffTwoToneIcon from '@mui/icons-material/VisibilityOffTwoTone';
-import { useState } from 'react';
+import { useState, useRef, Dispatch, useEffect } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import { Formik, Form, useFormik, FormikProvider } from "formik";
+import { Errors, ILoginModel } from '../../../actions/types/AuthTypes';
+import TextInput from './Fields/TextInput';
+import { useActions } from '../../../actions/auth/UseActions';
+import { Alert } from 'antd';
+import yupValidation from './yupValidation';
+import { useCookies } from 'react-cookie';
+
 
 const Login: React.FC = () => {
-    const [passVisible, setPassVisible] = useState(false);
-    const navigation = useNavigate();
+    var navigate = useNavigate();
+    const [error, setErrors] = useState<Array<string>>();
+    const { LoginAction, AuthUserWithToken } = useActions();
 
-
-    const onShowPasswordClicked = () => {
-        setPassVisible(!passVisible);
+    const [cookies, setCookie] = useCookies(['token']);
+    const initialValues: ILoginModel = {
+        email: '',
+        password: ''
     }
 
 
-    const onLoginSubmit = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
+    const [checked, setCheck] = useState<boolean>(false);
 
-        navigation("/profile");
+    const onCheckChange = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => 
+    {
+        setCheck(checked);
     }
+    const onSubmitHandler = async (values: ILoginModel) => {
+        try {
+            
+            await LoginAction(values);
+
+            if(checked) {
+                
+                let time = Date.now();
+                let token = localStorage.getItem("token");
+                setCookie("token",token, {
+                    path: '/',
+                    expires: new Date(time + 30*24*60*60*1000)
+                } );
+            }
+
+            navigate("/profile");
+
+        } catch (ex) {
+            const serverError = ex as Errors;
+
+            if (serverError.email && serverError.email.length > 0) {
+                setErrors([
+                    ...serverError.email
+                ]);
+            }
+
+            if (serverError.password && serverError.password.length > 0) {
+                setErrors([
+                    ...serverError.password
+                ]);
+            }
+        }
+
+
+    }
+
+    const formik = useFormik({
+        initialValues: initialValues,
+        onSubmit: onSubmitHandler,
+        validationSchema: yupValidation
+    })
+
+    const {errors, touched, handleSubmit, handleChange} = formik;
+
     return (<>
-        {/* <div className="container">
+        <div className="container">
             <div className="forms">
                 <div className="form login">
+
+                    {error && error.length > 0 && error.map((value, index) => {
+                        return <Alert
+                            message="Помилка авторизації"
+                            description={value}
+                            type="error"
+                            showIcon
+                            key={"errorAuth: " + index}
+                        />
+                    })}
+
                     <span className="title">Вхід</span>
 
-                    <form action="#">
-                        <div className="input-field">
-                            <EmailTwoToneIcon className='emailIcon' />
-                            <input type="text" placeholder='Введіть електронну адресу' required />
-
-                        </div>
-
-                        <div className="input-field">
-                            <LockTwoToneIcon className='lockIcon' />
-                            <input type={passVisible ? "text" : "password"} placeholder='Введіть пароль' required />
-                            {passVisible && <VisibilityTwoToneIcon className='visEye' onClick={onShowPasswordClicked} />}
-                            {!passVisible && <VisibilityOffTwoToneIcon className='noVisEye' onClick={onShowPasswordClicked} />}
-                        </div>
-
-                        <div className="input-field-checkbox">
-                            <FormControlLabel
-                                id='remember'
-                                name='remember'
-                                control={<Checkbox />}
-                                label="Запам'ятати мене"
-                                labelPlacement="end"
+                    <FormikProvider value={formik}>
+                        <Form
+                            onSubmit={handleSubmit}
+                        >
+                            <TextInput
+                                changeHandler={handleChange}
+                                touched={touched.email}
+                                error={errors.email}
+                                label='Введіть електронну адресу'
+                                id='email'
+                                name='email'
+                                IconElement={EmailTwoToneIcon}
+                                iconClass="emailIcon"
+                                isPassword={false}
                             />
 
-                            <Link className='link-forgot-password' to="/auth/register">
-                                Відновити пароль
-                            </Link>
-                        </div>
+                            <TextInput
+                                touched={touched.password}
+                                error={errors.password}
+                                changeHandler={handleChange}
+                                label='Введіть пароль'
+                                id='password'
+                                name='password'
+                                IconElement={LockTwoToneIcon}
+                                iconClass="emailIcon"
+                                isPassword={true}
+                            />
 
-                        <Link className='link-forgot-password' to="/auth/register">
-                            Відновити пароль
-                        </Link>
+                            <div className="input-field-checkbox">
+                                <FormControlLabel
+                                    id='remember'
+                                    name='remember'
+                                    control={<Checkbox onChange={onCheckChange} />}
+                                    label="Запам'ятати мене"
+                                    labelPlacement="end"
+                                />
+
+
+
+                                <Link className='link-forgot-password' to="/auth/register">
+                                    Відновити пароль
+                                </Link>
+                            </div>
+
+                            <div className="input-field">
+                                <button className='submitButton' type='submit'><p>Увійти</p></button>
+                            </div>
+                        </Form>
+                    </FormikProvider>
                 </div>
-
-                <div className="input-field">
-                    <button className='submitButton' onClick={onLoginSubmit}><p>Увійти</p></button>
-                </div>
-
-
-            </form>
-
-
+            </div>
         </div>
-    </div>
-        </div > */}
-
-<div className="container">
-            <div className="forms">
-                <div className="form login">
-                    <span className="title">Вхід</span>
-
-                    <form action="#">
-                    <div className="input-field">
-                            <EmailTwoToneIcon className='emailIcon' />
-                            <input type="text" placeholder='Введіть електронну адресу' required />
-
-                        </div>
-
-                        <div className="input-field">
-                            <LockTwoToneIcon className='lockIcon' />
-                            <input type={passVisible ? "text" : "password"} placeholder='Введіть пароль' required />
-                            {passVisible && <VisibilityTwoToneIcon className='visEye' onClick={onShowPasswordClicked} />}
-                            {!passVisible && <VisibilityOffTwoToneIcon className='noVisEye' onClick={onShowPasswordClicked} />}
-                        </div>
-
-                        <div className="input-field-checkbox">
-                            <FormControlLabel
-                                id='remember'
-                                name='remember'
-                                control={<Checkbox />}
-                                label="Запам'ятати мене"
-                                labelPlacement="end"
-                            />
-
-                            
-
-                        <Link className='link-forgot-password' to="/auth/register">
-                            Відновити пароль
-                        </Link>
-                </div>
-
-                <div className="input-field">
-                    <button className='submitButton' onClick={onLoginSubmit}><p>Увійти</p></button>
-                </div>
-                    </form>
-                    </div>
-                    </div>
-                    </div>
     </>);
 }
 
