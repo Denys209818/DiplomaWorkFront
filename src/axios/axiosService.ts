@@ -1,4 +1,4 @@
-import { ILoginModel, ReturnedData } from "../actions/types/AuthTypes";
+import { ILoginModel, IRegisterModel, ReturnedData } from "../actions/types/AuthTypes";
 import createAxios from "./createAxios";
 
 
@@ -8,8 +8,8 @@ class AxiosService {
         return createAxios.post<ReturnedData>("/api/account/login", data);
     }
 
-    register = () => {
-        return createAxios.post("/api/account/register");
+    register = (data: IRegisterModel) => {
+        return createAxios.post<ReturnedData>("/api/account/register", data);
     }
 }
 
