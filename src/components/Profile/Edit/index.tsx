@@ -53,6 +53,15 @@ const Edit = () => {
              });
 
 
+    const [name, setName] = useState("Денис");
+    const [surname, setSurname] = useState("Кравчук");
+    const [phone, setPhone] = useState("0680162");
+    const [password, setPassword] = useState("password");
+    const [confirmPassword, setConfirmPassword] = useState("password");
+    const [oldPassword, setOldPassword] = useState(false);
+    const [oldPasswordValue, setOldPasswordValue] = useState("Password");
+
+
             
             if (base64 && base64.length > 0) {
                 await ChangeImage({
@@ -70,10 +79,40 @@ const Edit = () => {
                 expires: new Date(time + 30 * 24 * 60 * 60 * 1000)
             });
 
+
             setVisibleAlert(true);
         } catch (ex) {
             let errors = ex as Array<string>;
             setError(errors.join("\n"));
+    const onChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
+        let html = e.target as HTMLInputElement;
+        let id = html.getAttribute("id");
+        switch (id) {
+            case "txtName":
+                {
+                    setName(html.value);
+                    break;
+                };
+            case "txtSurname": {
+                setSurname(html.value);
+                break;
+            };
+            case "txtPhone": {
+                setValue(html.value);
+                break;
+            };
+            case "txtPassword": {
+                setPassword(html.value);
+                break;
+            };
+            case "txtOldPassword": {
+                setOldPasswordValue(html.value);
+                break;
+            };
+            case "txtConfirmPassword": {
+                setConfirmPassword(html.value);
+                break;
+            };
         }
     }
 
@@ -110,10 +149,20 @@ const Edit = () => {
                         <FormikProvider value={formik}>
                             <Form  >
 
+
                                 <Field label="Ім'я" id="firstName" name="firstName"
                                     onChange={handleChange} value={user.firstName}
                                     error={errors.firstName} touched={touched.firstName}
                                 />
+                        <Field label="Прізвище" id="txtSurname" value={surname} onChange={onChangeValue}/>
+                        <PhoneField onChangeValue={onChangeValue} id="txtPhone" phone={phone} />
+                        
+                        <PasswordField label="Старий пароль" value={oldPasswordValue} id="txtOldPassword" showPassword={oldPassword} onChangeValue={onChangeValue}
+                        setShowPassword= {setOldPassword}/>
+
+                        <PasswordField label="Пароль" value={password} id="txtPassword" showPassword={showPassword} onChangeValue={onChangeValue}
+                        setShowPassword= {setShowPassword}/>
+
 
                                 <Field label="Прізвище" id="secondName" name="secondName" onChange={handleChange}
                                     value={user.secondName} error={errors.secondName} touched={touched.secondName}

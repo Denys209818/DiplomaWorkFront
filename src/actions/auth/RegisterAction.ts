@@ -2,7 +2,10 @@ import { Dispatch } from "react";
 import { IUser, IUserTypes, RegisterUserAction } from "../../redux/reducers/types/userTypes";
 
 
+
 export const RegisterAction = () => async (dispatch: Dispatch<RegisterUserAction>) => {
+
+const RegisterAction = () => async (dispatch: Dispatch<RegisterUserAction>) => {
 let user : IUser = {
     firstName: 'firstName',
     secondName: 'secondName',
@@ -10,6 +13,7 @@ let user : IUser = {
     email: 'email',
     id: 0,
     image: ''
+    id: 0
 };
 
     dispatch({
@@ -17,3 +21,6 @@ let user : IUser = {
         payload: user
     });
 }
+}
+
+export default RegisterAction;

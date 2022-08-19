@@ -32,6 +32,19 @@ export const LoginAction = (data: ILoginModel) => async (dispatch: Dispatch<any>
 
 export const AuthUserWithToken = (token: string) => async (dispatch: Dispatch<any>) => {
     var user: IUser =getUser(token);
+import { Dispatch } from "react";
+import { IUser, IUserTypes, LoginUserAction } from "../../redux/reducers/types/userTypes";
+
+
+const LoginAction = () => async (dispatch: Dispatch<LoginUserAction>) => {
+let user : IUser = {
+    firstName: 'firstName',
+    secondName: 'secondName',
+    phone: 'phone',
+    email: 'email',
+    id: 0
+};
+
     dispatch({
         type: IUserTypes.LOGIN_USER,
         payload: user
@@ -52,3 +65,6 @@ const getUser = (token: string) : IUser => {
 
     return user;
 }
+}
+
+export default LoginAction;
