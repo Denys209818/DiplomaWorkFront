@@ -49,9 +49,13 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
             image: delItem.name
         }));
         let list = fileListBlob.filter((x) => x.uid != id);
-        
+        if(images && setImages) {
 
-        setFileListBlob(list);
+            let newImages = images.filter((x) => x != delItem.name);
+            console.log(newImages);
+            setImages(newImages);
+        }
+            setFileListBlob(list);
         el?.remove();
     }
 
