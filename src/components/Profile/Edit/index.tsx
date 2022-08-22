@@ -72,12 +72,14 @@ const Edit = () => {
                 expires: new Date(time + 30 * 24 * 60 * 60 * 1000)
             });
 
+
             setVisibleAlert(true);
         } catch (ex) {
             let errors = ex as Array<string>;
             setError(errors.join("\n"));
-        }
+    
     }
+}
 
     const formik = useFormik({
         initialValues: {
@@ -121,6 +123,11 @@ const Edit = () => {
                                     value={user.secondName} error={errors.secondName} touched={touched.secondName}
                                 />
 
+
+                                <Field label="Прізвище" id="secondName" name="secondName" onChange={handleChange}
+                                    value={user.secondName} error={errors.secondName} touched={touched.secondName}
+                                />
+
                                 <PhoneField onChangeValue={handleChange} id="phone" name="phone"
                                     error={errors.phone} touched={touched.phone} defaultValue={user.phone}
                                 />
@@ -146,8 +153,17 @@ const Edit = () => {
                                     closable
                                     onClose={() => {setVisibleAlert(false)}}
                                 />}
+
                                 <SuccessAlert alertVis={alertVis} setVisibleAlert={setVisibleAlert}/>
                                 <ErrorAlert error={error} setError={setError} />
+
+                                {error && error.length > 0  && <Alert
+                                    message="Помилка редагування"
+                                    description={error}
+                                    type="error"
+                                    closable
+                                    onClose={() => setError("")}
+                                />}
                                 <div className="form-group">
                                     <Button className="btnSubmit" type="submit" variant="contained">Підтвердити</Button>
                                 </div>

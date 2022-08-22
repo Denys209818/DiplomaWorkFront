@@ -40,6 +40,7 @@ const CreateGroup: React.FC = () => {
                 image: base64 == "default.jpg" ? base64 : base64.split(",")[1],
                 ...values
             });
+    
 
             setSuccess(true);
 
