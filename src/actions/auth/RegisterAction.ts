@@ -2,6 +2,7 @@ import { Dispatch } from "react";
 import { IUser, IUserTypes, RegisterUserAction } from "../../redux/reducers/types/userTypes";
 
 
+
 export const RegisterAction = () => async (dispatch: Dispatch<RegisterUserAction>) => {
 
 
@@ -24,4 +25,6 @@ export const RegisterAction = () => async (dispatch: Dispatch<RegisterUserAction
 }
 
 
-    export default RegisterAction;
+export default RegisterAction;
+
+

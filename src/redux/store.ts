@@ -6,7 +6,6 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { useDispatch } from 'react-redux';
 
 
-
 var middleware = [thunk];
 
 export const store = createStore(rootReducer, {}, 
