@@ -4,12 +4,9 @@ import axiosService from "../../axios/axiosService";
 import { Errors, ErrorServer, ILoginModel } from "../types/AuthTypes";
 import jwt_decode from "jwt-decode";
 import axios, {  AxiosError } from "axios";
-<<<<<<< HEAD
 import { SetGroups } from "../profile/ProfileAction";
 import { useProfileAction } from "../profile/useProfileActions";
 
-=======
->>>>>>> 9d4fda03a9922541676631679a40c60c776f8eb8
 
 
 export const LoginAction = (data: ILoginModel) => async (dispatch: Dispatch<any>) => {
@@ -38,30 +35,10 @@ export const LoginAction = (data: ILoginModel) => async (dispatch: Dispatch<any>
 
 export const AuthUserWithToken = (token: string) => async (dispatch: Dispatch<any>) => {
     var user: IUser =getUser(token);
-<<<<<<< HEAD
     await dispatch(SetGroups({ 
         id: user.id
     }));
-=======
-import { Dispatch } from "react";
-import { IUser, IUserTypes, LoginUserAction } from "../../redux/reducers/types/userTypes";
-
-
-const LoginAction = () => async (dispatch: Dispatch<LoginUserAction>) => {
-let user : IUser = {
-    firstName: 'firstName',
-    secondName: 'secondName',
-    phone: 'phone',
-    email: 'email',
-    id: 0
-};
-
->>>>>>> 9d4fda03a9922541676631679a40c60c776f8eb8
-    dispatch({
-        type: IUserTypes.LOGIN_USER,
-        payload: user
-    });
-} 
+}
 
 
 const getUser = (token: string) : IUser => {
@@ -76,11 +53,7 @@ const getUser = (token: string) : IUser => {
     }
 
     return user;
-<<<<<<< HEAD
-}
-=======
-}
 }
 
+
 export default LoginAction;
->>>>>>> 9d4fda03a9922541676631679a40c60c776f8eb8
