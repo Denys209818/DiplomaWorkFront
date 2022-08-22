@@ -1,94 +1,159 @@
 import 'cropperjs/dist/cropper.css';
 import { Button, MenuItem, TextField } from "@mui/material";
-import { Col, Row, Modal } from "antd";
+import { Col, Modal, Row } from "antd";
 import { useRef, useState } from "react";
 import "../styles/createPost.css";
-import { IGroupInfo } from "./types";
 import SelectImage from '../Components/SelectImage/SelectImage';
 import EditorTiny from '../Components/EditorTiny';
+import { typedSelector } from '../../../redux/services/useTypedSelector';
+import { Form, FormikProvider, useFormik } from 'formik';
+import { ICreatePost, IGetTiny } from './types';
+import yupValidation from './yupValidation';
+import Field from '../Components/Fields/Field';
+import axiosService from '../../../axios/axiosService';
+import { useNavigate } from 'react-router-dom';
 
 
-const CreatePost: React.FC = () => {  
+const CreatePost: React.FC = () => {
 
-
+    const user = typedSelector(user => user.user);
+    const groups = typedSelector(groups => groups.groups);
     const handleGroup = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target);
         setGroup(e.target.value);
+        
+        if(e.target.value) {
+            setErrorGroup("");
+        }
     }
-    const [groupsList, setGroups] = useState<IGroupInfo[]>([
-        { title: 'Group 1' },
-        { title: 'Group 2' },
-        { title: 'Group 3' },
-    ]);
-    const [activeGroup, setGroup] = useState<string>("Change group");
+    const [activeGroup, setGroup] = useState<string>("");
+    const [errorGroup, setErrorGroup] = useState<string>("");
+    const [images, setImages] = useState<Array<string>>([]);
+
+    let initialState: ICreatePost = {
+        title: '',
+        tags: ''
+    };
+    const navigate = useNavigate();
+    const onSubmitHandler = async (values: ICreatePost) => {
+        
+        let content = (editorRef.current as IGetTiny)
+        .contentDocument.body.innerHTML;
+        
+        if(!activeGroup && activeGroup.length <= 0) {
+            setErrorGroup("Оберіть групу!");
+        }
 
 
-   
+        if(activeGroup) {
+            let id : number = (await axiosService.getGroupsByName({
+                name: activeGroup
+            })).data;
 
+
+            let res = (await axiosService.addPublication({
+                title: values.title,
+                tags: values.tags,
+                groupId: id,
+                text: content,
+                images: images.map((element) => {
+                    return {
+                        image: element
+                    }
+                })
+            })).data;
+
+            success(res);
+        }
+    }
+
+    const success = (text: string) => {
+        Modal.success({
+          content: text,
+          okText: "Добре",
+          onOk: () => {
+            navigate("/profile");
+          }
+        });
+      };
+
+    const formik = useFormik({
+        initialValues: initialState,
+        onSubmit: onSubmitHandler,
+        validationSchema: yupValidation
+    });
+
+    const { touched, errors, handleChange } = formik;
+
+    const editorRef = useRef<any>();
     return (<>
         <div className="main-for-createPost">
 
-            <Row id='createPostRow'>
-                <Col lg={8} xs={24}>
-                    <div className="form-createpost">
-                        <h2>Створити публікацію</h2>
-                        <form action="">
-                            <div className="text-field">
+            <FormikProvider value={formik}>
+                <Form>
+                    <Row id='createPostRow'>
+                        <Col lg={8} xs={24}>
+                            <div className="form-createpost">
+                                <h2>Створити публікацію</h2>
+                                <div className="text-field">
+                                    <Field label="Назва для поста" name="title"
+                                        id="title" onChange={handleChange}
+                                        touched={touched.title} error={errors.title} />
+                                    
+                                </div>
+                                <div className="text-field">
 
-                                <TextField
-                                    name="txtTitle"
-                                    id="txtTitle"
-                                    label="Назва для поста"
-                                    placeholder="Введіть назву"
-                                    multiline
-                                />
+                                    <Field label="Теги для пошуку" name="tags"
+                                        id="tags" onChange={handleChange}
+                                        touched={touched.tags} error={errors.tags} />
+
+                                </div>
+                                <div className="text-field">
+                                    <TextField
+                                        id="group"
+                                        name="group"
+                                        select
+                                        label="Обрати групу"
+                                        value={activeGroup}
+                                        onChange={handleGroup}
+                                        helperText="Оберіть групу"
+                                    >
+                                        {groups.map((option) => (
+                                            <MenuItem id={option.id.toString()}
+                                                key={option.title} value={option.title}>
+                                                {option.title}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                    {errorGroup && <p style={{
+                                        color: '#E64848',
+                                        marginLeft: '1em'
+                                    }}>
+                                        Оберіть групу!
+                                    </p>}
+                                </div>
+                                <div className="upload-image">
+                                    <SelectImage images={images} setImages={setImages} />
+                                </div>
+
+
                             </div>
-                            <div className="text-field">
-                                <TextField
-                                    name="txtTags"
-                                    id="txtTags"
-                                    label="Теги для пошуку"
-                                    placeholder="Введіть теги без знаку #"
-                                    multiline
-                                />
+                        </Col>
+                        <Col lg={16} xs={24}>
+
+                            <EditorTiny editorRef={editorRef} />
+
+                        </Col>
+                        <Col lg={8} xs={24}>
+                            <div className="submit">
+                                <Button type="submit" variant="outlined">Опублікувати</Button>
                             </div>
-                            <div className="text-field">
-
-                                <TextField
-                                    id="txtSelectGroup"
-                                    select
-                                    label="Обрати групу"
-                                    value={activeGroup}
-                                    onChange={handleGroup}
-                                    helperText="Оберіть групу"
-                                >
-                                    {groupsList.map((option) => (
-                                        <MenuItem key={option.title} value={option.title}>
-                                            {option.title}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                            <div className="upload-image">
-                                <SelectImage/>
-                            </div>
+                        </Col>
+                    </Row>
 
 
-                        </form>
-
-
-                    </div>
-                </Col>
-                <Col lg={16} xs={24}>
-
-                    <EditorTiny/>
-
-                </Col>
-                <Col lg={8} xs={24}>
-                    <div className="submit">
-                        <Button type="submit" variant="outlined">Опублікувати</Button>
-                    </div>
-                </Col>
-            </Row>
+                </Form>
+            </FormikProvider>
         </div>
     </>);
 }

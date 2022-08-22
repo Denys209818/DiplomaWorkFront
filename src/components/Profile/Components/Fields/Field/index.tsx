@@ -22,7 +22,7 @@ const Field: React.FC<IField> = ({label, id, onChange, name, touched, error, val
             <TextField label={label} id={id} 
             name={name} onChange={onChange} defaultValue={value}/>
         </div>
-        {touched && error && <div className="invalid-feedback" style={{color:"#E64848"}}>
+        {touched && error && <div className="invalid-feedback" style={{color:"#E64848", marginLeft: '1em'}}>
             {error}
                 </div>}
     </>);

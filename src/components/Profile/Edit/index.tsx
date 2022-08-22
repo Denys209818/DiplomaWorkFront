@@ -16,6 +16,8 @@ import { useCookies } from "react-cookie";
 import { useActions } from "../../../actions/auth/UseActions";
 import { defaultImage } from "../../../constants/defaultConsts";
 import yupValidation from "./yupValidation";
+import ErrorAlert from "../Components/ErrorAlert";
+import SuccessAlert from "../Components/SuccessAlert";
 
 const Edit = () => {
 
@@ -144,14 +146,8 @@ const Edit = () => {
                                     closable
                                     onClose={() => {setVisibleAlert(false)}}
                                 />}
-
-                                {error && error.length > 0  && <Alert
-                                    message="Помилка редагування"
-                                    description={error}
-                                    type="error"
-                                    closable
-                                    onClose={() => setError("")}
-                                />}
+                                <SuccessAlert alertVis={alertVis} setVisibleAlert={setVisibleAlert}/>
+                                <ErrorAlert error={error} setError={setError} />
                                 <div className="form-group">
                                     <Button className="btnSubmit" type="submit" variant="contained">Підтвердити</Button>
                                 </div>

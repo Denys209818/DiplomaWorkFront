@@ -1,15 +1,21 @@
 import { useRef, useState } from "react";
 import { Editor } from '@tinymce/tinymce-react';
 import './styles/style.css';
-const EditorTiny: React.FC = () => {
+import tinymce from "tinymce";
 
-    const editorRef = useRef(null);
+
+
+interface ITinyEditor {
+    editorRef: React.MutableRefObject<any>
+}
+
+const EditorTiny: React.FC<ITinyEditor> = ({editorRef}) => {
+
     var useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-
 
     return (<div className="editor-content">
         <Editor
+            id="tinyEditor"
             onInit={(evt, editor: any) => editorRef.current = editor}
             initialValue="<p>Опишіть публікацію...</p>"
             init={{

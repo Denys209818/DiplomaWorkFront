@@ -4,6 +4,9 @@ import axiosService from "../../axios/axiosService";
 import { Errors, ErrorServer, ILoginModel } from "../types/AuthTypes";
 import jwt_decode from "jwt-decode";
 import axios, {  AxiosError } from "axios";
+import { SetGroups } from "../profile/ProfileAction";
+import { useProfileAction } from "../profile/useProfileActions";
+
 
 
 export const LoginAction = (data: ILoginModel) => async (dispatch: Dispatch<any>) => {
@@ -32,6 +35,9 @@ export const LoginAction = (data: ILoginModel) => async (dispatch: Dispatch<any>
 
 export const AuthUserWithToken = (token: string) => async (dispatch: Dispatch<any>) => {
     var user: IUser =getUser(token);
+    await dispatch(SetGroups({ 
+        id: user.id
+    }));
     dispatch({
         type: IUserTypes.LOGIN_USER,
         payload: user

@@ -4,8 +4,15 @@ import { useRef, useState } from "react";
 import { ImageData } from '../../CreatePost/types';
 import './styles/style.css';
 import Cropper from "cropperjs";
+import axiosService from "../../../../axios/axiosService";
+import { IGetImageName } from "./types/SelectTypes";
 
-const SelectImage: React.FC = () => {
+interface ISelectManyImages {
+    images?: Array<string>,
+    setImages?: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
 
     const [fileListBlob, setFileListBlob] = useState<Array<ImageData>>([]);
     const [cropperObj, setCropperObj] = useState<Cropper>();
@@ -33,11 +40,18 @@ const SelectImage: React.FC = () => {
         }
     }
 
-    const onTrashClick = (e: React.MouseEvent<HTMLElement>) => {
+    const onTrashClick = async (e: React.MouseEvent<HTMLElement>) => {
+        
         let el = (e.target as HTMLButtonElement).closest('div.ant-col');
         let id = (e.target as HTMLButtonElement).closest('div.trash-icon')?.getAttribute('id');
+        let delItem = fileListBlob.filter((x) => x.uid == id)[0];
+        (await axiosService.delPostImage({
+            image: delItem.name
+        }));
         let list = fileListBlob.filter((x) => x.uid != id);
-        setFileListBlob([...list]);
+        
+
+        setFileListBlob(list);
         el?.remove();
     }
 
@@ -51,9 +65,17 @@ const SelectImage: React.FC = () => {
         if (base64) {
 
             let blobs = fileListBlob!;
+            let res: IGetImageName = (await axiosService.addPostImage({
+                image: base64.split(",")[1]
+            })).data;
+            console.log(res.filename);
+            if(setImages && images) {
+                setImages([...images, res.filename]);
+            }
             blobs.push({
                 base64: base64,
-                uid: 'id' + (new Date()).getTime()
+                uid: 'id' + (new Date()).getTime(),
+                name: res.filename
             });
             await setFileListBlob([...blobs]);
             await setDisabled(false);
@@ -65,7 +87,7 @@ const SelectImage: React.FC = () => {
     return (<>
         <Row>
             {fileListBlob.map((element, index) => {
-                return (<div className="loadImage" key={"pushedimg" + index} ><Col span={24}>
+                return (<div className="loadImage" key={"pushedimg" + element.uid} ><Col span={24}>
                     <div className="trash-icon" id={element.uid} onClick={onTrashClick}>
                         <RemoveCircleOutlineIcon />
                     </div>
