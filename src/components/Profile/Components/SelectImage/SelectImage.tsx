@@ -6,6 +6,7 @@ import './styles/style.css';
 import Cropper from "cropperjs";
 import axiosService from "../../../../axios/axiosService";
 import { IGetImageName } from "./types/SelectTypes";
+import { useProfileAction } from "../../../../actions/profile/useProfileActions";
 
 interface ISelectManyImages {
     images?: Array<string>,
@@ -20,6 +21,8 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
     const imageRef = useRef<HTMLImageElement>(null);
     const imagePreview = useRef<HTMLImageElement>(null);
     const [disabledBtn, setDisabled] = useState<boolean>(false);
+
+    const {AddImageAction, DelImageAction} = useProfileAction();
 
     const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = (e.target as HTMLInputElement).files!;
@@ -50,10 +53,10 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
         }));
         let list = fileListBlob.filter((x) => x.uid != id);
         if(images && setImages) {
-
+            
             let newImages = images.filter((x) => x != delItem.name);
-            console.log(newImages);
-            setImages(newImages);
+            await DelImageAction(delItem.name);
+            await setImages(newImages);
         }
             setFileListBlob(list);
         el?.remove();
@@ -72,9 +75,10 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
             let res: IGetImageName = (await axiosService.addPostImage({
                 image: base64.split(",")[1]
             })).data;
-            console.log(res.filename);
+            await AddImageAction(res.filename);
             if(setImages && images) {
-                setImages([...images, res.filename]);
+                
+                await setImages([...images, res.filename]);
             }
             blobs.push({
                 base64: base64,
@@ -84,7 +88,9 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
             await setFileListBlob([...blobs]);
             await setDisabled(false);
 
-            (document.getElementById("images") as HTMLInputElement).value = "";        
+            (document.getElementById("images") as HTMLInputElement).value = ""; 
+            
+            
         }
     }
 

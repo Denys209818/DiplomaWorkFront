@@ -5,6 +5,8 @@ import './styles/LayoutStyle.css';
 import { useCookies } from "react-cookie";
 import { useActions } from "../../actions/auth/UseActions";
 import { useEffect, useState } from "react";
+import { typedSelector } from "../../redux/services/useTypedSelector";
+import axiosService from "../../axios/axiosService";
 
 const ProfileLayout: React.FC = () => {
     const { AuthUserWithToken } = useActions();
@@ -17,6 +19,8 @@ const ProfileLayout: React.FC = () => {
         await AuthUserWithToken(token);
         setState(true);
     }
+
+
 
     useEffect(() => {
         let token = localStorage.getItem("token");

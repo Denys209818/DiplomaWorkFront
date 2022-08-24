@@ -54,7 +54,6 @@ const Edit = () => {
                 oldPassword: values.oldPassword, password: values.password, confirmPassword: values.confirmPassword 
              });
 
-
             
             if (base64 && base64.length > 0) {
                 await ChangeImage({
@@ -77,7 +76,6 @@ const Edit = () => {
         } catch (ex) {
             let errors = ex as Array<string>;
             setError(errors.join("\n"));
-    
     }
 }
 
@@ -113,16 +111,6 @@ const Edit = () => {
                         </div>
                         <FormikProvider value={formik}>
                             <Form  >
-
-                                <Field label="Ім'я" id="firstName" name="firstName"
-                                    onChange={handleChange} value={user.firstName}
-                                    error={errors.firstName} touched={touched.firstName}
-                                />
-
-                                <Field label="Прізвище" id="secondName" name="secondName" onChange={handleChange}
-                                    value={user.secondName} error={errors.secondName} touched={touched.secondName}
-                                />
-
 
                                 <Field label="Прізвище" id="secondName" name="secondName" onChange={handleChange}
                                     value={user.secondName} error={errors.secondName} touched={touched.secondName}
