@@ -1,7 +1,7 @@
 import 'cropperjs/dist/cropper.css';
 import { Button, MenuItem, TextField } from "@mui/material";
 import { Col, Modal, Row } from "antd";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/createPost.css";
 import SelectImage from '../Components/SelectImage/SelectImage';
 import EditorTiny from '../Components/EditorTiny';
@@ -12,20 +12,25 @@ import yupValidation from './yupValidation';
 import Field from '../Components/Fields/Field';
 import axiosService from '../../../axios/axiosService';
 import { useNavigate } from 'react-router-dom';
+import { useBeforeunload } from 'react-beforeunload';
+import { useProfileAction } from '../../../actions/profile/useProfileActions';
 
 
 const CreatePost: React.FC = () => {
 
     const user = typedSelector(user => user.user);
     const groups = typedSelector(groups => groups.groups);
+    const imgs = typedSelector(imgs => imgs.images);
+
     const handleGroup = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target);
         setGroup(e.target.value);
-        
-        if(e.target.value) {
+
+        if (e.target.value) {
             setErrorGroup("");
         }
     }
+
     const [activeGroup, setGroup] = useState<string>("");
     const [errorGroup, setErrorGroup] = useState<string>("");
     const [images, setImages] = useState<Array<string>>([]);
@@ -35,18 +40,48 @@ const CreatePost: React.FC = () => {
         tags: ''
     };
     const navigate = useNavigate();
+
+
+    // const trashImages = () => {
+
+    //     imgs && imgs.length > 0
+    //         && imgs.forEach(async (val) => {
+    //             (await axiosService.delPostImage({
+    //                 image: val
+    //             }))
+    //         });
+    // }
+
+    const {ClearImageAction} = useProfileAction();
+
+    const ClearImages = async () => {
+        await ClearImageAction();
+    }
+
+    useEffect(() => {
+        
+        return () => {
+            ClearImages();
+        };
+    }, []);
+
+    useBeforeunload((event) => {
+        ClearImages();
+    });
+
+
     const onSubmitHandler = async (values: ICreatePost) => {
-        
+
         let content = (editorRef.current as IGetTiny)
-        .contentDocument.body.innerHTML;
-        
-        if(!activeGroup && activeGroup.length <= 0) {
+            .contentDocument.body.innerHTML;
+
+        if (!activeGroup && activeGroup.length <= 0) {
             setErrorGroup("Оберіть групу!");
         }
 
 
-        if(activeGroup) {
-            let id : number = (await axiosService.getGroupsByName({
+        if (activeGroup) {
+            let id: number = (await axiosService.getGroupsByName({
                 name: activeGroup
             })).data;
 
@@ -69,13 +104,13 @@ const CreatePost: React.FC = () => {
 
     const success = (text: string) => {
         Modal.success({
-          content: text,
-          okText: "Добре",
-          onOk: () => {
-            navigate("/profile");
-          }
+            content: text,
+            okText: "Добре",
+            onOk: () => {
+                navigate("/profile");
+            }
         });
-      };
+    };
 
     const formik = useFormik({
         initialValues: initialState,
@@ -99,7 +134,7 @@ const CreatePost: React.FC = () => {
                                     <Field label="Назва для поста" name="title"
                                         id="title" onChange={handleChange}
                                         touched={touched.title} error={errors.title} />
-                                    
+
                                 </div>
                                 <div className="text-field">
 
@@ -133,7 +168,8 @@ const CreatePost: React.FC = () => {
                                     </p>}
                                 </div>
                                 <div className="upload-image">
-                                    <SelectImage images={images} setImages={setImages} />
+                                    <SelectImage images={images}
+                                        setImages={setImages} />
                                 </div>
 
 

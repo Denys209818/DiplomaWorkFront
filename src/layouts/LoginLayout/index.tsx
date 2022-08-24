@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useActions } from "../../actions/auth/UseActions";
+import axiosService from "../../axios/axiosService";
+import { typedSelector } from "../../redux/services/useTypedSelector";
 
 
 const LoginLayout: React.FC = () => {
@@ -16,6 +18,9 @@ const LoginLayout: React.FC = () => {
         setState(true);
         navigate("/profile");
     }
+
+
+
     useEffect(() => {
         let token = localStorage.getItem("token");
         if (token) {
@@ -33,6 +38,8 @@ const LoginLayout: React.FC = () => {
                 console.log(ex);
             }
         }
+
+        
     }, []);
     return (<>
         {state ? <Outlet /> : <></>}
