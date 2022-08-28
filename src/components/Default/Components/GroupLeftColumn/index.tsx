@@ -17,7 +17,9 @@ const GroupLeftColumn: React.FC<IGroupLeftColumn> = ({group_image, title, image,
         <Row>
             <Col span={6}>
                 <div className="image-group">
-                    <Avatar size={56} icon={<UserOutlined />} />
+                    {group_image && group_image.length > 0 ? <Avatar size={56} src={group_image} /> :
+                    <Avatar size={56} icon={<UserOutlined/>} />}
+                    
                 </div>
             </Col>
             <Col span={18}>

@@ -1,6 +1,7 @@
 
 export enum GROUP_TYPES {
-    SET_GROUPS="SET_GROUPS"
+    SET_GROUPS="SET_GROUPS",
+    ADD_GROUP="ADD_GROUP"
 }
 
 export interface IGroupShort {
@@ -13,9 +14,27 @@ export interface SetGroupsShort {
     payload: Array<IGroupShort>
 }
 
-export type GroupActions = SetGroupsShort;
 
+export interface AddGroupItem {
+    type: GROUP_TYPES.ADD_GROUP,
+    payload: ReturnedGroupData
+}
 
+export type GroupActions = SetGroupsShort | AddGroupItem;
+
+export interface IPublication {
+    title: string,
+    description: string,
+    images: Array<string>
+}
+
+export interface IGroupData {
+    id: number,
+    title: string,
+    meta: string,
+    descrption: string,
+    image: string
+}
 
 // Custom
 
@@ -25,4 +44,13 @@ export interface RequestGroupById {
 
 export interface RequestGroupByName {
     name: string
+}
+
+export interface ReturnedGroupData {
+    id: number,
+    title: string,
+    meta: string,
+    description: string,
+    image: string,
+    tags: string
 }

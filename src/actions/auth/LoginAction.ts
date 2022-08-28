@@ -36,6 +36,11 @@ export const LoginAction = (data: ILoginModel) => async (dispatch: Dispatch<any>
 export const AuthUserWithToken = (token: string) => async (dispatch: Dispatch<any>) => {
     var user: IUser =getUser(token);
 
+    await dispatch({
+        type: IUserTypes.LOGIN_USER,
+        payload: user
+    });
+
     await dispatch(SetGroups({ 
         id: user.id
     }));
