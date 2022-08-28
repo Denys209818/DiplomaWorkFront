@@ -1,17 +1,26 @@
 import { Col, Row } from 'antd';
 import Search from 'antd/lib/input/Search';
+import { useEffect, useState } from 'react';
+import axiosService from '../../../../axios/axiosService';
+import { defaultImage } from '../../../../constants/defaultConsts';
+import { typedSelector } from '../../../../redux/services/useTypedSelector';
 import GroupLeftColumn from '../../Components/GroupLeftColumn';
+import { IGroup } from '../types/groupTypes';
 import "./componentStyles/leftColumn.css";
 
 interface ILeftColumn {
-    onClickLeft: () => void
+    onClickLeft: (id: number) => void,
+    groups: Array<IGroup>,
+
 }
 
-const LeftColumn : React.FC<ILeftColumn> = ({onClickLeft}) => {
+const LeftColumn : React.FC<ILeftColumn> = ({onClickLeft, groups}) => {
 
     const onSearch = (value: string) => {
         console.log(value);
-    }
+    } 
+    
+    
 
     return (<div className="left-row">
     <div className="search">
@@ -21,46 +30,15 @@ const LeftColumn : React.FC<ILeftColumn> = ({onClickLeft}) => {
 
     <div className="groups-wrapper">
         <Row>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 1" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 2" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 3" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 3" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 3" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 3" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 3" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 3" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 3" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
-            <Col span={24} onClick={onClickLeft}>
-                <GroupLeftColumn title="Група номер 3" description='It is a long established fact that a reader'
-                    image="https://joeschmoe.io/api/v1/random" group_image='' />
-            </Col>
+            {groups && groups.map((element, index) => {
+                return (<Col key={"groupsitem" + index} id={element.id.toString()} span={24} onClick={() => {
+                    onClickLeft(element.id);
+                }}>
+                    <GroupLeftColumn  title={element.title} description={element.description}
+                        image={defaultImage + "Group/" + element.image} group_image={defaultImage +"Group/" + element.image} />
+                </Col>);
+            })}
+            
         </Row>
     </div>
 

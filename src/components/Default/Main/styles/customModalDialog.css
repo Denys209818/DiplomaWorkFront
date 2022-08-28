@@ -52,9 +52,9 @@
   
   .modalContainer .body {
     flex: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* display: flex; */
+    /* justify-content: center;
+    align-items: center; */
     height: 500px;
     margin-top: 20px;
     overflow-y: scroll;
@@ -108,4 +108,9 @@
 {
     background-image: linear-gradient(#04e69b, #16ead0);
     border-radius: 10px;
+}
+
+
+.demo-loadmore-list {
+  min-height: 350px;
 }

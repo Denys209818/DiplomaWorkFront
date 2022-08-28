@@ -14,13 +14,14 @@ import axiosService from '../../../axios/axiosService';
 import { useNavigate } from 'react-router-dom';
 import { useBeforeunload } from 'react-beforeunload';
 import { useProfileAction } from '../../../actions/profile/useProfileActions';
+import { IGroup } from '../../Default/Groups/types/groupTypes';
 
 
 const CreatePost: React.FC = () => {
 
-    const user = typedSelector(user => user.user);
-    const groups = typedSelector(groups => groups.groups);
-    const imgs = typedSelector(imgs => imgs.images);
+    const user = typedSelector(groups => groups.user);
+
+    const [groups, setGroups] = useState<Array<IGroup>>([]);
 
     const handleGroup = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target);
@@ -41,17 +42,6 @@ const CreatePost: React.FC = () => {
     };
     const navigate = useNavigate();
 
-
-    // const trashImages = () => {
-
-    //     imgs && imgs.length > 0
-    //         && imgs.forEach(async (val) => {
-    //             (await axiosService.delPostImage({
-    //                 image: val
-    //             }))
-    //         });
-    // }
-
     const {ClearImageAction} = useProfileAction();
 
     const ClearImages = async () => {
@@ -59,7 +49,15 @@ const CreatePost: React.FC = () => {
     }
 
     useEffect(() => {
-        
+
+        axiosService.getAllUserGroups(user.id)
+        .then(res => {
+            let data = res.data;
+            setGroups(data);
+        }).catch(error => {
+            console.log(error);
+        });
+
         return () => {
             ClearImages();
         };

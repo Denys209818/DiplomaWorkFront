@@ -8,16 +8,21 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ModalSpring from './CustomComponents/ModalSpring';
 import EditModal from './CustomComponents/EditModal';
+import { typedSelector } from '../../../redux/services/useTypedSelector';
+import { IGroup } from './types/groupTypes';
+import axiosService from '../../../axios/axiosService';
+import { IPublication } from '../../../redux/reducers/types/groupsTypes';
 
 
 const Groups: React.FC = () => {
-
-
     const [isPhone, setPhone] = useState(false);
     const [visibleRight, setVisibleRight] = useState(false);
     const [visibleLeft, setVisibleLeft] = useState(true);
     const [width, setWidth] = useState(window.innerWidth);
+    const user = typedSelector(user => user.user);
+    // const [groups, setGroups] = useState<Array<IGroup>>([]);
 
+    const groups = typedSelector(groups => groups.groups);
 
     useEffect(() => {
         window.addEventListener("resize", () => {
@@ -25,6 +30,19 @@ const Groups: React.FC = () => {
                 setWidth(window.innerWidth);
             });
         });
+
+        // let id = user.id as number;
+
+        // axiosService.getGroups({
+        //     id: id
+        // }).then(res => {
+        //     let data = res.data;
+        //     setGroups([...data]);
+        // })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
+
     }, []);
 
 
@@ -52,8 +70,30 @@ const Groups: React.FC = () => {
         }
     });
 
-    const openLeftRightComponent = () => {
+    const openLeftRightComponent = (id?: number) => {
         startTransition(() => {
+
+
+            if(id) {
+                axiosService.getAllPublicationsByGroupId(id)
+                .then(res => {
+                    let data = res.data;
+                    setPublications(data);
+                    
+                });
+
+                axiosService.getGroupDataById(id).then(res => {
+                    let data = res.data;
+
+                    setActiveGroup({
+                        title: data.title,
+                        description: data.descrption,
+                        image: data.image,
+                        id: id
+                    });
+                });
+                
+            }
 
             setVisibleLeft(!visibleLeft);
             setPhone(!isPhone);
@@ -70,7 +110,7 @@ const Groups: React.FC = () => {
     const handleClose = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(null);
 
-        
+
 
         var id = (e.target as HTMLElement).closest("li")?.getAttribute(
             "id"
@@ -106,7 +146,9 @@ const Groups: React.FC = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [isDeleted, setDeleted] = useState(false);
-    const [currentGroupId, setCurrentGroupId] = useState(0);
+
+    const [publications, setPublications] = useState<Array<IPublication>|null>(null);
+    const [activeGroup, setActiveGroup] = useState<IGroup|null>(null);
 
     const onDeleteGroup = () => {
         console.log("delete");
@@ -124,16 +166,16 @@ const Groups: React.FC = () => {
     const handleOk = (e: React.MouseEvent<HTMLElement>) => {
         console.log(e);
         setDraggable(false);
-      };
-    
-      const handleCancel = (e: React.MouseEvent<HTMLElement>) => {
+    };
+
+    const handleCancel = (e: React.MouseEvent<HTMLElement>) => {
         console.log(e);
         setDraggable(false);
-      };
+    };
 
     return (<>
         <ModalSpring open={modalOpen} title={modalTitle}
-            setOpen={setModalOpen} 
+            setOpen={setModalOpen}
             yesFunc={isDeleted ? onDeleteGroup : onExitGroup} />
 
         <EditModal
@@ -149,10 +191,10 @@ const Groups: React.FC = () => {
                     {width <= 768 ? transitionLeft((style, item) => {
                         return (item ? <animated.div style={style}>
 
-                            <LeftColumn onClickLeft={openLeftRightComponent} />
+                            <LeftColumn groups={groups} onClickLeft={openLeftRightComponent} />
 
                         </animated.div> : "");
-                    }) : <LeftColumn onClickLeft={openLeftRightComponent} />}
+                    }) : <LeftColumn groups={groups} onClickLeft={openLeftRightComponent} />}
                 </Col>
                 <Col lg={12} xl={18} md={12} xs={isPhone ? 24 : 0} className="right-column">
 
@@ -161,13 +203,19 @@ const Groups: React.FC = () => {
                             <animated.div style={style}>
                                 <RightColumn
                                     handleAvatarClick={handleClick}
-                                    onClickRight={openLeftRightComponent} />
+                                    publications={publications}
+                                    onClickRight={openLeftRightComponent} 
+                                    group={activeGroup}
+                                    />
 
 
                             </animated.div> : "")
                     }) : <RightColumn
                         handleAvatarClick={handleClick}
-                        onClickRight={openLeftRightComponent} />}
+                        onClickRight={openLeftRightComponent}
+                        publications={publications}
+                        group={activeGroup}
+                    />}
                 </Col>
             </Row>
         </div>

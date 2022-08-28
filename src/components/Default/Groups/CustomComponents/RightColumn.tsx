@@ -6,70 +6,99 @@ import "./componentStyles/rightColumn.css";
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import classNames from "classnames";
+import { IPublication } from "../../../../redux/reducers/types/groupsTypes";
+import { defaultImage } from "../../../../constants/defaultConsts";
+import { IGroup } from "../types/groupTypes";
 
 
 interface IRightColumn {
-    onClickRight: () => void,
+    onClickRight: (id?: number) => void,
     handleAvatarClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
+    publications: Array<IPublication> | null,
+    group: IGroup | null
 }
 
-const RightColumn: React.FC<IRightColumn> = ({onClickRight, handleAvatarClick }) => {
+const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, publications, group }) => {
     return (<>
         <div className="navbar-of-group">
-            <Row>
-                <Col md={0} lg={0} xs={{ span: 2 }}>
-                    <div className="icon-div">
-                        <KeyboardDoubleArrowLeftIcon onClick={onClickRight} />
-                    </div>
-                </Col>
-                <Col md={4} xs={4} xl={2}>
-                    <b onClick={handleAvatarClick}>
+            {group != null &&
+                <Row>
+                    <Col md={0} lg={0} xs={{ span: 2 }}>
+                        <div className="icon-div">
+                            <KeyboardDoubleArrowLeftIcon onClick={() => onClickRight()} />
+                        </div>
+                    </Col>
+                    <Col md={4} xs={4} xl={2}>
+                        <b onClick={handleAvatarClick}>
+                            {group.image && group.image.length > 0 ? <Avatar size="large"
+                                  src={defaultImage + "Group/" + group.image}/> :
+                                  <Avatar size="large"
+                                  icon={<UserOutlined/>}/>}
+                            
+                        </b>
+                    </Col>
+                    <Col md={20} xs={18} xl={22}>
+                        <div className="title-group">
+                            <span>
+                                <p>
+                                    <span className='title-of-group'>
+                                        {group.title}</span><br />
+                                        
+                                    <span className='subscribers'>{group.description}</span></p>
 
-                        <Avatar size="large"
-                            icon={<UserOutlined />} />
-                    </b>
-                </Col>
-                <Col md={20} xs={18} xl={22}>
+                            </span>
+                        </div>
+                    </Col>
+                </Row>
+            }
+            {group == null && <Row>
+                <Col span={24}>
                     <div className="title-group">
                         <span>
-                            <p>
-                                <span className='title-of-group'>
-                                    Група номер 1</span><br />
-                                <span className='subscribers'>500 Підписників</span></p>
+                            <p style={{
+                                marginLeft:'2em',
+                                marginTop:'15px',
+                                fontSize: '18px'
+                            }}>
+                               
+
+                              <b>Оберіть групу...</b>  
+                                
+                              </p>
 
                         </span>
                     </div>
                 </Col>
-            </Row>
+            </Row>}
         </div>
-
         <div className="content-group-body">
-            <Row>
-                <Col lg={{ span: 12, offset: 6 }} xs={{ span: 18, offset: 3 }}>
-                    <CardGroup title='Пост 1'
-                        description='Lizards are a widespread group of squamate reptiles, with over 6,000 species, 
+            {publications != null &&
+                <Row>
+                    {(publications as Array<IPublication>).map((element, index) => {
+                        return (<Col key={"publicationItem" + index.toString()}
+                            lg={{ span: 12, offset: 6 }} xs={{ span: 18, offset: 3 }}>
+                            <CardGroup title={element.title}
+                                description={element.description}
+                                images={element.images.map((element) => {
+                                    return defaultImage + element;
+                                })} />
+                        </Col>);
+                    })}
+
+                    {/* <Col lg={{ span: 12, offset: 6 }} xs={{ span: 18, offset: 3 }}>
+                        <CardGroup title='Пост 2'
+                            description='Lizards are a widespread group of squamate reptiles, with over 6,000 species, 
                                 ranging across all continents except Antarctica'
-                        images={[
-                            'https://mui.com/static/images/cards/contemplative-reptile.jpg',
-                            'https://learnenglish.britishcouncil.org/sites/podcasts/files/online-level-test.jpeg',
-                            'https://learnenglish.britishcouncil.org/sites/podcasts/files/2021-09/GettyImages-1072206958_2.jpg',
-                            'https://www.testim.io/wp-content/uploads/2019/11/What-Is-Test-Automation.jpg',
-                            'https://iq-global-test.com/upload/media/default/0011/01/5934817f827d37cbc08df9a4535eeb16a8419f1f.jpeg'
-                        ]} />
-                </Col>
-                <Col lg={{ span: 12, offset: 6 }} xs={{ span: 18, offset: 3 }}>
-                    <CardGroup title='Пост 2'
-                        description='Lizards are a widespread group of squamate reptiles, with over 6,000 species, 
-                                ranging across all continents except Antarctica'
-                        images={[
-                            'https://images.pexels.com/photos/11291271/pexels-photo-11291271.jpeg',
-                            'https://images.pexels.com/photos/6143369/pexels-photo-6143369.jpeg',
-                            'https://images.pexels.com/photos/11291117/pexels-photo-11291117.jpeg',
-                            'https://images.pexels.com/photos/338023/pexels-photo-338023.jpeg',
-                            'https://images.pexels.com/photos/11291157/pexels-photo-11291157.jpeg'
-                        ]} />
-                </Col>
-            </Row>
+                            images={[
+                                'https://images.pexels.com/photos/11291271/pexels-photo-11291271.jpeg',
+                                'https://images.pexels.com/photos/6143369/pexels-photo-6143369.jpeg',
+                                'https://images.pexels.com/photos/11291117/pexels-photo-11291117.jpeg',
+                                'https://images.pexels.com/photos/338023/pexels-photo-338023.jpeg',
+                                'https://images.pexels.com/photos/11291157/pexels-photo-11291157.jpeg'
+                            ]} />
+                    </Col> */}
+                </Row>
+            }
         </div>
     </>);
 }
