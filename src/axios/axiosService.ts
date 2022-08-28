@@ -8,6 +8,8 @@ import { IEditImage, IUserEdit, IUserFull } from "../components/Profile/Edit/typ
 
 import { IGroupData, IPublication, RequestGroupById, RequestGroupByName, ReturnedGroupData } from "../redux/reducers/types/groupsTypes";
 
+import { RequestGroupById, RequestGroupByName } from "../redux/reducers/types/groupsTypes";
+
 import createAxios from "./createAxios";
 
 
