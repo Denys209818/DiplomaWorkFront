@@ -1,5 +1,5 @@
 
-import { ILoginModel, ReturnedData } from "../actions/types/AuthTypes";
+import { IRegisterModel, ILoginModel, ReturnedData } from "../actions/types/AuthTypes";
 import { IDelImageRequest, ISendImage } from "../components/Profile/Components/SelectImage/types/SelectTypes";
 import { IGroupCreate, IGroupForm } from "../components/Profile/CreateGroup/types";
 import { IAddPublication } from "../components/Profile/CreatePost/types";
@@ -16,8 +16,8 @@ class AxiosService {
         return createAxios.post<ReturnedData>("/api/account/login", data);
     }
 
-    register = () => {
-        return createAxios.post("/api/account/register");
+    register = (data: IRegisterModel) => {
+        return createAxios.post<ReturnedData>("/api/account/register", data);
     }
 
     editUser = (user: IUserFull) => {
