@@ -1,19 +1,24 @@
 import { Col, Row, Modal } from "antd";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ImageData } from '../../CreatePost/types';
 import './styles/style.css';
 import Cropper from "cropperjs";
 import axiosService from "../../../../axios/axiosService";
 import { IGetImageName } from "./types/SelectTypes";
 import { useProfileAction } from "../../../../actions/profile/useProfileActions";
+import { defaultImage } from "../../../../constants/defaultConsts";
+import { IEditDynamicImage } from "../../../Default/Groups/CustomComponents/types/EditPostModalTypes";
+import { AxiosResponse } from "axios";
 
 interface ISelectManyImages {
     images?: Array<string>,
-    setImages?: React.Dispatch<React.SetStateAction<string[]>>
+    setImages?: React.Dispatch<React.SetStateAction<string[]>>,
+    editImage?: (image: IEditDynamicImage) => Promise<AxiosResponse<any, any>>,
+    postId?: Number
 }
 
-const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
+const SelectImage: React.FC<ISelectManyImages> = ({images, setImages, editImage, postId}) => {
 
     const [fileListBlob, setFileListBlob] = useState<Array<ImageData>>([]);
     const [cropperObj, setCropperObj] = useState<Cropper>();
@@ -21,6 +26,23 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
     const imageRef = useRef<HTMLImageElement>(null);
     const imagePreview = useRef<HTMLImageElement>(null);
     const [disabledBtn, setDisabled] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        if(images && images.length > 0) {
+            let blobs = images.map((element) => {
+                let item: ImageData = {
+                    uid: 'id' + (new Date()).getTime() + element,
+                    base64: defaultImage + "Post/" + element,
+                    name: element
+                };
+
+                return item;
+            });
+
+            setFileListBlob([...blobs]);
+        }
+    },[]);
 
     const {AddImageAction, DelImageAction} = useProfileAction();
 
@@ -75,7 +97,10 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
             let res: IGetImageName = (await axiosService.addPostImage({
                 image: base64.split(",")[1]
             })).data;
-            await AddImageAction(res.filename);
+            if(editImage == undefined && postId == undefined) {
+                
+                await AddImageAction(res.filename);
+            }
             if(setImages && images) {
                 
                 await setImages([...images, res.filename]);
@@ -90,7 +115,13 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages}) => {
 
             (document.getElementById("images") as HTMLInputElement).value = ""; 
             
-            
+            if(editImage && postId) {
+                console.log("add");
+                const editRes = await editImage({
+                    image: res.filename,
+                    postId: postId
+                });
+            }
         }
     }
 

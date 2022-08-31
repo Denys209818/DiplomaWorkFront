@@ -1,7 +1,8 @@
 import { Button, Input, Modal } from 'antd';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { DraggableData, DraggableEvent } from 'react-draggable';
 import Draggable from 'react-draggable';
+import { useProfileAction } from '../../../../actions/profile/useProfileActions';
 import SelectOneImage from '../../../Profile/Components/SelectOneImage';
 
 interface IEditModal {
@@ -16,6 +17,7 @@ const EditModal: React.FC<IEditModal> = ({showModal, handleOk, handleCancel, vis
     const [disabled, setDisabled] = useState(false);
     const [bounds, setBounds] = useState({ left: 0, top: 0, bottom: 0, right: 0 });
     const draggleRef = useRef<HTMLDivElement>(null);
+   
 
     const onStart = (_event: DraggableEvent, uiData: DraggableData) => {
         const { clientWidth, clientHeight } = window.document.documentElement;

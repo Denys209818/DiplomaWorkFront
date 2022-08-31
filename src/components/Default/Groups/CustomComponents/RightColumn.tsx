@@ -15,10 +15,11 @@ interface IRightColumn {
     onClickRight: (id?: number) => void,
     handleAvatarClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
     publications: Array<IPublication> | null,
-    group: IGroup | null
+    group: IGroup | null,
+    setPublications?: React.Dispatch<React.SetStateAction<IPublication[] | null>>
 }
 
-const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, publications, group }) => {
+const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, publications, group, setPublications }) => {
     return (<>
         <div className="navbar-of-group">
             {group != null &&
@@ -77,10 +78,12 @@ const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, 
                     {(publications as Array<IPublication>).map((element, index) => {
                         return (<Col key={"publicationItem" + index.toString()}
                             lg={{ span: 12, offset: 6 }} xs={{ span: 18, offset: 3 }}>
-                            <CardGroup title={element.title}
+                            <CardGroup setPublications={setPublications}
+                            publications={publications}
+                            title={element.title} id={element.id}
                                 description={element.description}
                                 images={element.images.map((element) => {
-                                    return defaultImage + element;
+                                    return element;
                                 })} />
                         </Col>);
                     })}

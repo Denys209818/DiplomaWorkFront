@@ -23,6 +23,7 @@ export interface AddGroupItem {
 export type GroupActions = SetGroupsShort | AddGroupItem;
 
 export interface IPublication {
+    id:number,
     title: string,
     description: string,
     images: Array<string>

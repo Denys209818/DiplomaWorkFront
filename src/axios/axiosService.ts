@@ -1,5 +1,6 @@
 
 import { ILoginModel, ReturnedData } from "../actions/types/AuthTypes";
+import { IEditDynamicImage, IEditPost, IEditPostModal, IPostDataReturned } from "../components/Default/Groups/CustomComponents/types/EditPostModalTypes";
 import { IGroup } from "../components/Default/Groups/types/groupTypes";
 import { IDelImageRequest, ISendImage } from "../components/Profile/Components/SelectImage/types/SelectTypes";
 import { IGroupCreate, IGroupForm } from "../components/Profile/CreateGroup/types";
@@ -77,6 +78,24 @@ class AxiosService {
         return createAxios.post("/api/group/subscribe", {
           groupId: groupId,
           userId: userId  
+        });
+    }
+
+    getPostDataById = (id: Number) => {
+        return createAxios.post<IPostDataReturned>("/api/publication/getpostdatabyid", id);
+    }
+
+    editPost = (edit: IEditPostModal) => {
+        return createAxios.post("/api/publication/edit", edit);
+    }
+
+    editDynamicImage = (image: IEditDynamicImage) => {
+        return createAxios.post("/api/publication/imagedynamicupdate", image);
+    }
+
+    deletePublication = (id: Number) => {
+        return createAxios.post("/api/publication/delete",{
+            postId: id
         });
     }
 }

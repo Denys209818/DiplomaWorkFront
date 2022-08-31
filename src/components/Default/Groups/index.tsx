@@ -204,6 +204,7 @@ const Groups: React.FC = () => {
                                 <RightColumn
                                     handleAvatarClick={handleClick}
                                     publications={publications}
+                                    setPublications={setPublications}
                                     onClickRight={openLeftRightComponent} 
                                     group={activeGroup}
                                     />
@@ -213,6 +214,7 @@ const Groups: React.FC = () => {
                     }) : <RightColumn
                         handleAvatarClick={handleClick}
                         onClickRight={openLeftRightComponent}
+                        setPublications={setPublications}
                         publications={publications}
                         group={activeGroup}
                     />}
