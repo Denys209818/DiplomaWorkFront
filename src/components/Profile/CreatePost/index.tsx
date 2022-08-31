@@ -19,9 +19,12 @@ import { IGroup } from '../../Default/Groups/types/groupTypes';
 
 const CreatePost: React.FC = () => {
 
+
     const user = typedSelector(groups => groups.user);
 
     const [groups, setGroups] = useState<Array<IGroup>>([]);
+    const user = typedSelector(user => user.user);
+    const imgs = typedSelector(imgs => imgs.images);
 
     const handleGroup = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target);
@@ -43,6 +46,17 @@ const CreatePost: React.FC = () => {
     const navigate = useNavigate();
 
     const {ClearImageAction, DelImageAction} = useProfileAction();
+
+
+    // const trashImages = () => {
+
+    //     imgs && imgs.length > 0
+    //         && imgs.forEach(async (val) => {
+    //             (await axiosService.delPostImage({
+    //                 image: val
+    //             }))
+    //         });
+    // }
 
     const ClearImages = async () => {
         await ClearImageAction();
