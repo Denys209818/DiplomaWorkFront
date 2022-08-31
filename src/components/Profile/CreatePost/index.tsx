@@ -23,7 +23,6 @@ const CreatePost: React.FC = () => {
     const user = typedSelector(groups => groups.user);
 
     const [groups, setGroups] = useState<Array<IGroup>>([]);
-    const user = typedSelector(user => user.user);
     const imgs = typedSelector(imgs => imgs.images);
 
     const handleGroup = (e: React.ChangeEvent<HTMLInputElement>) => {

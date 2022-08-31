@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useActions } from "../../actions/auth/UseActions";
-import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
 import axiosService from "../../axios/axiosService";
 import MainFooter from "../../components/Default/Main/MainFooter";
 import { typedSelector } from "../../redux/services/useTypedSelector";
@@ -52,24 +50,13 @@ const DefaultLayout: React.FC = () =>
 
     return (<>
         {state ? <>
-    // const images = typedSelector(images => images.images);
-
-    // useEffect(() => {
-    //     images && images.length > 0 && images.forEach(async (val) => {
-    //         (await axiosService.delPostImage({
-    //             image: val
-    //         }))
-    //     });
-    // }, []);
-
-    return (
-        <>
+    
             <Navbar/>
             <Outlet/>
             
             <MainFooter/>
         </> : <></>}
-     </>   
+     </>  
     );
 }
 
