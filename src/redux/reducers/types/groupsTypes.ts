@@ -1,12 +1,25 @@
 
 export enum GROUP_TYPES {
     SET_GROUPS="SET_GROUPS",
-    ADD_GROUP="ADD_GROUP"
+    ADD_GROUP="ADD_GROUP",
+    EDIT_GROUP="EDIT_GROUP",
+    DELETE_GROUP="DELETE_GROUP",
+    DELETE_USERGROUP="DELETE_USERGROUP"
 }
 
 export interface IGroupShort {
     id: number,
-    title: string
+    title: string,
+    meta: string,
+    description:string,
+    userId: number,
+    image: string, 
+    tags: string
+}
+
+export interface EditGroup {
+    type: GROUP_TYPES.EDIT_GROUP,
+    payload: IGroupShort
 }
 
 export interface SetGroupsShort {
@@ -14,13 +27,22 @@ export interface SetGroupsShort {
     payload: Array<IGroupShort>
 }
 
+export interface DeleteGroup {
+    type: GROUP_TYPES.DELETE_GROUP,
+    payload: Number
+}
+
+// export interface DeleteUserGroupAction {
+//     type: GROUP_TYPES.DELETE_USERGROUP,
+//     payload: IDelUserGroup
+// }
 
 export interface AddGroupItem {
     type: GROUP_TYPES.ADD_GROUP,
     payload: ReturnedGroupData
 }
 
-export type GroupActions = SetGroupsShort | AddGroupItem;
+export type GroupActions = SetGroupsShort | AddGroupItem |EditGroup | DeleteGroup;
 
 export interface IPublication {
     id:number,
@@ -34,7 +56,9 @@ export interface IGroupData {
     title: string,
     meta: string,
     descrption: string,
-    image: string
+    image: string,
+    userId: number,
+    tags: string
 }
 
 // Custom
@@ -54,4 +78,9 @@ export interface ReturnedGroupData {
     description: string,
     image: string,
     tags: string
+}
+
+export interface IDelUserGroup {
+    userId: number,
+    groupId: number
 }

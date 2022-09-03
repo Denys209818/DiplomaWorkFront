@@ -11,14 +11,11 @@ import "./componentStyles/leftColumn.css";
 interface ILeftColumn {
     onClickLeft: (id: number) => void,
     groups: Array<IGroup>,
+    onSearch:(value: string) => void
 
 }
 
-const LeftColumn : React.FC<ILeftColumn> = ({onClickLeft, groups}) => {
-
-    const onSearch = (value: string) => {
-        console.log(value);
-    } 
+const LeftColumn : React.FC<ILeftColumn> = ({onClickLeft, groups, onSearch}) => {
     
     
 

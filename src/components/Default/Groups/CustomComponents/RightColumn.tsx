@@ -16,10 +16,13 @@ interface IRightColumn {
     handleAvatarClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
     publications: Array<IPublication> | null,
     group: IGroup | null,
-    setPublications?: React.Dispatch<React.SetStateAction<IPublication[] | null>>
+    setPublications?: React.Dispatch<React.SetStateAction<IPublication[] | null>>,
 }
 
 const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, publications, group, setPublications }) => {
+
+
+
     return (<>
         <div className="navbar-of-group">
             {group != null &&
@@ -32,7 +35,9 @@ const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, 
                     <Col md={4} xs={4} xl={2}>
                         <b onClick={handleAvatarClick}>
                             {group.image && group.image.length > 0 ? <Avatar size="large"
-                                  src={defaultImage + "Group/" + group.image}/> :
+                                  src={group ?
+                                    group.image.length > 30 ? group.image : defaultImage + "Group/" + group.image
+                                : defaultImage + "Group/default.jpg"}/> :
                                   <Avatar size="large"
                                   icon={<UserOutlined/>}/>}
                             

@@ -57,7 +57,10 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages, editImage,
             var cropper = cropperObj ? cropperObj : new Cropper(imageRef.current as HTMLImageElement, {
                 aspectRatio: 16 / 9,
                 preview: imagePreview.current as HTMLImageElement,
-                viewMode: 1
+                viewMode: 1,
+                // zoomOnWheel: false,
+                // zoomOnTouch: false,
+                // zoomable: false
             });
 
             cropper?.replace(blob);
@@ -116,7 +119,6 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages, editImage,
             (document.getElementById("images") as HTMLInputElement).value = ""; 
             
             if(editImage && postId) {
-                console.log("add");
                 const editRes = await editImage({
                     image: res.filename,
                     postId: postId

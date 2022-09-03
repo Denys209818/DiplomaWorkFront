@@ -6,8 +6,6 @@ import { IGroupCreate, IGroupErrors, IGroupForm } from "../../components/Profile
 import { IEditImage, IUserFull } from "../../components/Profile/Edit/types/UserTypes";
 import { GROUP_TYPES, IGroupShort, RequestGroupById, SetGroupsShort } from "../../redux/reducers/types/groupsTypes";
 
-
-import { useActions } from "../auth/UseActions";
 import { ErrorProfileServer } from "./types/profileError";
 
 
@@ -63,7 +61,7 @@ export const CreateGroup = (data: IGroupCreate) => async (dispatch: Dispatch<any
 
 export const SetGroups = (id: RequestGroupById ) => async (dispatch: Dispatch<SetGroupsShort>) => {
     let res: Array<IGroupShort> = (await axiosService.getGroups(id)).data;
-    
+    console.log(res);
     dispatch({
         type: GROUP_TYPES.SET_GROUPS,
         payload: res
