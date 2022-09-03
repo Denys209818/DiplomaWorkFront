@@ -1,25 +1,51 @@
 import { Button, Col, Input, Modal, Row } from 'antd';
-import React, { useRef, useState } from 'react';
+import { Form, FormikErrors, FormikProvider, FormikTouched, useFormik } from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
 import type { DraggableData, DraggableEvent } from 'react-draggable';
 import Draggable from 'react-draggable';
+import { useProfileAction } from '../../../../actions/profile/useProfileActions';
+import Field from '../../../Profile/Components/Fields/Field';
 import SelectImage from '../../../Profile/Components/SelectImage/SelectImage';
-const { TextArea } = Input;
-
-const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log('Change:', e.target.value);
-  };
+import { IEditPost, IPostDataReturned } from './types/EditPostModalTypes';
+import "./componentStyles/editPostModal.css";
+import EditorTiny from '../../../Profile/Components/EditorTiny';
+import axiosService from '../../../../axios/axiosService';
 
 interface IEditPostModal {
     handleOk: (e: React.MouseEvent<HTMLElement>) => void,
     handleCancel: (e: React.MouseEvent<HTMLElement>) => void,
-    visible: boolean
+    visible: boolean,
+    images: Array<string>,
+    setImages: React.Dispatch<React.SetStateAction<string[]>>,
+    formik: any,
+    touched: FormikTouched<IEditPost>,
+    errors: FormikErrors<IEditPost>,
+    handleChange: any,
+    editorRef: React.MutableRefObject<any>,
+    groupData: IPostDataReturned|null
 }
 
-const EditPostModal: React.FC<IEditPostModal> = ({handleCancel, handleOk, visible}) => {
+const EditPostModal: React.FC<IEditPostModal> = ({handleCancel, handleOk, 
+    visible, images, setImages, formik, errors, touched, handleChange, editorRef, groupData}) => {
 
     const [disabled, setDisabled] = useState(false);
     const [bounds, setBounds] = useState({ left: 0, top: 0, bottom: 0, right: 0 });
     const draggleRef = useRef<HTMLDivElement>(null);
+
+
+    const {ClearImageAction} = useProfileAction();
+
+    const ClearImages = async () => {
+        await ClearImageAction();
+    }
+
+    useEffect(() => {
+        
+        return () => {
+            ClearImages();
+        };
+    }, []);
+
 
     const onStart = (_event: DraggableEvent, uiData: DraggableData) => {
         const { clientWidth, clientHeight } = window.document.documentElement;
@@ -37,7 +63,7 @@ const EditPostModal: React.FC<IEditPostModal> = ({handleCancel, handleOk, visibl
 
     return (<>
 
-        <Modal
+        {groupData && <Modal
             okText="Зберегти зміни"
             cancelText="Скасувати"
             title={
@@ -54,11 +80,8 @@ const EditPostModal: React.FC<IEditPostModal> = ({handleCancel, handleOk, visibl
                     onMouseOut={() => {
                         setDisabled(true);
                     }}
-                    // fix eslintjsx-a11y/mouse-events-have-key-events
-                    // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/mouse-events-have-key-events.md
                     onFocus={() => { }}
                     onBlur={() => { }}
-                // end
                 >
                     Редагування публікації
                 </div>
@@ -77,16 +100,23 @@ const EditPostModal: React.FC<IEditPostModal> = ({handleCancel, handleOk, visibl
                 </Draggable>
             )}
         >
-            <Input className="inputEdit" placeholder="Заголовок" />
-            <Input className="inputEdit" placeholder="Теги" />
-            <TextArea className="inputEdit" showCount maxLength={500} style={{ height: 120 }} onChange={onChange} />
+            <FormikProvider value={formik}>
+                <Form>
+                    <Field label='Заголовок' id='title' name='title' error={errors.title}
+                        touched={touched.title} onChange={handleChange} value={groupData.title} />
+                    <Field label='Теги' id='tags' name='tags' error={errors.tags}
+                        touched={touched.tags} onChange={handleChange} value={groupData.tags} />
+                </Form>
+            </FormikProvider>
+            <EditorTiny editorRef={editorRef} initialValues={groupData.description} height={400} />
             <Row
             className="row-for-image">
                 <Col offset={6} span={12}>
                 </Col>
             </Row>
-            <SelectImage />
-        </Modal>
+            <h4>Фотографії змінюються в режимі реального часу</h4>
+            <SelectImage images={images} setImages={setImages} editImage={axiosService.editDynamicImage} postId={groupData.id} />
+        </Modal>}
     </>);
 }
 

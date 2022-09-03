@@ -4,8 +4,8 @@ import { useCookies } from "react-cookie";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useActions } from "../../actions/auth/UseActions";
 import axiosService from "../../axios/axiosService";
+
 import MainFooter from "../../components/Default/Main/MainFooter";
-import { typedSelector } from "../../redux/services/useTypedSelector";
 import Navbar from "./Navbar";
 import './styles/index.css';
 
@@ -55,6 +55,7 @@ const DefaultLayout: React.FC = () =>
             
             <MainFooter/>
         </> : <></>}
+
      </>   
     );
 }

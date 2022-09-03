@@ -44,6 +44,8 @@ const CreatePost: React.FC = () => {
     };
     const navigate = useNavigate();
 
+    const {ClearImageAction, DelImageAction} = useProfileAction();
+
 
     // const trashImages = () => {
 
@@ -54,8 +56,6 @@ const CreatePost: React.FC = () => {
     //             }))
     //         });
     // }
-
-    const {ClearImageAction} = useProfileAction();
 
     const ClearImages = async () => {
         await ClearImageAction();
@@ -103,6 +103,7 @@ const CreatePost: React.FC = () => {
                 groupId: id,
                 text: content,
                 images: images.map((element) => {
+                    DelImageAction(element);
                     return {
                         image: element
                     }

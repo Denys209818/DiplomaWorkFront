@@ -15,10 +15,13 @@ interface IRightColumn {
     onClickRight: (id?: number) => void,
     handleAvatarClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
     publications: Array<IPublication> | null,
-    group: IGroup | null
+    group: IGroup | null,
+    setPublications?: React.Dispatch<React.SetStateAction<IPublication[] | null>>,
 }
 
-const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, publications, group }) => {
+const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, publications, group, setPublications }) => {
+
+
     return (<>
         <div className="navbar-of-group">
             {group != null &&
@@ -31,7 +34,13 @@ const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, 
                     <Col md={4} xs={4} xl={2}>
                         <b onClick={handleAvatarClick}>
                             {group.image && group.image.length > 0 ? <Avatar size="large"
+
+                                  src={group ?
+                                    group.image.length > 30 ? group.image : defaultImage + "Group/" + group.image
+                                : defaultImage + "Group/default.jpg"}/> :
+
                                   src={defaultImage + "Group/" + group.image}/> :
+
                                   <Avatar size="large"
                                   icon={<UserOutlined/>}/>}
                             
@@ -77,10 +86,19 @@ const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, 
                     {(publications as Array<IPublication>).map((element, index) => {
                         return (<Col key={"publicationItem" + index.toString()}
                             lg={{ span: 12, offset: 6 }} xs={{ span: 18, offset: 3 }}>
+
+                            <CardGroup setPublications={setPublications}
+                            publications={publications}
+                            title={element.title} id={element.id}
+                                description={element.description}
+                                images={element.images.map((element) => {
+                                    return element;
+
                             <CardGroup title={element.title}
                                 description={element.description}
                                 images={element.images.map((element) => {
                                     return defaultImage + element;
+
                                 })} />
                         </Col>);
                     })}

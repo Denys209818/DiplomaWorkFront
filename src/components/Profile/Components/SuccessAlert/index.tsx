@@ -9,7 +9,7 @@ interface ISuccessAlert {
 const SuccessAlert : React.FC<ISuccessAlert> = ({alertVis, setVisibleAlert}) => {
     return (<>
          {alertVis && <Alert
-                                    message="Успішно відредаговано!"
+                                    message="Успішно створено!"
                                     type="success"
                                     closable
                                     onClose={() => {setVisibleAlert(false)}}
