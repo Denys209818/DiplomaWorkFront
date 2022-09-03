@@ -226,9 +226,15 @@ const CardGroup: React.FC<ICardGroup> = ({ images, title, description, id, setPu
 
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
+
                     {cardText.title}
                 </Typography>
                 <div dangerouslySetInnerHTML={{ __html: cardText.description }}></div>
+
+                    {title}
+                </Typography>
+                <div dangerouslySetInnerHTML={{__html: description}}></div>
+
             </CardContent>
             <CardActions>
                 {isLiked ?

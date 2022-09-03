@@ -11,12 +11,12 @@ import "./componentStyles/leftColumn.css";
 interface ILeftColumn {
     onClickLeft: (id: number) => void,
     groups: Array<IGroup>,
+
     onSearch:(value: string) => void
 
 }
 
 const LeftColumn : React.FC<ILeftColumn> = ({onClickLeft, groups, onSearch}) => {
-    
     
 
     return (<div className="left-row">

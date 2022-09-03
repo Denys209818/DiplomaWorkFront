@@ -61,7 +61,6 @@ export const CreateGroup = (data: IGroupCreate) => async (dispatch: Dispatch<any
 
 export const SetGroups = (id: RequestGroupById ) => async (dispatch: Dispatch<SetGroupsShort>) => {
     let res: Array<IGroupShort> = (await axiosService.getGroups(id)).data;
-    console.log(res);
     dispatch({
         type: GROUP_TYPES.SET_GROUPS,
         payload: res

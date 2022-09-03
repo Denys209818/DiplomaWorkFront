@@ -32,10 +32,6 @@ export interface DeleteGroup {
     payload: Number
 }
 
-// export interface DeleteUserGroupAction {
-//     type: GROUP_TYPES.DELETE_USERGROUP,
-//     payload: IDelUserGroup
-// }
 
 export interface AddGroupItem {
     type: GROUP_TYPES.ADD_GROUP,
@@ -59,6 +55,7 @@ export interface IGroupData {
     image: string,
     userId: number,
     tags: string
+    image: string
 }
 
 // Custom
@@ -78,6 +75,7 @@ export interface ReturnedGroupData {
     description: string,
     image: string,
     tags: string
+
 }
 
 export interface IDelUserGroup {

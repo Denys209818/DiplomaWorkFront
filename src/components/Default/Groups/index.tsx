@@ -9,12 +9,14 @@ import MenuItem from '@mui/material/MenuItem';
 import ModalSpring from './CustomComponents/ModalSpring';
 import EditModal from './CustomComponents/EditModal';
 import { typedSelector } from '../../../redux/services/useTypedSelector';
+
 import { IGroup, IGroupInfo } from './types/groupTypes';
 import axiosService from '../../../axios/axiosService';
 import { IGroupData, IPublication } from '../../../redux/reducers/types/groupsTypes';
 import { IPostDataReturned } from './CustomComponents/types/EditPostModalTypes';
 import { defaultImage } from '../../../constants/defaultConsts';
 import { useGroupsAction } from '../../../actions/groups/useGroupsAction';
+
 
 
 const Groups: React.FC = () => {
@@ -27,12 +29,26 @@ const Groups: React.FC = () => {
 
     const groups = typedSelector(groups => groups.groups) as Array<IGroup>;
 
+
     useEffect(() => {
         window.addEventListener("resize", () => {
             startTransition(() => {
                 setWidth(window.innerWidth);
             });
         });
+
+        // let id = user.id as number;
+
+        // axiosService.getGroups({
+        //     id: id
+        // }).then(res => {
+        //     let data = res.data;
+        //     setGroups([...data]);
+        // })
+        //     .catch(error => {
+        //         console.log(error);
+        //     });
+
 
     }, []);
 
@@ -65,6 +81,7 @@ const Groups: React.FC = () => {
         startTransition(() => {
 
 
+
             if (id) {
                 axiosService.getAllPublicationsByGroupId(id)
                     .then(res => {
@@ -76,6 +93,18 @@ const Groups: React.FC = () => {
                 axiosService.getGroupDataById(id).then(res => {
                     let data : IGroupData= res.data;
                     // console.log(data);
+
+            if(id) {
+                axiosService.getAllPublicationsByGroupId(id)
+                .then(res => {
+                    let data = res.data;
+                    setPublications(data);
+                    
+                });
+
+                axiosService.getGroupDataById(id).then(res => {
+                    let data = res.data;
+
                     setActiveGroup({
                         title: data.title,
                         description: data.descrption,
@@ -86,6 +115,7 @@ const Groups: React.FC = () => {
                         tags: data.tags
                     });
                 });
+
 
             }
 
@@ -147,10 +177,8 @@ const Groups: React.FC = () => {
     const [modalTitle, setModalTitle] = useState("");
     const [isDeleted, setDeleted] = useState(false);
 
-    const [publications, setPublications] = useState<Array<IPublication> | null>(null);
-
-
-    const [activeGroup, setActiveGroup] = useState<IGroup | null>(null);
+    const [publications, setPublications] = useState<Array<IPublication>|null>(null);
+    const [activeGroup, setActiveGroup] = useState<IGroup|null>(null);
 
     const onDeleteGroup = async () => {
         // console.log("delete");
@@ -178,6 +206,7 @@ const Groups: React.FC = () => {
             image: image
         });
     }
+
 
     const onExitGroup = async () => {
         if(activeGroup) {
@@ -223,11 +252,11 @@ const Groups: React.FC = () => {
                 <Col lg={12} xl={6} md={12} xs={!isPhone ? 24 : 0} >
                     {width <= 768 ? transitionLeft((style, item) => {
                         return (item ? <animated.div style={style}>
-
                             <LeftColumn groups={groups.filter(x => x.title.includes(searchGroup))} onSearch={onSearch} onClickLeft={openLeftRightComponent} />
 
                         </animated.div> : "");
                     }) : <LeftColumn groups={groups.filter(x => x.title.includes(searchGroup))} onSearch={onSearch} onClickLeft={openLeftRightComponent} />}
+
                 </Col>
                 <Col lg={12} xl={18} md={12} xs={isPhone ? 24 : 0} className="right-column">
 
@@ -242,6 +271,7 @@ const Groups: React.FC = () => {
                                     group={activeGroup}
                                     
                                 />
+
 
 
                             </animated.div> : "")
