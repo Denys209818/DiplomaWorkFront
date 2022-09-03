@@ -1,14 +1,16 @@
 
 import { ILoginModel, ReturnedData } from "../actions/types/AuthTypes";
-import { IGroup } from "../components/Default/Groups/types/groupTypes";
+
+import { IEditDynamicImage, IEditPost, IEditPostModal, IPostDataReturned } from "../components/Default/Groups/CustomComponents/types/EditPostModalTypes";
+import { IGroup, IGroupDelete, IGroupInfo } from "../components/Default/Groups/types/groupTypes";
+
 import { IDelImageRequest, ISendImage } from "../components/Profile/Components/SelectImage/types/SelectTypes";
 import { IGroupCreate, IGroupForm } from "../components/Profile/CreateGroup/types";
 import { IAddPublication } from "../components/Profile/CreatePost/types";
 import { IEditImage, IUserEdit, IUserFull } from "../components/Profile/Edit/types/UserTypes";
 
-import { IGroupData, IPublication, RequestGroupById, RequestGroupByName, ReturnedGroupData } from "../redux/reducers/types/groupsTypes";
+import { IDelUserGroup, IGroupData, IPublication, RequestGroupById, RequestGroupByName, ReturnedGroupData } from "../redux/reducers/types/groupsTypes";
 
-import { RequestGroupById, RequestGroupByName } from "../redux/reducers/types/groupsTypes";
 
 import createAxios from "./createAxios";
 
@@ -80,6 +82,36 @@ class AxiosService {
           groupId: groupId,
           userId: userId  
         });
+    }
+
+    getPostDataById = (id: Number) => {
+        return createAxios.post<IPostDataReturned>("/api/publication/getpostdatabyid", id);
+    }
+
+    editPost = (edit: IEditPostModal) => {
+        return createAxios.post("/api/publication/edit", edit);
+    }
+
+    editGroup = (edit: IGroupInfo) => {
+        return createAxios.post<string>("/api/group/edit", edit);
+    }
+
+    editDynamicImage = (image: IEditDynamicImage) => {
+        return createAxios.post("/api/publication/imagedynamicupdate", image);
+    }
+
+    deletePublication = (id: Number) => {
+        return createAxios.post("/api/publication/delete",{
+            postId: id
+        });
+    }
+
+    deleteGroup = (groupId: IGroupDelete) => {
+        return createAxios.post("/api/group/delete", groupId);
+    }
+
+    deleteUserGroup = (data: IDelUserGroup) => {
+        return createAxios.post("/api/group/delusergroup", data);
     }
 }
 

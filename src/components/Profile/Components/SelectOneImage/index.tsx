@@ -69,7 +69,7 @@ const SelectOneImage: React.FC<ISelectOneImage> = ({ image, setBase64 }) => {
             if (setBase64)
                 setBase64("default.jpg")
 
-                setImg(defaultImage +  "default.jpg");
+                setImg(defaultImage +"Group/" +  "default.jpg");
         }}>Видалити фотографію</p>
         <input type="file" id='selectFileAvatar' multiple={false} onChange={changeImage} />
 

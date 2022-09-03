@@ -6,10 +6,12 @@ import tinymce from "tinymce";
 
 
 interface ITinyEditor {
-    editorRef: React.MutableRefObject<any>
+    editorRef: React.MutableRefObject<any>,
+    initialValues?: string,
+    height?: number
 }
 
-const EditorTiny: React.FC<ITinyEditor> = ({editorRef}) => {
+const EditorTiny: React.FC<ITinyEditor> = ({editorRef,initialValues, height}) => {
 
     var useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -17,7 +19,7 @@ const EditorTiny: React.FC<ITinyEditor> = ({editorRef}) => {
         <Editor
             id="tinyEditor"
             onInit={(evt, editor: any) => editorRef.current = editor}
-            initialValue="<p>Опишіть публікацію...</p>"
+            initialValue={initialValues ? initialValues : "<p>Опишіть публікацію...</p>"}
             init={{
                 plugins: 'preview powerpaste casechange importcss tinydrive searchreplace autolink autosave save directionality advcode visualblocks visualchars fullscreen link template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists checklist wordcount tinymcespellchecker a11ychecker help formatpainter permanentpen pageembed charmap tinycomments mentions quickbars linkchecker emoticons advtable export',
                 tinydrive_token_provider: 'URL_TO_YOUR_TOKEN_PROVIDER',
@@ -60,7 +62,7 @@ const EditorTiny: React.FC<ITinyEditor> = ({editorRef}) => {
                 ],
                 template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
                 template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
-                height: 600,
+                height: height ? height : 600,
                 quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
                 noneditable_noneditable_class: 'mceNonEditable',
                 toolbar_mode: 'sliding',

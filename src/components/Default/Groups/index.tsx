@@ -9,9 +9,14 @@ import MenuItem from '@mui/material/MenuItem';
 import ModalSpring from './CustomComponents/ModalSpring';
 import EditModal from './CustomComponents/EditModal';
 import { typedSelector } from '../../../redux/services/useTypedSelector';
-import { IGroup } from './types/groupTypes';
+
+import { IGroup, IGroupInfo } from './types/groupTypes';
 import axiosService from '../../../axios/axiosService';
-import { IPublication } from '../../../redux/reducers/types/groupsTypes';
+import { IGroupData, IPublication } from '../../../redux/reducers/types/groupsTypes';
+import { IPostDataReturned } from './CustomComponents/types/EditPostModalTypes';
+import { defaultImage } from '../../../constants/defaultConsts';
+import { useGroupsAction } from '../../../actions/groups/useGroupsAction';
+
 
 
 const Groups: React.FC = () => {
@@ -22,7 +27,8 @@ const Groups: React.FC = () => {
     const user = typedSelector(user => user.user);
     // const [groups, setGroups] = useState<Array<IGroup>>([]);
 
-    const groups = typedSelector(groups => groups.groups);
+    const groups = typedSelector(groups => groups.groups) as Array<IGroup>;
+
 
     useEffect(() => {
         window.addEventListener("resize", () => {
@@ -42,6 +48,7 @@ const Groups: React.FC = () => {
         //     .catch(error => {
         //         console.log(error);
         //     });
+
 
     }, []);
 
@@ -74,6 +81,19 @@ const Groups: React.FC = () => {
         startTransition(() => {
 
 
+
+            if (id) {
+                axiosService.getAllPublicationsByGroupId(id)
+                    .then(res => {
+                        let data = res.data;
+                        setPublications(data);
+
+                    });
+
+                axiosService.getGroupDataById(id).then(res => {
+                    let data : IGroupData= res.data;
+                    // console.log(data);
+
             if(id) {
                 axiosService.getAllPublicationsByGroupId(id)
                 .then(res => {
@@ -89,10 +109,14 @@ const Groups: React.FC = () => {
                         title: data.title,
                         description: data.descrption,
                         image: data.image,
-                        id: id
+                        id: id,
+                        userId: data.userId,
+                        meta: data.meta,
+                        tags: data.tags
                     });
                 });
-                
+
+
             }
 
             setVisibleLeft(!visibleLeft);
@@ -104,9 +128,14 @@ const Groups: React.FC = () => {
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
+
+    const showDragModal = () => {
+        setDraggable(true);
+    };
+
     const handleClose = (e: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(null);
 
@@ -142,6 +171,7 @@ const Groups: React.FC = () => {
 
     };
 
+    const {DeleteGroupAction, DeleteGroupRedux, DeleteUserGroup} = useGroupsAction();
 
     const [modalOpen, setModalOpen] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
@@ -150,39 +180,71 @@ const Groups: React.FC = () => {
     const [publications, setPublications] = useState<Array<IPublication>|null>(null);
     const [activeGroup, setActiveGroup] = useState<IGroup|null>(null);
 
-    const onDeleteGroup = () => {
-        console.log("delete");
+    const onDeleteGroup = async () => {
+        // console.log("delete");
+        if(activeGroup) {
+            if(publications) {
+                publications.forEach((el) => {
+                    el.images.forEach((img) => {
+                        delPostImage(img);
+                    })
+                    deletePublication(el.id);
+                });
+            }
+            setPublications(null);
+            await DeleteGroupAction(activeGroup.id);
+            setActiveGroup(null);
+        }
     }
 
-    const onExitGroup = () => {
-        console.log("exit");
+    const deletePublication = async (publicationId: Number) => {
+        await axiosService.deletePublication(publicationId);
     }
+
+    const delPostImage = async (image: string) => {
+        await axiosService.delPostImage({
+            image: image
+        });
+    }
+
+
+    const onExitGroup = async () => {
+        if(activeGroup) {
+
+            let groupId = activeGroup.id;
+            let userId = user.id;
+
+            setPublications(null);
+            setActiveGroup(null);
+
+            await DeleteGroupRedux(groupId);
+
+            await DeleteUserGroup(groupId, userId);
+        }
+    }
+
+
+
+    /// edit
 
     const [draggable, setDraggable] = useState(false);
-    const showDragModal = () => {
-        setDraggable(true);
-    };
-
-    const handleOk = (e: React.MouseEvent<HTMLElement>) => {
-        console.log(e);
-        setDraggable(false);
-    };
-
-    const handleCancel = (e: React.MouseEvent<HTMLElement>) => {
-        console.log(e);
-        setDraggable(false);
-    };
-
+    
+    /// search
+    const [searchGroup, setSearchGroup] = useState<string>("");
+    const onSearch = (value: string) => {
+        //console.log(value);
+        setSearchGroup(value);
+    } 
     return (<>
         <ModalSpring open={modalOpen} title={modalTitle}
             setOpen={setModalOpen}
             yesFunc={isDeleted ? onDeleteGroup : onExitGroup} />
 
         <EditModal
-            visible={draggable}
-            showModal={showDragModal}
-            handleOk={handleOk}
-            handleCancel={handleCancel}
+            draggable={draggable}
+            setDraggable={setDraggable}
+            group={activeGroup}
+            setGroup={setActiveGroup}
         />
         <div className="rows">
 
@@ -190,11 +252,11 @@ const Groups: React.FC = () => {
                 <Col lg={12} xl={6} md={12} xs={!isPhone ? 24 : 0} >
                     {width <= 768 ? transitionLeft((style, item) => {
                         return (item ? <animated.div style={style}>
-
-                            <LeftColumn groups={groups} onClickLeft={openLeftRightComponent} />
+                            <LeftColumn groups={groups.filter(x => x.title.includes(searchGroup))} onSearch={onSearch} onClickLeft={openLeftRightComponent} />
 
                         </animated.div> : "");
-                    }) : <LeftColumn groups={groups} onClickLeft={openLeftRightComponent} />}
+                    }) : <LeftColumn groups={groups.filter(x => x.title.includes(searchGroup))} onSearch={onSearch} onClickLeft={openLeftRightComponent} />}
+
                 </Col>
                 <Col lg={12} xl={18} md={12} xs={isPhone ? 24 : 0} className="right-column">
 
@@ -204,15 +266,19 @@ const Groups: React.FC = () => {
                                 <RightColumn
                                     handleAvatarClick={handleClick}
                                     publications={publications}
-                                    onClickRight={openLeftRightComponent} 
+                                    setPublications={setPublications}
+                                    onClickRight={openLeftRightComponent}
                                     group={activeGroup}
-                                    />
+                                    
+                                />
+
 
 
                             </animated.div> : "")
                     }) : <RightColumn
                         handleAvatarClick={handleClick}
                         onClickRight={openLeftRightComponent}
+                        setPublications={setPublications}
                         publications={publications}
                         group={activeGroup}
                     />}
@@ -226,9 +292,19 @@ const Groups: React.FC = () => {
             open={open}
             onClose={handleClose}
         >
-            <MenuItem onClick={handleClose} id="editGroup">Редагувати групу</MenuItem>
-            <MenuItem onClick={handleClose} id="deleteGroup">Видалити групу</MenuItem>
-            <MenuItem onClick={handleClose} id="exitGroup">Вийти з групи</MenuItem>
+            {(activeGroup && activeGroup.userId == user.id) && 
+                <MenuItem onClick={handleClose} id="editGroup">Редагувати групу</MenuItem>  
+            }
+
+            {(activeGroup && activeGroup.userId == user.id) &&
+                <MenuItem onClick={handleClose} id="deleteGroup">Видалити групу</MenuItem>
+            }
+
+            {(activeGroup && activeGroup.userId != user.id) &&
+
+                <MenuItem onClick={handleClose} id="exitGroup">Вийти з групи</MenuItem>
+            }
+            
         </Menu>
     </>);
 }

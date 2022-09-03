@@ -106,8 +106,12 @@ const CreateGroup: React.FC = () => {
                                     {errors.description}
                                 </div>}
                             </div>
-                            <SuccessAlert alertVis={success} setVisibleAlert={setSuccess}/>
-                            <ErrorAlert error={error} setError={setError}/>
+                            <div style={{
+                                marginTop:'2em'
+                            }}>
+                                <SuccessAlert alertVis={success} setVisibleAlert={setSuccess}/>
+                                <ErrorAlert error={error} setError={setError}/>
+                            </div>
 
                             <Button type='primary' htmlType='submit' className='createGroupSubmit' block>Створити групу</Button>
 
