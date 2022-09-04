@@ -44,7 +44,8 @@ export interface IPublication {
     id:number,
     title: string,
     description: string,
-    images: Array<string>
+    images: Array<string>,
+    isLiked: boolean
 }
 
 export interface IGroupData {
@@ -55,7 +56,6 @@ export interface IGroupData {
     image: string,
     userId: number,
     tags: string
-    image: string
 }
 
 // Custom
@@ -81,4 +81,9 @@ export interface ReturnedGroupData {
 export interface IDelUserGroup {
     userId: number,
     groupId: number
+}
+
+export interface ILikePost {
+    liked: boolean,
+    postId: Number
 }

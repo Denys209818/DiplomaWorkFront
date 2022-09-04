@@ -9,7 +9,7 @@ import { IGroupCreate, IGroupForm } from "../components/Profile/CreateGroup/type
 import { IAddPublication } from "../components/Profile/CreatePost/types";
 import { IEditImage, IUserEdit, IUserFull } from "../components/Profile/Edit/types/UserTypes";
 
-import { IDelUserGroup, IGroupData, IPublication, RequestGroupById, RequestGroupByName, ReturnedGroupData } from "../redux/reducers/types/groupsTypes";
+import { IDelUserGroup, IGroupData, ILikePost, IPublication, RequestGroupById, RequestGroupByName, ReturnedGroupData } from "../redux/reducers/types/groupsTypes";
 
 
 import createAxios from "./createAxios";
@@ -112,6 +112,10 @@ class AxiosService {
 
     deleteUserGroup = (data: IDelUserGroup) => {
         return createAxios.post("/api/group/delusergroup", data);
+    }
+
+    likedPost = (data: ILikePost) => {
+        return createAxios.post("/api/publication/likepost", data);
     }
 }
 
