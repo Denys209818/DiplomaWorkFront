@@ -29,7 +29,7 @@ const Groups: React.FC = () => {
     // const [groups, setGroups] = useState<Array<IGroup>>([]);
 
     const groups = typedSelector(groups => groups.groups) as Array<IGroup>;
-
+    const publicationsObj = typedSelector(posts => posts.posts) as Array<IPublication>;
 
     useEffect(() => {
         window.addEventListener("resize", () => {
@@ -153,17 +153,17 @@ const Groups: React.FC = () => {
     const [activeGroup, setActiveGroup] = useState<IGroup|null>(null);
 
     const onDeleteGroup = async () => {
-        // console.log("delete");
+        
         if(activeGroup) {
-            if(publications) {
-                publications.forEach((el) => {
+            if(publicationsObj) {
+                publicationsObj.forEach((el) => {
                     el.images.forEach((img) => {
                         delPostImage(img);
                     })
                     deletePublication(el.id);
                 });
             }
-            setPublications(null);
+            await ClearPost();
             await DeleteGroupAction(activeGroup.id);
             setActiveGroup(null);
         }

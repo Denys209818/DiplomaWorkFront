@@ -5,10 +5,13 @@ import {DeleteGroup, GROUP_TYPES} from "../../redux/reducers/types/groupsTypes";
 export const DeleteGroupAction =  (groupId: number) => 
 async (dispatch: Dispatch<DeleteGroup>) => {
     
-    await DeleteGroupRedux(groupId);
-
     let res = await axiosService.deleteGroup({
         groupId: groupId
+    });
+
+    dispatch({
+        type: GROUP_TYPES.DELETE_GROUP,
+        payload:groupId
     });
 }
 
