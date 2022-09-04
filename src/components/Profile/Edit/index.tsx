@@ -111,7 +111,9 @@ const Edit = () => {
                         </div>
                         <FormikProvider value={formik}>
                             <Form  >
-
+                                <Field label="Ім'я" id="firstName" name="firstName" onChange={handleChange}
+                                    value={user.firstName} error={errors.firstName} touched={touched.firstName}
+                                />
                                 <Field label="Прізвище" id="secondName" name="secondName" onChange={handleChange}
                                     value={user.secondName} error={errors.secondName} touched={touched.secondName}
                                 />
