@@ -23,6 +23,7 @@ import axiosService from '../../../../axios/axiosService';
 import { defaultImage } from '../../../../constants/defaultConsts';
 import { useProfileAction } from '../../../../actions/profile/useProfileActions';
 import { IPublication } from '../../../../redux/reducers/types/groupsTypes';
+import { usePostActions } from '../../../../actions/post/usePostActions';
 
 
 
@@ -31,8 +32,7 @@ interface ICardGroup {
     title: string,
     description: string,
     id: number,
-    setPublications?: React.Dispatch<React.SetStateAction<IPublication[] | null>>,
-    publications?: Array<IPublication> | null
+    isLikedObj: boolean
 }
 
 interface ICardText {
@@ -40,7 +40,7 @@ interface ICardText {
     description: string
 }
 
-const CardGroup: React.FC<ICardGroup> = ({ images, title, description, id, setPublications, publications }) => {
+const CardGroup: React.FC<ICardGroup> = ({ images, title, description, id, isLikedObj }) => {
 
     const user = typedSelector(user => user.user);
 
@@ -51,6 +51,21 @@ const CardGroup: React.FC<ICardGroup> = ({ images, title, description, id, setPu
     }
 
 
+    const onLike = async () => {
+        let liked = !isLiked;
+        let userId = Number.parseInt(user.id.toString());
+        let groupId = id;
+
+        // console.log(liked, userId, groupId);
+
+        await axiosService.likedPost({
+            postId: groupId,
+            liked: liked
+        });
+        setLiked(!isLiked);
+
+    }
+
     const [cardText, setCardText] = useState<ICardText>({
         title: title,
         description: description
@@ -59,7 +74,7 @@ const CardGroup: React.FC<ICardGroup> = ({ images, title, description, id, setPu
     const [groupData, setGroupData] = useState<IPostDataReturned|null>(null);
     const [isOpen, setOpen] = useState<Boolean>(false);
     const [photoIndex, setPhotoIndex] = useState(0);
-    const [isLiked, setLiked] = useState<Boolean>(false);
+    const [isLiked, setLiked] = useState<Boolean>(isLikedObj);
     const [visible, setVisible] = useState(false);
 
     const reduxImages = typedSelector(images => images.images);
@@ -132,7 +147,6 @@ const CardGroup: React.FC<ICardGroup> = ({ images, title, description, id, setPu
 
         axiosService.getPostDataById(id).then(res => {
             let data = res.data;
-            // console.log(data);
             setImages(data.images);
             setGroupData(data);
         }).catch(error => {
@@ -157,14 +171,13 @@ const CardGroup: React.FC<ICardGroup> = ({ images, title, description, id, setPu
 
     const [isOpenDelete, setOpenDelete] = useState(false);
 
+    const {DelPosts} = usePostActions();
+
     const onDelete = async () => {
         
-        if(publications && setPublications) {
-
-            setPublications([...(publications.filter(x => x.id != id))])
-        }
-
-        let res = await axiosService.deletePublication(id);
+         
+        await DelPosts(id);
+        
     }
 
     return (<>
@@ -231,15 +244,13 @@ const CardGroup: React.FC<ICardGroup> = ({ images, title, description, id, setPu
                 </Typography>
                 <div dangerouslySetInnerHTML={{ __html: cardText.description }}></div>
 
-                    {title}
-                </Typography>
-                <div dangerouslySetInnerHTML={{__html: description}}></div>
+  
 
             </CardContent>
             <CardActions>
                 {isLiked ?
-                    <FavoriteSharpIcon color='error' className='icon-mui' fontSize='large' onClick={() => { setLiked(!isLiked) }} /> :
-                    <FavoriteBorderSharpIcon color='error' className='icon-mui' fontSize='large' onClick={() => { setLiked(!isLiked) }} />}
+                    <FavoriteSharpIcon color='error' className='icon-mui' fontSize='large' onClick={onLike} /> :
+                    <FavoriteBorderSharpIcon color='error' className='icon-mui' fontSize='large' onClick={onLike} />}
 
                     {(groupData && groupData.userId == user.id) ? <>
                 <DeleteForeverIcon onClick={() => setOpenDelete(true)} className='icon-mui' fontSize='large' />

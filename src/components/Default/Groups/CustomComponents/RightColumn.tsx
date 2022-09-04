@@ -9,18 +9,17 @@ import classNames from "classnames";
 import { IPublication } from "../../../../redux/reducers/types/groupsTypes";
 import { defaultImage } from "../../../../constants/defaultConsts";
 import { IGroup } from "../types/groupTypes";
+import { typedSelector } from "../../../../redux/services/useTypedSelector";
 
 
 interface IRightColumn {
     onClickRight: (id?: number) => void,
     handleAvatarClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
-    publications: Array<IPublication> | null,
     group: IGroup | null,
-    setPublications?: React.Dispatch<React.SetStateAction<IPublication[] | null>>,
 }
 
-const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, publications, group, setPublications }) => {
-
+const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, group }) => {
+    const posts = typedSelector(x => x.posts)as Array<IPublication>;
 
     return (<>
         <div className="navbar-of-group">
@@ -38,8 +37,6 @@ const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, 
                                   src={group ?
                                     group.image.length > 30 ? group.image : defaultImage + "Group/" + group.image
                                 : defaultImage + "Group/default.jpg"}/> :
-
-                                  src={defaultImage + "Group/" + group.image}/> :
 
                                   <Avatar size="large"
                                   icon={<UserOutlined/>}/>}
@@ -81,23 +78,19 @@ const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, 
             </Row>}
         </div>
         <div className="content-group-body">
-            {publications != null &&
+            {posts != null &&
                 <Row>
-                    {(publications as Array<IPublication>).map((element, index) => {
+                    {posts.map((element, index) => {
                         return (<Col key={"publicationItem" + index.toString()}
                             lg={{ span: 12, offset: 6 }} xs={{ span: 18, offset: 3 }}>
 
-                            <CardGroup setPublications={setPublications}
-                            publications={publications}
+                            <CardGroup
                             title={element.title} id={element.id}
+                            isLikedObj={element.isLiked}
                                 description={element.description}
                                 images={element.images.map((element) => {
                                     return element;
 
-                            <CardGroup title={element.title}
-                                description={element.description}
-                                images={element.images.map((element) => {
-                                    return defaultImage + element;
 
                                 })} />
                         </Col>);

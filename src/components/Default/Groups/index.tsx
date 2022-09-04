@@ -16,6 +16,7 @@ import { IGroupData, IPublication } from '../../../redux/reducers/types/groupsTy
 import { IPostDataReturned } from './CustomComponents/types/EditPostModalTypes';
 import { defaultImage } from '../../../constants/defaultConsts';
 import { useGroupsAction } from '../../../actions/groups/useGroupsAction';
+import { usePostActions } from '../../../actions/post/usePostActions';
 
 
 
@@ -36,20 +37,6 @@ const Groups: React.FC = () => {
                 setWidth(window.innerWidth);
             });
         });
-
-        // let id = user.id as number;
-
-        // axiosService.getGroups({
-        //     id: id
-        // }).then(res => {
-        //     let data = res.data;
-        //     setGroups([...data]);
-        // })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
-
-
     }, []);
 
 
@@ -77,52 +64,37 @@ const Groups: React.FC = () => {
         }
     });
 
-    const openLeftRightComponent = (id?: number) => {
-        startTransition(() => {
+    const {SetPosts, ClearPost} = usePostActions();
 
+    const generateRightColumn = async (id :number) => {
+        ClearPost();
+        SetPosts(id);
 
-
-            if (id) {
-                axiosService.getAllPublicationsByGroupId(id)
-                    .then(res => {
-                        let data = res.data;
-                        setPublications(data);
-
-                    });
-
-                axiosService.getGroupDataById(id).then(res => {
-                    let data : IGroupData= res.data;
-                    // console.log(data);
-
-            if(id) {
-                axiosService.getAllPublicationsByGroupId(id)
-                .then(res => {
-                    let data = res.data;
-                    setPublications(data);
-                    
-                });
-
-                axiosService.getGroupDataById(id).then(res => {
-                    let data = res.data;
-
-                    setActiveGroup({
-                        title: data.title,
-                        description: data.descrption,
-                        image: data.image,
-                        id: id,
-                        userId: data.userId,
-                        meta: data.meta,
-                        tags: data.tags
-                    });
-                });
-
-
-            }
-
-            setVisibleLeft(!visibleLeft);
-            setPhone(!isPhone);
-            setVisibleRight(!visibleRight);
+        let data = (await axiosService.getGroupDataById(id)).data;
+        setActiveGroup({
+            title: data.title,
+            description: data.descrption,
+            image: data.image,
+            id: id,
+            userId: data.userId,
+            meta: data.meta,
+            tags: data.tags
         });
+
+        setVisibleLeft(!visibleLeft);
+        setPhone(!isPhone);
+        setVisibleRight(!visibleRight);
+    }
+
+    const openLeftRightComponent =async (id?: number) => {
+        if (id) {
+            startTransition(() => {
+
+
+                generateRightColumn(id)
+            }
+            );
+        }
     }
 
 
@@ -265,8 +237,6 @@ const Groups: React.FC = () => {
                             <animated.div style={style}>
                                 <RightColumn
                                     handleAvatarClick={handleClick}
-                                    publications={publications}
-                                    setPublications={setPublications}
                                     onClickRight={openLeftRightComponent}
                                     group={activeGroup}
                                     
@@ -278,8 +248,6 @@ const Groups: React.FC = () => {
                     }) : <RightColumn
                         handleAvatarClick={handleClick}
                         onClickRight={openLeftRightComponent}
-                        setPublications={setPublications}
-                        publications={publications}
                         group={activeGroup}
                     />}
                 </Col>
