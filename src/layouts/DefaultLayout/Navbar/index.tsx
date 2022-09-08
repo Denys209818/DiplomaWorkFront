@@ -17,6 +17,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import GroupIcon from '@mui/icons-material/Group';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
 import CustomModalDialog from '../../../components/Default/Main/customComponents/CustomModalDialog';
+import { Link } from 'react-router-dom';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -133,6 +134,7 @@ const Navbar: React.FC = () =>
         <p>Групи</p>
       </MenuItem>
       <MenuItem>
+      
         <IconButton
           size="large"
           color="inherit"
@@ -144,10 +146,11 @@ const Navbar: React.FC = () =>
         <p>Новини</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
+        
         <IconButton
           size="large"
           color="inherit"
-        >
+          >
           <AccountCircle />
         </IconButton>
         <p>Профіль</p>
