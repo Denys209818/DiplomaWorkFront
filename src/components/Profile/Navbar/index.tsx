@@ -9,7 +9,9 @@ import AppRegistrationOutlinedIcon from '@mui/icons-material/AppRegistrationOutl
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import classNames from "classnames";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Logout } from "../../../actions/auth/LogoutAction";
+import { useCookies } from "react-cookie";
 
 
 
@@ -17,13 +19,28 @@ const Navbar: React.FC = () => {
 
     const [isOpen, setOpen] = useState(false);
 
-    const onSearchClick = () => 
-    {
-        if(!isOpen) 
-        {
-           setOpen(true);
-        }
+    const navigate = useNavigate();
+
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+
+    const onLogout = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        let target = e.target;
+        e.preventDefault();
+        e.stopPropagation();
+
+        
+        
+        Logout(removeCookie, cookies.token != null);
+        navigate("/");
     }
+
+    // const onSearchClick = () => 
+    // {
+    //     if(!isOpen) 
+    //     {
+    //        setOpen(true);
+    //     }
+    // }
 
     const onSearchMenuClick = () => 
     {
@@ -46,11 +63,11 @@ const Navbar: React.FC = () => {
                 <DragHandleOutlinedIcon onClick={onSearchMenuClick}  id="btn"/>
             </div>
             <ul className="nav-list">
-                <li onClick={onSearchClick}>
+                {/* <li onClick={onSearchClick}>
                 <SearchOutlinedIcon className="bx-search"/>
                     <input type="text" placeholder="Пошук..."/>
                         <span className="tooltip">Пошук</span>
-                </li>
+                </li> */}
 
                 <li onClick={onCloseNavbar}>
                     <Link to="/profile">
@@ -60,14 +77,14 @@ const Navbar: React.FC = () => {
                     <span className="tooltip">Профіль</span>
                 </li>
                 <li onClick={onCloseNavbar}>
-                    <Link to="/news">
+                    <Link to="/news" target="_top">
                        <ContactsOutlinedIcon/>
                         <span className="links_name">Публікації</span>
                     </Link>
                     <span className="tooltip">Публікації</span>
                 </li>
                 <li onClick={onCloseNavbar}>
-                    <Link to="/groups">
+                    <Link to="/groups" target="_top">
                         <GroupsOutlinedIcon/>
                         <span className="links_name">Групи</span>
                     </Link>
@@ -81,7 +98,7 @@ const Navbar: React.FC = () => {
                     <span className="tooltip">Редагувати профіль</span>
                 </li>
                 <li onClick={onCloseNavbar}>
-                    <Link to="/logout">
+                    <Link to="/logout" onClick={onLogout}>
                         <LogoutOutlinedIcon/>
                         <span className="links_name">Вийти</span>
                     </Link>

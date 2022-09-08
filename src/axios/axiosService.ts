@@ -1,5 +1,6 @@
 
 import { ILoginModel, ReturnedData } from "../actions/types/AuthTypes";
+import { IMessageReturned } from "../components/Default/Chat/types/chatTypes";
 
 import { IEditDynamicImage, IEditPost, IEditPostModal, IPostDataReturned } from "../components/Default/Groups/CustomComponents/types/EditPostModalTypes";
 import { IGroup, IGroupDelete, IGroupInfo } from "../components/Default/Groups/types/groupTypes";
@@ -10,6 +11,7 @@ import { IAddPublication } from "../components/Profile/CreatePost/types";
 import { IEditImage, IUserEdit, IUserFull } from "../components/Profile/Edit/types/UserTypes";
 
 import { IDelUserGroup, IGroupData, ILikePost, IPublication, RequestGroupById, RequestGroupByName, ReturnedGroupData } from "../redux/reducers/types/groupsTypes";
+import { ICreateMessage, IMessageRedux, IRetCreateMessage, IUserFriend, IUserMessage } from "../redux/reducers/types/messageTypes";
 
 
 import createAxios from "./createAxios";
@@ -116,6 +118,27 @@ class AxiosService {
 
     likedPost = (data: ILikePost) => {
         return createAxios.post("/api/publication/likepost", data);
+    }
+
+    addMessage = (message: ICreateMessage) => {
+        return createAxios.post<IRetCreateMessage>("/api/chat/add", message);
+    }
+
+    getMessages = (groupId: Number) => {
+        return createAxios.get<Array<IMessageReturned>>(`/api/chat/getbygroupid?groupId=${groupId.toString()}`);
+    }
+    
+    getFriends = () => {
+        return createAxios.get<Array<IUserFriend>>("/api/account/friends");
+    }
+
+    getFriendsMessages = (friendUserId: number) => {
+        return createAxios.get<Array<IUserMessage>>(`/api/chat/getbyfriendid?friendUserId=${friendUserId}`);
+
+    }
+
+    addFriendMessage = (message: any) => {
+        return createAxios.post("/api/chat/addfriendmessage", message);
     }
 }
 

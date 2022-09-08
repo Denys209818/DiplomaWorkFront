@@ -94,7 +94,7 @@ const Edit = () => {
 
     const [alertVis, setVisibleAlert] = useState<boolean>(false);
 
-    const [base64, setBase64] = useState<string>("default.jpg");
+    const [base64, setBase64] = useState<string>("");
 
     const { handleChange, touched, errors } = formik;
 
@@ -144,7 +144,7 @@ const Edit = () => {
                                     onClose={() => {setVisibleAlert(false)}}
                                 />}
 
-                                <SuccessAlert alertVis={alertVis} setVisibleAlert={setVisibleAlert}/>
+                                {/* <SuccessAlert alertVis={alertVis} setVisibleAlert={setVisibleAlert}/> */}
                                 <ErrorAlert error={error} setError={setError} />
 
                                 {error && error.length > 0  && <Alert
