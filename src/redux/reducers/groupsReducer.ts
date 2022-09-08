@@ -7,7 +7,8 @@ const groupReducer = (state = initialState, action: GroupActions) => {
     switch(action.type) {
         case GROUP_TYPES.SET_GROUPS: {
             return action.payload;
-        }default: {
+        }
+        default: {
             return state;
         }
     }

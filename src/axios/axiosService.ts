@@ -4,6 +4,7 @@ import { IDelImageRequest, ISendImage } from "../components/Profile/Components/S
 import { IGroupCreate, IGroupForm } from "../components/Profile/CreateGroup/types";
 import { IAddPublication } from "../components/Profile/CreatePost/types";
 import { IEditImage, IUserEdit, IUserFull } from "../components/Profile/Edit/types/UserTypes";
+import { RequestFriendId } from "../redux/reducers/types/friendTypes";
 
 import { RequestGroupById, RequestGroupByName } from "../redux/reducers/types/groupsTypes";
 
@@ -50,6 +51,10 @@ class AxiosService {
 
     addPublication = (publication: IAddPublication) => {
         return createAxios.post("/api/publication/create", publication);
+    }
+
+    getFriends = (id: RequestFriendId) => {
+        return createAxios.post("/api/friend/getbyid", id);
     }
 }
 

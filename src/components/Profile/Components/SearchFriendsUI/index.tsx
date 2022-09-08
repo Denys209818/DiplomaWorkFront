@@ -11,10 +11,6 @@ import { MessageOutlined } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import MenuForPhone from '../../SearchFriends/MenuForPhone';
 
-
-
-
-
 const SearchFriendsUI: React.FC = () => {
     const [data, setData] = useState<DataType[]>([
         {
