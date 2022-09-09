@@ -1,0 +1,14 @@
+
+.friends-list::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .friends-list::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: 10px;
+  }
+  
+  .friends-list::-webkit-scrollbar-thumb {
+    background: #1976d2;
+    border-radius: 5px;
+  }

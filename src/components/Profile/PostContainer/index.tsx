@@ -1,35 +1,36 @@
 import "./../styles/postStyles.css";
 import { Link } from "react-router-dom";
+import { IUserSubscribersPosts } from "../types/IProfileTypes";
+import { defaultImage } from "../../../constants/defaultConsts";
 
-const PostContainer : React.FC = () => {
+const PostContainer : React.FC<IUserSubscribersPosts> = ({id, images, title, description, tags, 
+    userEmail, userImage, userName, countLikes, groupImage, groupName}) => {
     return (<>
         <div className="post-container">
                         <div className="user-profile">
-                            <img src="https://i.pinimg.com/originals/b8/59/bd/b859bd54eeb0a7e25869d4726fde8fdb.jpg" alt="No Avatar" />
+                            <img src={defaultImage + "Group/" + groupImage} alt="No Avatar" />
 
                             <div>
-                                <p>John Nockson</p>
-                                <span>June 24 2022, 12:40 pm</span>
+                                <p>{groupName}</p>
+                                <span>{title}</span>
                             </div>
                         </div>
-                        <p className="post-text">Subscribe <span>Chanel</span> to watch more videos on website
-                            development and designs. <Link to="#">#MyChanel</Link></p>
+                        <div className="post-text" dangerouslySetInnerHTML={{ __html: description }}></div>
+                        <Link to="#">{tags}</Link>
 
-                        <img src="/images/post1.jpg" alt="Np image" className="post-img" />
+                        <img src={defaultImage+ "Post/" +images[0]} alt="Np image" className="post-img" />
 
                         <div className="post-row">
                             <div className="activity-icons">
                                 <div>
                                     <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                    <span>120</span>
+                                    <span>{countLikes}</span>
                                 </div>
-                                <div>
-                                    <i className="fa fa-comments-o" aria-hidden="true"></i>
-                                </div>
+                                
                             </div>
                             <div className="post-profile-icon">
-                                <span><b>Yeahn Stoltenberg</b></span>
-                                <img src="https://i.pinimg.com/originals/b8/59/bd/b859bd54eeb0a7e25869d4726fde8fdb.jpg" alt="Profile Icon" />
+                                <span><b>{userName}</b></span>
+                                <img src={defaultImage+userImage} alt="Profile Icon" />
 
 
                             </div>

@@ -17,3 +17,9 @@ export interface Errors {
     email: Array<string>,
     password: Array<string>
 }
+
+export interface IUserDataCount {
+    groupsCount: Number,
+    postsCount: Number,
+    friendsCount: Number
+}

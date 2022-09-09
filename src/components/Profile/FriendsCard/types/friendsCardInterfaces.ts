@@ -3,8 +3,7 @@
 export interface IFriendData {
     image: string,
     name: String,
-    description: String,
-    isOnline: Boolean
+    description: String
 }
 
 export interface IFriendDataArray {

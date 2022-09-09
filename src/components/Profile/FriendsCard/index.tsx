@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import { IFriendDataArray } from './types/friendsCardInterfaces';
 import { Link } from 'react-router-dom';
+import "./styles/friendCard.css";
 
 const FriendsCard: React.FC<IFriendDataArray> = ({ friends }) => {
 
@@ -45,25 +46,14 @@ const FriendsCard: React.FC<IFriendDataArray> = ({ friends }) => {
     return (<>
         <div className="friends-chats">
             <h3 className="friends-chats-title">Друзі</h3>
-            <List className="friends-list" sx={{ bgcolor: 'background.paper', borderRadius: '10px' }}>
+            <List className="friends-list" sx={{ bgcolor: 'background.paper', borderRadius: '10px'
+        ,height: '300px', overflow: 'scroll', overflowX: 'hidden' }}>
 
                 {friends.map((element, index) => {
                     return (<div key={"listItem " + index.toString()} >
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
-                                {element.isOnline ? <StyledBadge
-                                    overlap="circular"
-                                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                                    variant="dot"
-                                >
-
-                                    <Avatar alt="Remy Sharp" src={element.image} />
-                                </StyledBadge> : <Avatar alt="Remy Sharp" src={element.image} />
-                                }
-                                
-
-                                    
-                                
+                                <Avatar alt="Remy Sharp" src={element.image} />    
                             </ListItemAvatar>
                             <ListItemText
                                 primary={ element.name}
@@ -85,9 +75,9 @@ const FriendsCard: React.FC<IFriendDataArray> = ({ friends }) => {
                         <Divider variant="inset" component="li" />
                     </div>);
                 })}
-                <ListItem>
+                {/* <ListItem>
                         <Link className='link-in-block' to="/profile/searchFriends">Пошук друзів</Link>
-                </ListItem>
+                </ListItem> */}
             </List>
         </div>
     </>);

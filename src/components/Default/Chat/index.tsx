@@ -288,8 +288,8 @@ const Chat : React.FC = () => {
                                     <h5 className='text-center
                                     text-light'>Групи</h5>
                                 </li>
-                                {groups && groups.filter(x => x.title.includes(searchParam) ||
-                                x.tags.includes(searchParam)).map((element, index) => {
+                                {groups && groups.filter(x => x.title.toLowerCase().includes(searchParam.toLowerCase()) ||
+                                x.tags.toLowerCase().includes(searchParam.toLowerCase())).map((element, index) => {
                                     return (<li key={"groupChat" + index}>
                                         <ContactCard image={defaultImage + "Group/" + element.image}
                                             name={element.title} id={element.id} onClickChatGroup={onClickChatGroup} />
@@ -299,8 +299,9 @@ const Chat : React.FC = () => {
                                     <h5 className='text-center
                                     text-light'>Друзі</h5>
                                 </li>
-                                {userFriends && userFriends.filter(x => (x.firstName + " " + x.secondName)
-                                .includes(searchParam) || x.email.includes(searchParam)).map((element, index) => {
+                                {userFriends && userFriends.filter(x => (x.firstName + " " + x.secondName).toLowerCase()
+                                .includes(searchParam.toLowerCase()) || x.email.toLowerCase()
+                                .includes(searchParam.toLowerCase())).map((element, index) => {
                                     return (<li key={"userChat" + index.toString()}>
                                         <ContactUserCard
                                             title={element.firstName + " " +
