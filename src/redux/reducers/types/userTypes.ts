@@ -1,7 +1,8 @@
 
 export enum IUserTypes {
     LOGIN_USER = "LOGIN_USER",
-    REGISTER_USER="REGISTER_USER"
+    REGISTER_USER="REGISTER_USER",
+    CLEAR_USER="CLEAR_USER"
 }
 
 export interface IUser {
@@ -34,5 +35,8 @@ export interface RegisterUserAction {
     payload: IUser
 }
 
+export interface IClearUser {
+    type: IUserTypes.CLEAR_USER
+}
 
-export type UserActions = LoginUserAction | RegisterUserAction;
+export type UserActions = LoginUserAction | RegisterUserAction | IClearUser;

@@ -1,9 +1,11 @@
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useActions } from "../../actions/auth/UseActions";
+import { LoaderIs } from "../../App";
 import axiosService from "../../axios/axiosService";
+import Loader from "../../components/Custom/Loader";
 
 import MainFooter from "../../components/Default/Main/MainFooter";
 import Navbar from "./Navbar";
@@ -25,6 +27,7 @@ const DefaultLayout: React.FC = () =>
         setState(true);
     }
 
+    const {load, setLoad} = useContext(LoaderIs);
 
 
     useEffect(() => {
@@ -50,6 +53,7 @@ const DefaultLayout: React.FC = () =>
 
     return (<>
         {state ? <>
+        {load && <Loader/>}
             <Navbar/>
             <Outlet/>
             

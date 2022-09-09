@@ -19,10 +19,11 @@ const FooterContentBlock: React.FC = () => {
 
                 
 
-                    <iframe className='iframeFooter' width={560} height={310} src="https://www.youtube.com/embed/vP4GMcusruU"
-                        title="YouTube video player" frameBorder={0}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen></iframe>
+                <iframe width="560" height="315" 
+                src="https://www.youtube.com/embed/b-PWrBu43tw" 
+                title="YouTube video player" frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen></iframe>
                 </div>
             </div>
 

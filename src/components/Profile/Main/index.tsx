@@ -11,9 +11,12 @@ import { Link } from "react-router-dom";
 import { typedSelector } from "../../../redux/services/useTypedSelector";
 import { defaultImage } from "../../../constants/defaultConsts";
 import axiosService from "../../../axios/axiosService";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useContext, useEffect, useState } from "react";
 import { IUserDataCount } from "../../../actions/types/AuthTypes";
 import { IGetGroup, IUserSubscribersPosts } from "../types/IProfileTypes";
+import { token } from "../../../axios/createAxios";
+import Loader from "../../Custom/Loader";
+import { LoaderIs } from "../../../App";
 
 
 
@@ -29,7 +32,11 @@ const ProfileMain: React.FC = () => {
 
     const [userDataCount, setUserDataCount] = useState<IUserDataCount>();
 
+    const {load, setLoad} = useContext(LoaderIs)
+
     const setUserData = async () => {
+        setLoad(true);
+        
         let res = (await axiosService.getUserData()).data;
 
         let groups: Array<IGetGroup> = (await axiosService.getAllUserGroups(
@@ -54,21 +61,25 @@ const ProfileMain: React.FC = () => {
 
             setGroupPosts(groupPosts);
             setData(friendsObj);
-            setDataSource(groups);
+        setDataSource(groups
+        );
             setUserDataCount(res);
+        setLoad(false);
+
         
     }
 
 
 
     useEffect(() => {
+        
         setUserData();
 
-
+        
     },[]);
 
     return (<>
-        
+            
             <Row>
                 <Col md={24} xs={24} className="navbar-small">
 

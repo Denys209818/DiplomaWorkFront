@@ -1,6 +1,6 @@
 import { Col, Row, Modal } from "antd";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ImageData } from '../../CreatePost/types';
 import './styles/style.css';
 import Cropper from "cropperjs";
@@ -10,6 +10,7 @@ import { useProfileAction } from "../../../../actions/profile/useProfileActions"
 import { defaultImage } from "../../../../constants/defaultConsts";
 import { IEditDynamicImage } from "../../../Default/Groups/CustomComponents/types/EditPostModalTypes";
 import { AxiosResponse } from "axios";
+import { LoaderIs } from "../../../../App";
 
 interface ISelectManyImages {
     images?: Array<string>,
@@ -46,8 +47,11 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages, editImage,
 
     const {AddImageAction, DelImageAction} = useProfileAction();
 
+    const {load, setLoad} = useContext(LoaderIs);
+
     const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = (e.target as HTMLInputElement).files!;
+        
 
         const file = files[0];
         if (file) {
@@ -66,9 +70,11 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages, editImage,
             cropper?.replace(blob);
             setCropperObj(cropper);
         }
+
     }
 
     const onTrashClick = async (e: React.MouseEvent<HTMLElement>) => {
+        setLoad(true);
         
         let el = (e.target as HTMLButtonElement).closest('div.ant-col');
         let id = (e.target as HTMLButtonElement).closest('div.trash-icon')?.getAttribute('id');
@@ -85,9 +91,13 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages, editImage,
         }
             setFileListBlob(list);
         el?.remove();
+        setLoad(false);
+
     }
 
     const onOkHandler = async () => {
+        setLoad(true);
+
         await setDisabled(true);
 
         await setVisible(false);
@@ -125,6 +135,8 @@ const SelectImage: React.FC<ISelectManyImages> = ({images, setImages, editImage,
                 });
             }
         }
+        setLoad(false);
+
     }
 
     return (<>

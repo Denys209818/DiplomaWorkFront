@@ -49,14 +49,6 @@ async (dispatch: Dispatch<ISetMessages>) => {
 export const CreateMessageFriend = (message: IFriendMessageRedux) =>
 async (dispatch: Dispatch<IAddMessage>) =>  {
 
-    await axiosService.addFriendMessage({
-        message: message.text,
-        date: message.date,
-        chatId: Number.parseInt(message.chatId.substring(10)),
-        fullName: message.fullName,
-        image: message.image
-    });
-
     dispatch({
         type: MESSAGE_TYPES.ADD_MESSAGE,
         payload: {

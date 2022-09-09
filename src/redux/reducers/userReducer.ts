@@ -20,6 +20,14 @@ const userReducer = (state = initialState, action: UserActions) => {
         case IUserTypes.REGISTER_USER: {
             return state;
         }
+        case IUserTypes.CLEAR_USER: {
+            return {firstName: '',
+            secondName:'',
+            phone:'',
+            email:'',
+            id: 0,
+            image: ''};
+        }
         default: {
             return state;
         }

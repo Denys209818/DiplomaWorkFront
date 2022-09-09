@@ -13,6 +13,9 @@ export const postReducer = (state = initialState, action: PostActions) =>
         let id = action.payload;
         return [...(state.filter(x => x.id != id))]
     }
+    case POST_TYPES.CLEAR_POSTS: {
+        return [];
+    }
     default: {
         return state;
     }

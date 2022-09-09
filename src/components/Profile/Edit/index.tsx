@@ -2,7 +2,7 @@
 import { Button, TextField } from "@mui/material";
 import { useIMask } from 'react-imask';
 import { Col, Row, Image, Modal, Alert } from "antd";
-import { ChangeEvent, startTransition, useState } from "react";
+import { ChangeEvent, startTransition, useContext, useState } from "react";
 import "./styles/style.css";
 import SelectOneImage from "../Components/SelectOneImage";
 import PasswordField from "../Components/Fields/PasswordField";
@@ -18,6 +18,7 @@ import { defaultImage } from "../../../constants/defaultConsts";
 import yupValidation from "./yupValidation";
 import ErrorAlert from "../Components/ErrorAlert";
 import SuccessAlert from "../Components/SuccessAlert";
+import { LoaderIs } from "../../../App";
 
 const Edit = () => {
 
@@ -41,7 +42,10 @@ const Edit = () => {
 
     const [error, setError] = useState<string>();
 
+    const {load, setLoad} = useContext(LoaderIs);
+
     const onSubmitHandler = async (values: IUserEdit) => {
+        setLoad(true);
 
         await startTransition(() => {
             setError("");
@@ -77,6 +81,8 @@ const Edit = () => {
             let errors = ex as Array<string>;
             setError(errors.join("\n"));
     }
+    setLoad(false);
+
 }
 
     const formik = useFormik({

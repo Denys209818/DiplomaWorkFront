@@ -1,5 +1,5 @@
        
-import React, { RefObject, useEffect, useRef, useState } from 'react';
+import React, { RefObject, useContext, useEffect, useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './../Chat/chatStyles.css';
@@ -18,6 +18,7 @@ import { useBeforeunload } from 'react-beforeunload';
 import axiosService from '../../../axios/axiosService';
 import { Alert } from '@mui/material';
 import ContactUserCard from './CustomComponents/ContactUserCard';
+import { LoaderIs } from '../../../App';
 
 
 const Chat : React.FC = () => {
@@ -34,13 +35,17 @@ const Chat : React.FC = () => {
 
     const [userFriends, setUserFriends]= useState<Array<IUserFriend>>([]);
     const setFriends = async () => {
+        setLoad(true);
         let data = (await axiosService.getFriends()).data;
 
         setUserFriends(data);
+        setLoad(false);
     }
 
 
     const closeConnection =  async () => {
+        setLoad(true);
+
         try {
             if (connection) {
 
@@ -49,6 +54,8 @@ const Chat : React.FC = () => {
         } catch (e) {
             console.log(e);
         }
+        setLoad(false);
+
     }
 
 
@@ -79,18 +86,26 @@ const Chat : React.FC = () => {
     const [connection,setConnection] = useState<HubConnection>();
 
     const sendMessageRedux =async (messageAdd: ICreateMessage, image: string) => {
+        setLoad(true);
+
         await AddMessage(messageAdd, image);
+        setLoad(false);
+
     }
 
     const sendMessageFriendRedux = async (message: IFriendMessageRedux) => {
+        setLoad(true);
+
         await CreateMessageFriend(message);
+        setLoad(false);
+
     }
     
     const joinRoom =async (user: string,
          room: string) => {
+        setLoad(true);
 
             if(connection){
-
                 connection.stop();
             }
 
@@ -132,11 +147,15 @@ const Chat : React.FC = () => {
             }catch(e) {
                 console.log(e);
             }
+        setLoad(false);
+
     }
 
     const [errorAlert, setErrorAlert] = useState<boolean>(false);
 
     const sendMessage = async (message: IMessageRedux) => {
+        setLoad(true);
+
         if(connection && activeGroup) {
             const res = (await axiosService.addMessage({
                 groupId: activeGroup.id,
@@ -163,12 +182,15 @@ const Chat : React.FC = () => {
                 }
             }
         }
+        setLoad(false);
+
     }
 
     const onClickChatGroup = async (groupId: Number) => {
     
        
         let group: IGroup = groups.filter(x=> x.id == groupId)[0];
+        setLoad(true);
 
         await setActiveGroup(group);
         await setHeader({
@@ -179,6 +201,8 @@ const Chat : React.FC = () => {
         await SetMessages(group.id);
         await joinRoom(user.firstName + " " + 
             user.secondName, group.title);
+        setLoad(false);
+
     }
 
 
@@ -186,6 +210,8 @@ const Chat : React.FC = () => {
         let area = document.getElementById("txtMessage") as HTMLTextAreaElement;
         let content = area.value;
         area.value = '';
+        setLoad(true);
+
         if(activeGroup) {
                 await sendMessage({
                     text: content,
@@ -198,12 +224,18 @@ const Chat : React.FC = () => {
                 onSendMessageToUser(chatId, content);
             }
         }
+        setLoad(false);
+
     }
 
+
+    const {load, setLoad} = useContext(LoaderIs);
     //Chat User
     const [chatId, setChatId] = useState<string>();
 
     const onClickUser = async (chatId: string) => {
+        setLoad(true);
+
         setActiveGroup(undefined);
         setChatId(chatId);
         let friendUser = chatId.substring(10);
@@ -241,6 +273,8 @@ const Chat : React.FC = () => {
         
             await joinRoom(user.firstName + " " + user.secondName, chatId);
                // onSendMessageToUser(chatId);
+        setLoad(false);
+
     }
 
     const onSendMessageToUser = async (chatId: string, content: string) => {
@@ -254,9 +288,19 @@ const Chat : React.FC = () => {
             image: user.image,
             userId: user.id
         }
+        setLoad(true);
+        await axiosService.addFriendMessage({
+            message: send.message,
+            date: send.dateCreated,
+            chatId: Number.parseInt(send.chatId.substring(10)),
+            fullName: send.fullName,
+            image: send.image
+        });
+
         if(connection){
             await connection.invoke("SendMessageToUser", send);
         }
+        setLoad(false);
     }
 
     /////////////////////

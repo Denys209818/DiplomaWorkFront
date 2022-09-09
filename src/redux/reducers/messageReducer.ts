@@ -11,6 +11,9 @@ const messageReducer = (state = initialValues, action: MessageTypes) => {
         case MESSAGE_TYPES.SET_MESSAGES: {
             return [...action.payload];
         }
+        case MESSAGE_TYPES.CLEAR_MESSAGES: {
+            return [];
+        }
         default: {
             return state;
         }

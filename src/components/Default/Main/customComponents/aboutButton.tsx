@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
 
 
 const AboutButton: React.FC = () => 
 {
     return (<>
     
-        <button className="button-53" role="button">Долучитися до волонтерства</button>
+        <Link to="/auth/login" target="_self"
+         className="button-53" role="button">Долучитися до волонтерства</Link>
     </>);
 }
 

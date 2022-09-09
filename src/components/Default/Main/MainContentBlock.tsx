@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import { Col, Row } from 'antd';
+import { Link } from 'react-router-dom';
 import './styles/mainContentBlock.css';
 
 
@@ -16,7 +17,7 @@ const MainContentBlock: React.FC = () => {
                     <div className="textBlock">
                         <p>Приєднуйся до чатів та комунікуй з лідерами груп, до яких ти долучений. Кожен користувач має можливість лише на 4 повідомлення, якщо це не адмін. Це зроблено для того, щоб запобігти флуду. Адмін може додати Вас до списку людей, які мають більше повідомлень. 
                             Адмін може видати бан для користувача на певний час або на завжди, тому обов'язково звертайте увагу на правила спільноти.  </p>
-                              <Button variant="outlined" className='btnChat'>Перейти до чатів</Button>
+                              <Link to="/chat" target="_top"><Button variant="outlined" className='btnChat'>Перейти до чатів</Button></Link>
                     </div>
                     <img className='chat-image' src="/images/chatsBlock.jpg"  alt="" />
                 </div>

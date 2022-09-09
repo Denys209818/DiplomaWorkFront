@@ -1,7 +1,7 @@
 import 'cropperjs/dist/cropper.css';
 import { Button, MenuItem, TextField } from "@mui/material";
 import { Col, Modal, Row } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "../styles/createPost.css";
 import SelectImage from '../Components/SelectImage/SelectImage';
 import EditorTiny from '../Components/EditorTiny';
@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { useBeforeunload } from 'react-beforeunload';
 import { useProfileAction } from '../../../actions/profile/useProfileActions';
 import { IGroup } from '../../Default/Groups/types/groupTypes';
+import { LoaderIs } from '../../../App';
 
 
 const CreatePost: React.FC = () => {
@@ -80,6 +81,7 @@ const CreatePost: React.FC = () => {
         ClearImages();
     });
 
+    const {load, setLoad} = useContext(LoaderIs);
 
     const onSubmitHandler = async (values: ICreatePost) => {
 
@@ -92,6 +94,8 @@ const CreatePost: React.FC = () => {
 
 
         if (activeGroup) {
+        setLoad(true);
+
             let id: number = (await axiosService.getGroupsByName({
                 name: activeGroup
             })).data;
@@ -111,6 +115,8 @@ const CreatePost: React.FC = () => {
             })).data;
 
             success(res);
+        setLoad(false);
+
         }
     }
 

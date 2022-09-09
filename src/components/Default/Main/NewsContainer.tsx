@@ -1,6 +1,8 @@
 import { Col, Row } from 'antd';
-import {useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { useTransition, animated, useSpring } from 'react-spring';
+import { LoaderIs } from '../../../App';
+import axiosService from '../../../axios/axiosService';
 import NewsCard, { ICardInfo } from './customComponents/NewsCard';
 import './styles/newsContainer.css';
 
@@ -12,38 +14,47 @@ export interface ICardInfoFull
     description: string,
     delay:number,
     x: number,
-    y:number
+    y:number,
+    postTitle: string,
+    groupImage:string,
+    likes: number
 }
 
 
 const NewsContainer: React.FC = () => {
 
-    const data : Array<ICardInfoFull> = [
-        {
-            image: "https://mui.com/static/images/cards/paella.jpg",
-            title: "Shrimp and Chorizo Paella",
-            description: "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.",
-            delay: 200,
-            x:0,
-            y:0
-        },
-        {
-            image: "https://mui.com/static/images/cards/contemplative-reptile.jpg" ,
-            title: "Lizard",
-            description: "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.",
-            delay: 400,
-            x:0,
-            y:0  
-        },
-        {
-            image: "https://mui.com/static/images/cards/paella.jpg" ,
-            title: "Shrimp and Chorizo Paella",
-            description: "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like." ,  
-            delay: 600,
-            x:0,
-            y:0
+    const [data, setData] = useState<Array<ICardInfoFull>>([]);
+    const {load, setLoad} = useContext(LoaderIs);
+
+    const setDataCards = async (items: number) => {
+        setLoad(true);
+        let data = (await axiosService.getPopularPosts(items)).data;
+        console.log(data);
+        let itemsCard : Array<ICardInfoFull> = [];
+        for(let i = 0; i < data.length; i++) {
+            let item:ICardInfoFull = {
+                x: 0,
+                y: 0,
+                delay: 200 * (i+1),
+                title: data[i].groupName,
+                description: data[i].description,
+                image: data[i].images[0],
+                postTitle: data[i].title,
+                groupImage: data[i].groupImage,
+                likes: data[i].countLikes
+                
+            }
+
+            itemsCard.push(item);
         }
-    ];
+
+        setLoad(false);
+        setData(itemsCard);
+    }
+
+    useEffect(() => {
+        setDataCards(3);
+    },[]);
 
     const [isVisible, setVisible] = useState(false);
 
@@ -66,6 +77,9 @@ const NewsContainer: React.FC = () => {
             setVisible(false);
         }
     });
+
+  
+
   return (<div className='news-container-out'>
     <div className='news-container'>
         
@@ -73,7 +87,7 @@ const NewsContainer: React.FC = () => {
 
               
               <Row justify="space-around">
-                {data.map((itemMain, index) => {
+                {data && data.length > 0 && data.map((itemMain, index) => {
                     return <Col key={"col" + index} lg={8} md={12} xs={24} sm={12}>
                     {transition((style, item) => {
                         return item ? <animated.div style={style} >
@@ -81,6 +95,9 @@ const NewsContainer: React.FC = () => {
                                 image={itemMain.image}
                                 title={itemMain.title}
                                 description={itemMain.description}
+                                postTitle={itemMain.postTitle}
+                                groupImage={itemMain.groupImage}
+                                likes={itemMain.likes}
                             />
                         </animated.div> : "";
                     })}

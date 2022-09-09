@@ -12,14 +12,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Logout } from "../../../actions/auth/LogoutAction";
 import { useCookies } from "react-cookie";
+import ChatIcon from '@mui/icons-material/Chat';
 
 
 
 const Navbar: React.FC = () => {
 
     const [isOpen, setOpen] = useState(false);
-
-    const navigate = useNavigate();
 
     const [cookies, setCookie, removeCookie] = useCookies(['token']);
 
@@ -31,7 +30,8 @@ const Navbar: React.FC = () => {
         
         
         Logout(removeCookie, cookies.token != null);
-        navigate("/");
+        let link = document.getElementById("onLogoutLink") as HTMLAnchorElement;
+        link.click();
     }
 
     // const onSearchClick = () => 
@@ -63,11 +63,7 @@ const Navbar: React.FC = () => {
                 <DragHandleOutlinedIcon onClick={onSearchMenuClick}  id="btn"/>
             </div>
             <ul className="nav-list">
-                {/* <li onClick={onSearchClick}>
-                <SearchOutlinedIcon className="bx-search"/>
-                    <input type="text" placeholder="Пошук..."/>
-                        <span className="tooltip">Пошук</span>
-                </li> */}
+                
 
                 <li onClick={onCloseNavbar}>
                     <Link to="/profile">
@@ -75,6 +71,13 @@ const Navbar: React.FC = () => {
                         <span className="links_name">Профіль</span>
                     </Link>
                     <span className="tooltip">Профіль</span>
+                </li>
+                <li onClick={onCloseNavbar}>
+                    <Link to="/chat" target="_top">
+                        <ChatIcon/>
+                        <span className="links_name">Чат</span>
+                    </Link>
+                    <span className="tooltip">Чат</span>
                 </li>
                 <li onClick={onCloseNavbar}>
                     <Link to="/news" target="_top">
@@ -106,6 +109,8 @@ const Navbar: React.FC = () => {
                 </li>
             </ul>
         </div>
+
+        <Link to="/" id="onLogoutLink" target="_top"/>
     </>);
 }
 

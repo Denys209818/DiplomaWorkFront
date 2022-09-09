@@ -1,7 +1,8 @@
 
 export enum MESSAGE_TYPES {
     ADD_MESSAGE="ADD_MESSAGE",
-    SET_MESSAGES="SET_MESSAGES"
+    SET_MESSAGES="SET_MESSAGES",
+    CLEAR_MESSAGES="CLEAR_MESSAGES"
 }
 
 export interface IMessageRedux {
@@ -31,7 +32,11 @@ export interface ISetMessages {
     payload: Array<IMessageRedux>
 }
 
-export type MessageTypes = IAddMessage | ISetMessages;
+export interface IClearMessages {
+    type: MESSAGE_TYPES.CLEAR_MESSAGES
+}
+
+export type MessageTypes = IAddMessage | ISetMessages | IClearMessages;
 
 
 //Custom types
