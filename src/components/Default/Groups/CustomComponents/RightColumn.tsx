@@ -27,7 +27,8 @@ const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, 
                 <Row>
                     <Col md={0} lg={0} xs={{ span: 2 }}>
                         <div className="icon-div">
-                            <KeyboardDoubleArrowLeftIcon onClick={() => onClickRight()} />
+                            <KeyboardDoubleArrowLeftIcon onClick={() => {
+                                onClickRight()}} />
                         </div>
                     </Col>
                     <Col md={4} xs={4} xl={2}>

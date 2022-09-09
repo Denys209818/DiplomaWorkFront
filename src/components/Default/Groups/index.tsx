@@ -1,5 +1,5 @@
 import { Col, Row } from 'antd';
-import React, { startTransition, useEffect, useState } from 'react';
+import React, { startTransition, useContext, useEffect, useState } from 'react';
 import './../Groups/groupsStyles.css';
 import { animated, useTransition } from 'react-spring';
 import RightColumn from './CustomComponents/RightColumn';
@@ -17,6 +17,7 @@ import { IPostDataReturned } from './CustomComponents/types/EditPostModalTypes';
 import { defaultImage } from '../../../constants/defaultConsts';
 import { useGroupsAction } from '../../../actions/groups/useGroupsAction';
 import { usePostActions } from '../../../actions/post/usePostActions';
+import { LoaderIs } from '../../../App';
 
 
 
@@ -27,6 +28,8 @@ const Groups: React.FC = () => {
     const [width, setWidth] = useState(window.innerWidth);
     const user = typedSelector(user => user.user);
     // const [groups, setGroups] = useState<Array<IGroup>>([]);
+
+    const {load, setLoad} = useContext(LoaderIs)
 
     const groups = typedSelector(groups => groups.groups) as Array<IGroup>;
     const publicationsObj = typedSelector(posts => posts.posts) as Array<IPublication>;
@@ -69,6 +72,7 @@ const Groups: React.FC = () => {
     const generateRightColumn = async (id :number) => {
         ClearPost();
         SetPosts(id);
+        setLoad(true);
 
         let data = (await axiosService.getGroupDataById(id)).data;
         setActiveGroup({
@@ -81,9 +85,8 @@ const Groups: React.FC = () => {
             tags: data.tags
         });
 
-        setVisibleLeft(!visibleLeft);
-        setPhone(!isPhone);
-        setVisibleRight(!visibleRight);
+        setLoad(false);
+        
     }
 
     const openLeftRightComponent =async (id?: number) => {
@@ -95,6 +98,10 @@ const Groups: React.FC = () => {
             }
             );
         }
+
+        setVisibleLeft(!visibleLeft);
+        setPhone(!isPhone);
+        setVisibleRight(!visibleRight);
     }
 
 
@@ -153,6 +160,7 @@ const Groups: React.FC = () => {
     const [activeGroup, setActiveGroup] = useState<IGroup|null>(null);
 
     const onDeleteGroup = async () => {
+        setLoad(true);
         
         if(activeGroup) {
             if(publicationsObj) {
@@ -166,22 +174,33 @@ const Groups: React.FC = () => {
             await ClearPost();
             await DeleteGroupAction(activeGroup.id);
             setActiveGroup(null);
+        setLoad(false);
+
         }
     }
 
     const deletePublication = async (publicationId: Number) => {
+        setLoad(true);
+
         await axiosService.deletePublication(publicationId);
+        setLoad(false);
+
     }
 
     const delPostImage = async (image: string) => {
+        setLoad(true);
+
         await axiosService.delPostImage({
             image: image
         });
+        setLoad(false);
+
     }
 
 
     const onExitGroup = async () => {
         if(activeGroup) {
+            setLoad(true);
 
             let groupId = activeGroup.id;
             let userId = user.id;
@@ -192,6 +211,8 @@ const Groups: React.FC = () => {
             await DeleteGroupRedux(groupId);
 
             await DeleteUserGroup(groupId, userId);
+        setLoad(false);
+
         }
     }
 

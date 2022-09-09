@@ -27,6 +27,9 @@ const groupReducer = (state = initialState, action: GroupActions) => {
         case GROUP_TYPES.DELETE_GROUP: {
             return [...state.filter(x => x.id != action.payload)]
         }
+        case GROUP_TYPES.CLEAR_GROUPS: {
+            return [];
+        }
         default: {
             return state;
         }

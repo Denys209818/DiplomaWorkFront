@@ -4,9 +4,11 @@ import 'antd/dist/antd.css';
 import './styles/LayoutStyle.css';
 import { useCookies } from "react-cookie";
 import { useActions } from "../../actions/auth/UseActions";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { typedSelector } from "../../redux/services/useTypedSelector";
 import axiosService from "../../axios/axiosService";
+import { LoaderIs } from "../../App";
+import Loader from "../../components/Custom/Loader";
 
 const ProfileLayout: React.FC = () => {
     const { AuthUserWithToken } = useActions();
@@ -20,6 +22,7 @@ const ProfileLayout: React.FC = () => {
         setState(true);
     }
 
+    const {load, setLoad} = useContext(LoaderIs);
 
 
     useEffect(() => {
@@ -42,6 +45,8 @@ const ProfileLayout: React.FC = () => {
         }
     }, []);
     return (<>
+            {load && <Loader/>}
+
         <Navbar/>
         <section className="home-section">
             {state ? <Outlet/> : <></>}

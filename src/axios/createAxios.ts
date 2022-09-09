@@ -1,6 +1,7 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
 
-const token = localStorage.getItem("token");
+export const token = localStorage.getItem("token");
 
 const createAxios = axios.create({
     baseURL: 'http://localhost:5053',

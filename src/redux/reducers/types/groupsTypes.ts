@@ -4,7 +4,8 @@ export enum GROUP_TYPES {
     ADD_GROUP="ADD_GROUP",
     EDIT_GROUP="EDIT_GROUP",
     DELETE_GROUP="DELETE_GROUP",
-    DELETE_USERGROUP="DELETE_USERGROUP"
+    DELETE_USERGROUP="DELETE_USERGROUP",
+    CLEAR_GROUPS="CLEAR_GROUPS"
 }
 
 export interface IGroupShort {
@@ -38,7 +39,11 @@ export interface AddGroupItem {
     payload: ReturnedGroupData
 }
 
-export type GroupActions = SetGroupsShort | AddGroupItem |EditGroup | DeleteGroup;
+export interface ClearGroup {
+    type: GROUP_TYPES.CLEAR_GROUPS
+}
+
+export type GroupActions = SetGroupsShort | AddGroupItem |EditGroup | DeleteGroup | ClearGroup;
 
 export interface IPublication {
     id:number,

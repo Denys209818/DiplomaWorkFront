@@ -4,7 +4,7 @@ import { Button, Col, Row } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import SelectOneImage from '../Components/SelectOneImage';
 import Field from '../Components/Fields/Field';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { defaultImage } from '../../../constants/defaultConsts';
 import { IGroupErrors, IGroupForm } from './types';
 import { Form, FormikProvider, useFormik } from 'formik';
@@ -13,6 +13,7 @@ import { useProfileAction } from '../../../actions/profile/useProfileActions';
 import ErrorAlert from '../Components/ErrorAlert';
 import { typedSelector } from '../../../redux/services/useTypedSelector';
 import SuccessAlert from '../Components/SuccessAlert';
+import { LoaderIs } from '../../../App';
 
 
 const CreateGroup: React.FC = () => {
@@ -33,7 +34,11 @@ const CreateGroup: React.FC = () => {
     }
 
 
+    const {load, setLoad} = useContext(LoaderIs);
+
     const onSubmitHandler = async (values: IGroupForm) => {
+        setLoad(true);
+
         try {
             await CreateGroup({
                 userId: user.id,
@@ -48,6 +53,8 @@ const CreateGroup: React.FC = () => {
             let errors = ex as IGroupErrors;
             setError(errors.message);
         }
+        setLoad(false);
+
     }
 
     const formik = useFormik({

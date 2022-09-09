@@ -1,6 +1,5 @@
 
 import { ILoginModel, IUserDataCount, ReturnedData } from "../actions/types/AuthTypes";
-inModel, ReturnedData } from "../actions/types/AuthTypes";
 import { IMessageReturned } from "../components/Default/Chat/types/chatTypes";
 
 import { IEditDynamicImage, IEditPost, IEditPostModal, IPostDataReturned } from "../components/Default/Groups/CustomComponents/types/EditPostModalTypes";
@@ -10,7 +9,7 @@ import { IDelImageRequest, ISendImage } from "../components/Profile/Components/S
 import { IGroupCreate, IGroupForm } from "../components/Profile/CreateGroup/types";
 import { IAddPublication } from "../components/Profile/CreatePost/types";
 import { IEditImage, IUserEdit, IUserFull } from "../components/Profile/Edit/types/UserTypes";
-import { IUserSubscribersPosts } from "../components/Profile/types/IProfileTypes";
+import { IUserMainInfo, IUserSubscribersPosts } from "../components/Profile/types/IProfileTypes";
 
 import { IDelUserGroup, IGroupData, ILikePost, IPublication, RequestGroupById, RequestGroupByName, ReturnedGroupData } from "../redux/reducers/types/groupsTypes";
 import { ICreateMessage, IMessageRedux, IRetCreateMessage, IUserFriend, IUserMessage } from "../redux/reducers/types/messageTypes";
@@ -150,6 +149,10 @@ class AxiosService {
 
     getPostsByUserSubscribers = () => {
         return createAxios.get<Array<IUserSubscribersPosts>>("/api/publication/getpopularfromgroupbyuserid");
+    }
+
+    getPopularPosts = (items: number) => {
+        return createAxios.get<Array<IUserMainInfo>>(`/api/publication/getpopularposts?items=${items}`);
     }
 }
 

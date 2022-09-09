@@ -4,22 +4,26 @@ import { Button, Card, CardActions, CardContent, CssBaseline, Container, Grid, T
 
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const tiers = [
   {
     title: 'Групи',
     image: '/images/info1.jpg',
-    text: 'Оберіть групу у вашій місцевості та намагайтеся приймати участь у різних проєктах та долучайтесь до різних акцій'
+    text: 'Оберіть групу у вашій місцевості та намагайтеся приймати участь у різних проєктах та долучайтесь до різних акцій',
+    url: '/groups'
   },
   {
     title: 'Профіль',
     image: '/images/profile1.jpg',
-    text: 'У вашому профілі є всі необхідні інструменти для створення груп і публікацій повідомлень. Створюйте контент!'
+    text: 'У вашому профілі є всі необхідні інструменти для створення груп і публікацій повідомлень. Створюйте контент!',
+    url: '/profile'
   },
   {
     title: 'Новини',
     image: '/images/news1.jpg',
-    text: 'У розділі "Новини" ви знайдете найпопулярніші завдання, які зібрали найбільше лайків протягом тижня'
+    text: 'У розділі "Новини" ви знайдете найпопулярніші завдання, які зібрали найбільше лайків протягом тижня',
+    url: '/news'
   },
 ];
 
@@ -62,7 +66,7 @@ const ContentCardsMain: React.FC = () => {
               </CardActionArea>
               <CardActions>
                 <Button size="small" color="primary">
-                  Перейти
+                  <Link to={tier.url} target="_top">Перейти</Link>
                 </Button>
               </CardActions>
             </Card>

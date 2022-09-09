@@ -10,6 +10,8 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
+import { typedSelector } from '../../../redux/services/useTypedSelector';
+import { defaultImage } from '../../../constants/defaultConsts';
 
 interface SettingsData {
     title: string,
@@ -20,7 +22,7 @@ const settings: Array<SettingsData> = [{title: 'Профіль', link: '/profile
 {title: 'Друзі', link: '/profile/searchFriends'}, 
 {title:'Створити групу', link: '/profile/createGroup'}, 
 {title:'Створити пост', link: '/profile/createPost'}, 
-{title:'Редагувати профіль', link: '/profile/editProfile'}];
+{title:'Редагувати профіль', link: '/profile/edit'}];
 
 const PhoneNavbar: React.FC = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -33,6 +35,8 @@ const PhoneNavbar: React.FC = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const user = typedSelector(user => user.user);
 
     return (<>
         <AppBar position="static">
@@ -78,7 +82,7 @@ const PhoneNavbar: React.FC = () => {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Відкрити додаткове меню">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="https://mui.com/static/images/avatar/2.jpg" />
+                                <Avatar alt="Remy Sharp" src={defaultImage + user.image} />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -99,7 +103,9 @@ const PhoneNavbar: React.FC = () => {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting.link+"id"} onClick={handleCloseUserMenu}>
-                                    <Link to={setting.link}>
+                                    <Link to={setting.link} target="_top" style={{
+                                        color: '#000'
+                                    }}>
                                         <Typography textAlign="center">{setting.title}</Typography>
                                     </Link>
                                 </MenuItem>

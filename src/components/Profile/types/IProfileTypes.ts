@@ -20,3 +20,13 @@ export interface IUserSubscribersPosts {
     groupName: string,
     groupImage: string
 }
+
+export interface IUserMainInfo {
+    id: number
+    groupName: string
+    groupImage: string
+    countLikes: number,
+    title: string,
+    description: string
+    images: Array<string>
+}

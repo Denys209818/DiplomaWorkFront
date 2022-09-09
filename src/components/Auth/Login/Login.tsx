@@ -2,9 +2,9 @@ import './../styles/mainStyles.css';
 import './../styles/loginStyles.css';
 import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
-import { useState, useRef, Dispatch, useEffect } from 'react';
+import { useState, useRef, Dispatch, useEffect, useContext } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavigateOptions, useNavigate } from 'react-router-dom';
 import { Formik, Form, useFormik, FormikProvider } from "formik";
 import { Errors, ILoginModel } from '../../../actions/types/AuthTypes';
 import TextInput from './Fields/TextInput';
@@ -12,6 +12,8 @@ import { useActions } from '../../../actions/auth/UseActions';
 import { Alert } from 'antd';
 import yupValidation from './yupValidation';
 import { useCookies } from 'react-cookie';
+import createAxios from '../../../axios/createAxios';
+import { LoaderIs } from '../../../App';
 
 
 const Login: React.FC = () => {
@@ -19,7 +21,7 @@ const Login: React.FC = () => {
     const [error, setErrors] = useState<Array<string>>();
     const { LoginAction, AuthUserWithToken } = useActions();
 
-    const [cookies, setCookie] = useCookies(['token']);
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
     const initialValues: ILoginModel = {
         email: '',
         password: ''
@@ -32,9 +34,12 @@ const Login: React.FC = () => {
     {
         setCheck(checked);
     }
+
+    const {load, setLoad} = useContext(LoaderIs);
+
     const onSubmitHandler = async (values: ILoginModel) => {
         try {
-            
+            setLoad(true);
             await LoginAction(values);
 
             if(checked) {
@@ -46,8 +51,10 @@ const Login: React.FC = () => {
                     expires: new Date(time + 30*24*60*60*1000)
                 } );
             }
-
-            navigate("/profile");
+            // // navigate("/profile");
+            // setLoad(false);
+            let link = document.getElementById("linkToProfile") as HTMLAnchorElement;
+            link.click();
 
         } catch (ex) {
             const serverError = ex as Errors;
@@ -145,6 +152,10 @@ const Login: React.FC = () => {
                 </div>
             </div>
         </div>
+
+        <Link id='linkToProfile' style={
+            {display: 'none'}
+        } to="/profile" target="_top"/>
     </>);
 }
 
