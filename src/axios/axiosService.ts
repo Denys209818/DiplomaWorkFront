@@ -1,5 +1,6 @@
 
 import { ILoginModel, IUserDataCount, ReturnedData } from "../actions/types/AuthTypes";
+inModel, ReturnedData } from "../actions/types/AuthTypes";
 import { IMessageReturned } from "../components/Default/Chat/types/chatTypes";
 
 import { IEditDynamicImage, IEditPost, IEditPostModal, IPostDataReturned } from "../components/Default/Groups/CustomComponents/types/EditPostModalTypes";
@@ -141,6 +142,7 @@ class AxiosService {
     addFriendMessage = (message: any) => {
         return createAxios.post("/api/chat/addfriendmessage", message);
     }
+
 
     getUserData = () => {
         return createAxios.get<IUserDataCount>("/api/account/getuserdata");
