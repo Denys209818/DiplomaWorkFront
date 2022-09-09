@@ -1,18 +1,32 @@
+import { userInfo } from "os";
+import { useNavigate } from "react-router-dom";
 import "./../styles/cardStyles.css";
 
 interface ICardInfo {
     name: String,
     stage: String,
-    posts: Number,
-    follows: Number,
-    following: Number
+    groupsCount: Number,
+    friendsCount: Number,
+    postsCount: Number,
+    image: string
 }
 
-const Card: React.FC<ICardInfo> = ({name, stage, posts, follows, following}) => {
+const Card: React.FC<ICardInfo> = ({name, stage, groupsCount, friendsCount, postsCount,image}) => {
+
+    const navigate = useNavigate();
+    const onClickFriends = () => {
+        navigate("/profile/searchFriends");
+    }
+
+    const onClickCreatePost = () => {
+        navigate("/profile/createPost");
+    }
+
+
     return (<>
         <div className="card">
             <div className="imgBx">
-                <img src="https://i.pinimg.com/originals/bd/94/5b/bd945b1a518afce06a405e69123974d9.jpg" alt="" />
+                <img src={image} alt="" />
             </div>
 
             <div className="content">
@@ -20,14 +34,14 @@ const Card: React.FC<ICardInfo> = ({name, stage, posts, follows, following}) => 
                     <h2>{name} <br /> <span>{stage}</span></h2>
 
                     <div className="data">
-                        <h3> {posts.toString()} <br /> <span>Posts</span></h3>
-                        <h3> {follows.toString()} <br /> <span>Followers</span></h3>
-                        <h3> {following.toString()} <br /> <span>Following</span></h3>
+                        <h3> {groupsCount.toString()} <br /> <span>Груп</span></h3>
+                        <h3> {friendsCount.toString()} <br /> <span>Друзів</span></h3>
+                        <h3> {postsCount.toString()} <br /> <span>Постів</span></h3>
                     </div>
 
                     <div className="actionBtn">
-                        <button>Follow</button>
-                        <button>Message</button>
+                        <button onClick={onClickFriends}>Додати друзів</button>
+                        <button onClick={onClickCreatePost}>Створити пост</button>
                     </div>
                 </div>
             </div>

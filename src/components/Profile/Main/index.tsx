@@ -3,54 +3,69 @@ import { Col, Row } from "antd";
 import PostContainer from "../PostContainer";
 import Card from "../Card";
 import FriendsCard from "../FriendsCard";
-import { IFriendDataArray } from "../FriendsCard/types/friendsCardInterfaces";
+import { IFriendData, IFriendDataArray } from "../FriendsCard/types/friendsCardInterfaces";
 
 import { Avatar, List } from 'antd';
 import PhoneNavbar from "../PhoneNavbar";
 import { Link } from "react-router-dom";
+import { typedSelector } from "../../../redux/services/useTypedSelector";
+import { defaultImage } from "../../../constants/defaultConsts";
+import axiosService from "../../../axios/axiosService";
+import { startTransition, useEffect, useState } from "react";
+import { IUserDataCount } from "../../../actions/types/AuthTypes";
+import { IGetGroup, IUserSubscribersPosts } from "../types/IProfileTypes";
 
 
 
 const ProfileMain: React.FC = () => {
-    const data: IFriendDataArray = {
-        friends: [
-            {
-                name: "Ali Connors",
-                description: "I'll be in your neighborhood doing errands this…",
-                image: "https://mui.com/static/images/avatar/1.jpg",
-                isOnline: true
-            },
-            {
-                name: "to Scott, Alex, Jennifer",
-                description: "Wish I could come, but I'm out of town this…",
-                image: "https://mui.com/static/images/avatar/2.jpg", isOnline: false
-            },
-            {
-                name: "Sandra Adams",
-                description: "Do you have Paris recommendations? Have you ever…",
-                image: "https://mui.com/static/images/avatar/3.jpg", isOnline: false
-            }
-        ]
+    const [data, setData] = useState< IFriendDataArray>({
+        friends: []
+    });
+
+    const [dataSource, setDataSource] = useState<Array<IGetGroup>>([]);
+    const [groupPosts, setGroupPosts] = useState<Array<IUserSubscribersPosts>>([])
+
+    const user = typedSelector(x => x.user);
+
+    const [userDataCount, setUserDataCount] = useState<IUserDataCount>();
+
+    const setUserData = async () => {
+        let res = (await axiosService.getUserData()).data;
+
+        let groups: Array<IGetGroup> = (await axiosService.getAllUserGroups(
+            user.id
+        )).data;
+
+        let friends = (await axiosService.getFriends()).data;
+        
+        let friendsObj: IFriendDataArray = {
+            friends: friends.map((item) => {
+                let friendData: IFriendData = {
+                    name: item.firstName + " " + item.secondName,
+                    description: item.email,
+                    image: defaultImage + item.image
+                }
+                return friendData;
+            })
+        };
+
+        let groupPosts = (await axiosService.getPostsByUserSubscribers()).data;
+
+
+            setGroupPosts(groupPosts);
+            setData(friendsObj);
+            setDataSource(groups);
+            setUserDataCount(res);
+        
     }
 
-    const dataSource = [
-        {
-            title: 'Ant Design Title 1',
-            id: "1214124"
-        },
-        {
-            title: 'Ant Design Title 2',
-            id: "1214122"
-        },
-        {
-            title: 'Ant Design Title 3',
-            id: "1214121"
-        },
-        {
-            title: 'Ant Design Title 4',
-            id: "1214125"
-        },
-    ];
+
+
+    useEffect(() => {
+        setUserData();
+
+
+    },[]);
 
     return (<>
         
@@ -63,12 +78,16 @@ const ProfileMain: React.FC = () => {
                     lg={13} xs={22}>
                     <div className="post-container-block">
 
-                        <PostContainer />
+                        {/* <PostContainer />
                         <PostContainer />
 
                         <PostContainer />
                         <PostContainer />
-                        <PostContainer />
+                        <PostContainer /> */}
+
+                        {groupPosts && groupPosts.map((element) => {
+                            return (<PostContainer key={"postIndexItem" + element.id} {...element} />);
+                        })}
 
 
                     </div>
@@ -80,22 +99,25 @@ const ProfileMain: React.FC = () => {
                     <div className="parent-element">
                         <div className="content-body">
 
-                            <Card name="Денис Кравчук" stage="Senior Developer" posts={123} follows={500} following={300} />
+                        <Card name={user.firstName + " " + user.secondName } stage={user.email}
+                        postsCount={userDataCount ? userDataCount.postsCount : 0} 
+                        groupsCount={userDataCount ? userDataCount.groupsCount : 0} 
+                        friendsCount={userDataCount ? userDataCount.friendsCount : 0} image={defaultImage + user.image} />
 
 
                             <FriendsCard friends={data.friends} />
 
                             <div className="groups-block">
-                                <h3>Групи</h3>
+                                <h3>Мої групи</h3>
                                 <List
                                     itemLayout="horizontal"
                                     dataSource={dataSource}
                                     renderItem={item => (
                                         <List.Item key={"Index" + item.id}>
                                             <List.Item.Meta
-                                                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                                                title={<a href="https://ant.design">{item.title}</a>}
-                                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                                avatar={<Avatar src={defaultImage + "Group/" + item.image} />}
+                                                title={item.title}
+                                                description={item.description}
                                             />
                                         </List.Item>
                                     )}
@@ -103,7 +125,7 @@ const ProfileMain: React.FC = () => {
                                         <List.Item key="lastItem">
                                             <Link to="/profile/createGroup" className="link-in-block">Створити групу</Link>
                                             
-                                            <Link to="/profile/createPost" className="link-in-block">Створити пост</Link>
+                                            {/* <Link to="/profile/createPost" className="link-in-block">Створити пост</Link> */}
 
 
                                         </List.Item>

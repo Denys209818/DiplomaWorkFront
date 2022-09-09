@@ -128,3 +128,23 @@ body{
         display: block;
     }
 } */
+
+.groups-block {
+    max-height: 580px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.groups-block::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .groups-block::-webkit-scrollbar-track {
+    background: #fff;
+    border-radius: 10px;
+  }
+  
+  .groups-block::-webkit-scrollbar-thumb {
+    background: #1976d2;
+    border-radius: 5px;
+  }
