@@ -1,5 +1,7 @@
 
+import axios from "axios";
 import { IRegisterModel, ILoginModel, ReturnedData } from "../actions/types/AuthTypes";
+import { IFriendAdd, IFriendDelete } from "../components/Profile/Components/SearchFriendsUI/types/SelectTypes";
 import { IDelImageRequest, ISendImage } from "../components/Profile/Components/SelectImage/types/SelectTypes";
 import { IGroupCreate, IGroupForm } from "../components/Profile/CreateGroup/types";
 import { IAddPublication } from "../components/Profile/CreatePost/types";
@@ -53,8 +55,16 @@ class AxiosService {
         return createAxios.post("/api/publication/create", publication);
     }
 
-    getFriends = (id: RequestFriendId) => {
+    getFriend = (id: RequestFriendId) => {
         return createAxios.post("/api/friend/getbyid", id);
+    }
+
+    addFriend = (friendId: IFriendAdd) => {
+        return createAxios.post("/api/friend/add",friendId);
+    }
+
+    deleteFriend = (friendId: IFriendDelete) => {
+        return createAxios.post("/api/friend/delete",friendId);
     }
 }
 

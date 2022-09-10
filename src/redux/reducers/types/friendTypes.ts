@@ -5,31 +5,40 @@ export enum FRIEND_TYPES {
     SEARCH_FRIEND="SEARCH_FRIEND"
 }
 
-export interface IFriend {
-    id: number
+export interface IFriendData {
+    id: number,
+    firstName: string,
+    secondName: string,
+    image: string,
+    friendId: number,
+    userId: number
 }
 
 export interface SetFriend {
     type: FRIEND_TYPES.SET_FRIEND,
-    payload: Array<IFriend>
+    payload: Array<IFriendData>
 }
 
 export interface AddFriend {
     type: FRIEND_TYPES.ADD_FRIEND,
-    payload: string
+    payload: Number
 }
    
 export interface DelFriend {
    type: FRIEND_TYPES.DEL_FRIEND,
-   payload: string
+   payload: Number
 }
    
 export interface SearchFriend {
+    [x: string]: any;
     type: FRIEND_TYPES.SEARCH_FRIEND,
 }
 
 export type FriendActions = SetFriend | AddFriend | DelFriend | SearchFriend;
 
 export interface RequestFriendId {
-    id: number
+    id: number,
+    firstName: string,
+    secondName: string,
+    image: string
 }

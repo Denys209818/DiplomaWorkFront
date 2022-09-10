@@ -1,7 +1,7 @@
-import { FriendActions, FRIEND_TYPES, IFriend } from "./types/friendTypes";
+import { FriendActions, FRIEND_TYPES, IFriendData } from "./types/friendTypes";
 
 
-const initialState: Array<IFriend> = [];
+const initialState: Array<IFriendData> = [];
 
 const friendReducer = (state = initialState, action: FriendActions) => {
     switch(action.type) {
@@ -12,10 +12,10 @@ const friendReducer = (state = initialState, action: FriendActions) => {
             return [...state, action.payload];
         }
         case FRIEND_TYPES.DEL_FRIEND: {
-            return [...state, action.payload];
+            return [...state.filter(x => x.id != action.payload)];
         }
         case FRIEND_TYPES.SEARCH_FRIEND:{
-            return [...state];
+            return [...state, action.payload];
         }
         default: {
             return state;
