@@ -3,6 +3,7 @@ import {useContext, useEffect, useState} from 'react';
 import { useTransition, animated, useSpring } from 'react-spring';
 import { LoaderIs } from '../../../App';
 import axiosService from '../../../axios/axiosService';
+import { IUserMainInfo } from '../../Profile/types/IProfileTypes';
 import NewsCard, { ICardInfo } from './customComponents/NewsCard';
 import './styles/newsContainer.css';
 
@@ -28,8 +29,8 @@ const NewsContainer: React.FC = () => {
 
     const setDataCards = async (items: number) => {
         setLoad(true);
-        let data = (await axiosService.getPopularPosts(items)).data;
-        console.log(data);
+        let data:Array<IUserMainInfo> = (await axiosService.getPopularPosts(items)).data;
+        // console.log(data);
         let itemsCard : Array<ICardInfoFull> = [];
         for(let i = 0; i < data.length; i++) {
             let item:ICardInfoFull = {

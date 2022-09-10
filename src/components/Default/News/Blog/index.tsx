@@ -1,34 +1,62 @@
 import './../styles/blogStyles.css';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppBlockingRounded } from '@mui/icons-material';
 import { Footer } from 'antd/lib/layout/layout';
+import { Pagination } from 'antd';
+import axiosService from '../../../../axios/axiosService';
+import { IUserMainInfo } from '../../../Profile/types/IProfileTypes';
+import PostContainer from '../Components/PostContainer';
+import { LoaderIs } from '../../../../App';
 
 
 const Blog: React.FC = () => {
+
+    const [count, setCount] = useState<number>(0);
+    const [data, setData] = useState<Array<IUserMainInfo>>([]);
+
+    const setPostsOnPage =async (page: number) => {
+        setLoad(true);
+        let data = (await axiosService.getPopularPostsWithPage(page)).data;
+        
+        setData(data);
+        setLoad(false);
+    }
+
+    const setCountItems = async () => {
+        setLoad(true);
+        let count = (await axiosService.getPostCount()).data;
+        setCount(count);
+        setLoad(false);
+    }
+
+    useEffect(() => {
+        setPostsOnPage(0);
+
+        setCountItems();
+    },[]);
+
+    const onChangeValue = (page: number) => {
+        setPostsOnPage((page-1));
+    }
+
+
+    const {load, setLoad} = useContext(LoaderIs);
     return (<>
 
         <div className="post-filter container">
-            <span className="filter-item active-filter" data-filter='all'>All</span>
-            <span className="filter-item" data-filter='design'>Design</span>
-            <span className="filter-item" data-filter='tech'>Tech</span>
-            <span className="filter-item" data-filter='mobile'>Mobile</span>
+            <Pagination defaultCurrent={1} pageSize={6} total={count} showSizeChanger={false} onChange={onChangeValue} />
         </div>
 
         <section className="post coutainer">
-            <div className="post-box">
-                <img src="images/mobile1.jpg" alt="" className='post-img'></img>
-                <h2 className="category">Mobile</h2>
-                <a href="post-page.html" className="post-title">
-                    How To Create Best UX Design With Adobe XD
-                </a>
-                <span className="post-date">12 Feb 2022</span>
-                <p className="post-decription">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex, velit optio quod, minima beatae dolorem corporis cupiditate, ducimus similique veritatis maiores nihil rerum. Voluptates eligendi architecto nam ad enim quasi?</p>
-                <div className="profile">
-                    <img src="images/design.jpg" alt="" className ="profile-img"></img>
-                    <span className="profile-name">User name</span>
-                </div>
-            </div>
 
+            {data && data.map((element, index) => {
+                return (<PostContainer key={"postContainerPage" + index} image={element.images[0]} groupImage={element.groupImage} 
+                    title={element.title} groupName={element.groupName} date= {element.dateCreated}
+                    description={element.description} likes={element.countLikes}
+                />);
+            })}
+           
+            {/* 
             <div className="post-box">
                 <img src="images/Tech.jpg" alt="" className='post-img'></img>
                 <h2 className="category">Tech</h2>
@@ -125,7 +153,7 @@ const Blog: React.FC = () => {
                     <img src="images/design-header4.jpg" alt="" className ="profile-img"></img>
                     <span className="profile-name">User name</span>
                 </div>
-            </div>
+            </div> */}
         </section>
     </>)
 }

@@ -28,5 +28,6 @@ export interface IUserMainInfo {
     countLikes: number,
     title: string,
     description: string
-    images: Array<string>
+    images: Array<string>,
+    dateCreated: Date
 }

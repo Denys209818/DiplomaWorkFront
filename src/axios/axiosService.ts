@@ -155,6 +155,14 @@ class AxiosService {
         return createAxios.get<Array<IUserMainInfo>>(`/api/publication/getpopularposts?items=${items}`);
     }
 
+    getPopularPostsWithPage = (page: number) => {
+        return createAxios.get<Array<IUserMainInfo>>(`/api/publication/getallpopularposts?page=${page}`);
+    }
+
+    getPostCount = () => {
+        return createAxios.get<number>("/api/publication/getpostcount");
+    }
+
     getPopularGroups = (items: number) => {
         return createAxios.get<Array<IGroupDataMain>>(`/api/group/getpopulargroups?items=${items}`);
     }
