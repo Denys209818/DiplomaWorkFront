@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axiosService from '../../../../axios/axiosService';
 import { typedSelector } from '../../../../redux/services/useTypedSelector';
 import './../styles/cardFeedback.css';
@@ -17,12 +18,20 @@ const CardFeedback: React.FC<ICardData> = ({title, subscribers, description, ima
 {
     const user = typedSelector(user => user.user);
     const onSubscribeGroup = async (e: any) => {
-        let btn = e.target as HTMLButtonElement;
-        btn.classList.remove("card-button");
-        btn.classList.add("card-button-disabled");
-        btn.disabled = true;
+        let token = localStorage.getItem("token");
+        if(token) {
 
-        let res = await axiosService.subscribeOnGroup(id, user.id);
+            let btn = e.target as HTMLButtonElement;
+            btn.classList.remove("card-button");
+            btn.classList.add("card-button-disabled");
+            btn.disabled = true;
+            
+            let res = await axiosService.subscribeOnGroup(id, user.id);
+        }else {
+            let link = document.getElementById("toAuth") as HTMLAnchorElement;
+            link.click();
+
+        }
     }
 
     return (<div className="Card">
@@ -41,6 +50,9 @@ const CardFeedback: React.FC<ICardData> = ({title, subscribers, description, ima
              {'card-button-disabled':isSubscribed})} onClick={onSubscribeGroup} 
              disabled={isSubscribed}>Підписатися</button>
         </div>
+        <Link id="toAuth" style={{
+            display:'none'
+        }} to="/auth/login" target="_top"/>
     </div>);
 }
 
