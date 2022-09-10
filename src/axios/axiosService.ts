@@ -3,7 +3,7 @@ import { ILoginModel, IUserDataCount, ReturnedData } from "../actions/types/Auth
 import { IMessageReturned } from "../components/Default/Chat/types/chatTypes";
 
 import { IEditDynamicImage, IEditPost, IEditPostModal, IPostDataReturned } from "../components/Default/Groups/CustomComponents/types/EditPostModalTypes";
-import { IGroup, IGroupDelete, IGroupInfo } from "../components/Default/Groups/types/groupTypes";
+import { IGroup, IGroupDataMain, IGroupDelete, IGroupInfo } from "../components/Default/Groups/types/groupTypes";
 
 import { IDelImageRequest, ISendImage } from "../components/Profile/Components/SelectImage/types/SelectTypes";
 import { IGroupCreate, IGroupForm } from "../components/Profile/CreateGroup/types";
@@ -153,6 +153,10 @@ class AxiosService {
 
     getPopularPosts = (items: number) => {
         return createAxios.get<Array<IUserMainInfo>>(`/api/publication/getpopularposts?items=${items}`);
+    }
+
+    getPopularGroups = (items: number) => {
+        return createAxios.get<Array<IGroupDataMain>>(`/api/group/getpopulargroups?items=${items}`);
     }
 }
 
