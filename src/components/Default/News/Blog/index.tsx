@@ -29,14 +29,17 @@ const Blog: React.FC = () => {
         setLoad(false);
     }
 
+    const [current, setCurrent ] = useState<number>(1);
+
     useEffect(() => {
         setPostsOnPage(0);
-
+        setCurrent(1);
         setCountItems();
     },[]);
 
     const onChangeValue = (page: number) => {
         setPostsOnPage((page-1));
+        setCurrent(page);
     }
 
 
@@ -44,7 +47,7 @@ const Blog: React.FC = () => {
     return (<>
 
         <div className="post-filter container">
-            <Pagination defaultCurrent={1} pageSize={6} total={count} showSizeChanger={false} onChange={onChangeValue} />
+            <Pagination current={current} pageSize={6} total={count} showSizeChanger={false} onChange={onChangeValue} />
         </div>
 
         <section className="post coutainer">
