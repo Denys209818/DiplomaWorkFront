@@ -200,6 +200,10 @@
 
 }
 
+body{
+    overflow-x: hidden;
+}
+
 .msg_cotainer_send {
     margin-top: auto;
     margin-bottom: auto;

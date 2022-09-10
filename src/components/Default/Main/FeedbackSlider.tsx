@@ -12,6 +12,10 @@ import { Keyboard, Scrollbar, Navigation, Pagination } from "swiper";
 import { faChevronCircleRight, faChevronCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import CardFeedback from "./customComponents/CardFeedback";
+import { useEffect, useState } from "react";
+import axiosService from "../../../axios/axiosService";
+import { IGroupDataMain } from "../Groups/types/groupTypes";
+import { defaultImage } from "../../../constants/defaultConsts";
 
 const iconRight = faChevronCircleRight as IconProp;
 const iconLeft = faChevronCircleLeft as IconProp;
@@ -37,8 +41,19 @@ const FeedbackSlider: React.FC = () => {
         htmlel.click();
     }
 
+    const[data, setData] = useState<Array<IGroupDataMain>>([]);
+
+    const getGroup = async () => {
+        let data: Array<IGroupDataMain> = (await axiosService.getPopularGroups(5)).data;
+        setData(data);
+    }
+
+    useEffect(() => {
+        getGroup();
+    },[]);
+
     return (<>
-       <h1 className="nameOfSliderBlock">Відгуки</h1>
+       <h1 className="nameOfSliderBlock">Популярні групи</h1>
         <Row justify="center" className="feedBackSliderMain">
         
             <Col md={4} className="arrow" style={feedbackSliderButton}>
@@ -71,20 +86,18 @@ const FeedbackSlider: React.FC = () => {
                     className="mySwiper"
                 >
 
-                    <SwiperSlide className="sliderEl">
-                    <CardFeedback name="Albert Einstein" year="107" 
-                            image="https://upload.wikimedia.org/wikipedia/commons/2/2f/Albert_Einstein_%28Nobel%29.jpg"
-                            description="Lorem Ipsum is simply dummy 
-        text of the printing and typesetting 
-        industry. Lorem Ipsum has been the 
-        industry's standard dummy text ever 
-        since the 1500s, when an unknown 
-        printer took a galley of type and 
-        scrambled it to make a type specimen 
-        book."/>
-                    </SwiperSlide>
-                    <SwiperSlide className="sliderEl">
-                    <CardFeedback name="Ilon Mask" year="33"
+                    {data && data.map((item,index) => {
+                        return (<SwiperSlide key={"swiperSlider" + index} className="sliderEl">
+
+                            <CardFeedback title={item.title} subscribers={item.subscribersCount.toString()}
+                                image={defaultImage + "Group/" +item.image}
+                                description={item.description} id={item.id} 
+                                isSubscribed={item.isSubscribed}/>
+                        </SwiperSlide>);
+                    })}
+                    
+                    {/* <SwiperSlide className="sliderEl">
+                    <CardFeedback title="Albert Einstein" subscribers="107" 
                     image="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Elon_Musk_2015.jpg/250px-Elon_Musk_2015.jpg"
                             description="Lorem Ipsum is simply dummy 
         text of the printing and typesetting 
@@ -96,7 +109,7 @@ const FeedbackSlider: React.FC = () => {
         book."/>
                     </SwiperSlide>
                     <SwiperSlide className="sliderEl">
-                    <CardFeedback name="Boris Johnson" year="23"
+                    <CardFeedback title="Albert Einstein" subscribers="107" 
                     image="https://chp-aws-media.s3-accelerate.amazonaws.com/2019/07/Boris-Johnson.jpg"
                             description="Lorem Ipsum is simply dummy 
         text of the printing and typesetting 
@@ -108,7 +121,7 @@ const FeedbackSlider: React.FC = () => {
         book."/>
                     </SwiperSlide>
                     <SwiperSlide className="sliderEl">
-                    <CardFeedback name="Andriy Shevchenko" year="43"
+                    <CardFeedback title="Albert Einstein" subscribers="107" 
                     image="https://cdn.footballua.tv/i/original/uploads/football-www/novosti/5c4d97e599d40_andrey_shevchenko.jpeg"
                             description="Lorem Ipsum is simply dummy 
         text of the printing and typesetting 
@@ -120,7 +133,7 @@ const FeedbackSlider: React.FC = () => {
         book."/>
                     </SwiperSlide>
                     <SwiperSlide className="sliderEl">
-                    <CardFeedback name="Volodymyr Zelenskiy" year="45"
+                    <CardFeedback title="Albert Einstein" subscribers="107" 
                     image="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Volodymyr_Zelensky_Official_portrait.jpg/220px-Volodymyr_Zelensky_Official_portrait.jpg"
                             description="Lorem Ipsum is simply dummy 
         text of the printing and typesetting 
@@ -130,7 +143,7 @@ const FeedbackSlider: React.FC = () => {
         printer took a galley of type and 
         scrambled it to make a type specimen 
         book."/>
-                    </SwiperSlide>
+                    </SwiperSlide> */}
                 </Swiper>
             </Col>
             <Col md={4} className="arrow" style={feedbackSliderButton}>

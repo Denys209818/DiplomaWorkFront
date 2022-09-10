@@ -1,15 +1,30 @@
+import classNames from 'classnames';
 import { useState } from 'react';
+import axiosService from '../../../../axios/axiosService';
+import { typedSelector } from '../../../../redux/services/useTypedSelector';
 import './../styles/cardFeedback.css';
 
 interface ICardData {
-    name: String,
-    year: String,
+    title: String,
+    subscribers: String,
     description: String,
-    image: string
+    image: string,
+    id: number,
+    isSubscribed: boolean
 };
 
-const CardFeedback: React.FC<ICardData> = ({name, year, description, image}:ICardData) => 
+const CardFeedback: React.FC<ICardData> = ({title, subscribers, description, image, id, isSubscribed}:ICardData) => 
 {
+    const user = typedSelector(user => user.user);
+    const onSubscribeGroup = async (e: any) => {
+        let btn = e.target as HTMLButtonElement;
+        btn.classList.remove("card-button");
+        btn.classList.add("card-button-disabled");
+        btn.disabled = true;
+
+        let res = await axiosService.subscribeOnGroup(id, user.id);
+    }
+
     return (<div className="Card">
         <div className="upper-container">
             <div className="image-container">
@@ -17,10 +32,14 @@ const CardFeedback: React.FC<ICardData> = ({name, year, description, image}:ICar
             </div>
         </div>
         <div className="lower-container">
-            <h3> {name}</h3>
-            <h4> {year}</h4>
-            <p> {description}</p>
-            <button className='card-button'>Профіль</button>
+            <h3> {title}</h3>
+            <h4> {subscribers}</h4>
+            <p style={{
+                textAlign: 'center'
+            }}> {description}</p>
+            <button className={classNames({"card-button": !isSubscribed},
+             {'card-button-disabled':isSubscribed})} onClick={onSubscribeGroup} 
+             disabled={isSubscribed}>Підписатися</button>
         </div>
     </div>);
 }

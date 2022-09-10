@@ -21,3 +21,12 @@ export interface IGroupInfo {
 export interface IGroupDelete {
     groupId: number
 }
+
+export interface IGroupDataMain {
+    id: number,
+    title: string
+    description: string,
+    subscribersCount: Number,
+    image: string,
+    isSubscribed: boolean
+}

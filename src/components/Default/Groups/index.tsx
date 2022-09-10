@@ -204,9 +204,9 @@ const Groups: React.FC = () => {
 
             let groupId = activeGroup.id;
             let userId = user.id;
-
-            setPublications(null);
-            setActiveGroup(null);
+            
+            await ClearPost();
+            await setActiveGroup(null);
 
             await DeleteGroupRedux(groupId);
 

@@ -99,6 +99,8 @@ const ProfileMain: React.FC = () => {
                         {groupPosts && groupPosts.map((element) => {
                             return (<PostContainer key={"postIndexItem" + element.id} {...element} />);
                         })}
+                        {groupPosts && groupPosts.length == 0 &&
+                        <h3>У вас поки що немає публікацій...</h3>}
 
 
                     </div>

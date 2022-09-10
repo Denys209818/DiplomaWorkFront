@@ -216,7 +216,7 @@ const Chat : React.FC = () => {
                 await sendMessage({
                     text: content,
                     date: new Date(Date.now()),
-                    image: user.image
+                    image: user.image,
                 });
         }else {
             if(chatId){

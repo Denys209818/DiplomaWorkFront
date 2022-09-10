@@ -33,23 +33,23 @@ const MainFooter: React.FC = () =>
                 <Container maxWidth="lg">
                     <Grid container spacing={5}>
                         <Grid item xs={5} sm={2} lg={2}>
-                            <Box fontWeight={'bold'} fontSize={'h7.fontSize'} color={'white'} > Products </Box>
+                            <Box fontWeight={'bold'} fontSize={'h7.fontSize'} color={'white'} > Головне </Box>
                             <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                iDEs
+                                <Link style={offTextDecoration} href="/chat" color="inherit">
+                                Перейти до чатів
                                 </Link>
                             </Box>
                             <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                .NET & Visual Studio
+                                <Link style={offTextDecoration} href="/groups" color="inherit">
+                                Перейти до груп
                                 </Link>
                             </Box>
                             <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                Teams Tools
+                                <Link style={offTextDecoration} href="/news" color="inherit">
+                                Перейти до останніх публікацій
                                 </Link>
                             </Box>
-                            <Box>
+                            {/* <Box>
                                 <Link style={offTextDecoration} href="/" color="inherit">
                                 Plugins
                                 </Link>
@@ -68,52 +68,37 @@ const MainFooter: React.FC = () =>
                                 <Link style={offTextDecoration} href="/" color="inherit">
                                 All products
                                 </Link>
-                            </Box>
+                            </Box> */}
                         </Grid>
                         <Grid item xs={5} sm={2} lg={2}>
-                            <Box fontWeight={'bold'} fontSize={'h7.fontSize'} color={'white'} > Solutions </Box>
+                            <Box fontWeight={'bold'} fontSize={'h7.fontSize'} color={'white'} > Профіль </Box>
                             <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                C++ Tools
+                                <Link style={offTextDecoration} href="/profile" color="inherit">
+                                Перейти до профіля
                                 </Link>
                             </Box>
                             <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                Data Tools
+                                <Link style={offTextDecoration} href="/profile/edit" color="inherit">
+                                Редагувати профіль
                                 </Link>
                             </Box>
                             <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                DevOps
+                                <Link style={offTextDecoration} href="/profile/searchFriends" color="inherit">
+                                Пошук друзів
                                 </Link>
                             </Box>
                             <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                Education
+                                <Link style={offTextDecoration} href="/profile/createGroup" color="inherit">
+                                Створити групу
                                 </Link>
                             </Box>
                             <Box >
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                Game Development
-                                </Link>
-                            </Box>
-                            <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                Software Development
-                                </Link>
-                            </Box>
-                            <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                Tools For Business
-                                </Link>
-                            </Box>
-                            <Box>
-                                <Link style={offTextDecoration} href="/" color="inherit">
-                                Quality Assurance
+                                <Link style={offTextDecoration} href="/profile/createPost" color="inherit">
+                                Створити пост
                                 </Link>
                             </Box>
                         </Grid>
-                        <Grid item xs={5} sm={2} lg={2}>
+                        {/* <Grid item xs={5} sm={2} lg={2}>
                             <Box fontWeight={'bold'} fontSize={'h7.fontSize'} color={'white'} > Inltlatives </Box>
                             <Box>
                                 <Link style={offTextDecoration} href="/" color="inherit">
@@ -254,7 +239,7 @@ const MainFooter: React.FC = () =>
                                 Partners and Resellers
                                 </Link>
                             </Box>
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={15} sm={25}>
                             <Box borderBottom={1}> </Box>
                         </Grid>
@@ -286,17 +271,17 @@ const MainFooter: React.FC = () =>
                             </Link>
                         </Box>
                         <Box mr={2}>
-                            <Link href="/" color="inherit">
+                            <Link href="https://github.com/Denys209818" color="inherit">
                                 <GitHubIcon></GitHubIcon>
                             </Link>
                         </Box>
                         <Box>
-                            <Link href="/" color="inherit">
+                            <Link href="https://google.com" color="inherit">
                                 <GoogleIcon></GoogleIcon>
                             </Link>
                         </Box>
                     </Grid>
-                    <Grid container spacing={1} item xs={8}>
+                    {/* <Grid container spacing={1} item xs={8}>
                         <Box mr={2}>
                             <Link style={offTextDecoration} href="/" color="inherit">
                                 Privacy & Security
@@ -322,7 +307,7 @@ const MainFooter: React.FC = () =>
                                 Genuine Tools
                             </Link>
                         </Box>
-                    </Grid>
+                    </Grid> */}
                     <Box textAlign="center" pt={{ xs: 5, sm: 10 }} pb={{ xs: 5, sm: 0 }}>
                         VOLONTER.IO &reg; {new Date().getFullYear()}
                     </Box>
