@@ -18,6 +18,7 @@ import { defaultImage } from '../../../constants/defaultConsts';
 import { useGroupsAction } from '../../../actions/groups/useGroupsAction';
 import { usePostActions } from '../../../actions/post/usePostActions';
 import { LoaderIs } from '../../../App';
+import { Link } from 'react-router-dom';
 
 
 
@@ -35,11 +36,18 @@ const Groups: React.FC = () => {
     const publicationsObj = typedSelector(posts => posts.posts) as Array<IPublication>;
 
     useEffect(() => {
-        window.addEventListener("resize", () => {
-            startTransition(() => {
-                setWidth(window.innerWidth);
+        let token = localStorage.getItem("token");
+        if(token) {
+
+            window.addEventListener("resize", () => {
+                startTransition(() => {
+                    setWidth(window.innerWidth);
+                });
             });
-        });
+        }else {
+            let link = document.getElementById("toAuth") as HTMLAnchorElement;
+            link.click();
+        }
     }, []);
 
 
@@ -295,6 +303,10 @@ const Groups: React.FC = () => {
             }
             
         </Menu>
+        
+        <Link id="toAuth" style={{
+                display:'none'
+            }} to="/auth/login" target="_top"/>
     </>);
 }
 

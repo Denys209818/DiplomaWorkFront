@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Profile/Navbar";
 import 'antd/dist/antd.css';
 import './styles/LayoutStyle.css';
@@ -32,7 +32,8 @@ const ProfileLayout: React.FC = () => {
             authUser(token);
             return;
         }else {
-            setState(true);
+            let item = document.getElementById("toAuth") as HTMLAnchorElement;
+            item.click();
         }
 
         if(cookies.token) {
@@ -51,6 +52,8 @@ const ProfileLayout: React.FC = () => {
         <section className="home-section">
             {state ? <Outlet/> : <></>}
         </section>
+
+        
     </>);
 }
 

@@ -270,7 +270,14 @@ const Navbar: React.FC = () => {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const onSearchClickHandler = () => {
-    setModalOpen(true);
+    let  token = localStorage.getItem("token");
+    if(token) {
+
+      setModalOpen(true);
+    }else {
+      let item = document.getElementById("toAuth") as HTMLAnchorElement;
+            item.click();
+    }
   }
 
 
@@ -350,7 +357,10 @@ const Navbar: React.FC = () => {
     <Link style={{
       display: 'none'
     }}  to="/news" target="_top" id='toNewsLink'/>
-
+    
+    <Link id="toAuth" style={{
+            display:'none'
+        }} to="/auth/login" target="_top"/>
   </>);
 }
 

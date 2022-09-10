@@ -18,7 +18,7 @@ const userReducer = (state = initialState, action: UserActions) => {
             return action.payload;
         }
         case IUserTypes.REGISTER_USER: {
-            return state;
+            return action.payload;
         }
         case IUserTypes.CLEAR_USER: {
             return {firstName: '',

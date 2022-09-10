@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Col, Input, Row } from "antd";
 import SearchFriendsUI from "../Components/SearchFriendsUI";
 import "./styles/style.css";
+import { getSuggestedQuery } from "@testing-library/react";
 
 const { Search } = Input;
 
@@ -9,7 +10,10 @@ const SearchFriends: React.FC = () => {
     const [tableName, setTableName] = useState<String>("Ваші друзі");
     const onSearch = (value: string) => {
         value.length > 0 ? setTableName("Знайдені друзі") : setTableName("Ваші друзі");
-        console.log(value);}
+        let searchParam = (document.getElementById("search") as HTMLInputElement).name;
+
+        setTableName(searchParam);
+    }
     return (<>
         <div className="main-for-searchFriends">
 
