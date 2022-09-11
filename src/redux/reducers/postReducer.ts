@@ -11,7 +11,8 @@ export const postReducer = (state = initialState, action: PostActions) =>
     }
     case POST_TYPES.DELETE_POST: {
         let id = action.payload;
-        return [...(state.filter(x => x.id != id))]
+        let arr = state.filter(x => x.id != id);
+        return [...arr];
     }
     case POST_TYPES.CLEAR_POSTS: {
         return [];

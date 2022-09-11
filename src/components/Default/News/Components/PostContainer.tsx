@@ -13,7 +13,9 @@ interface IPostContainer {
 const PostContainer: React.FC<IPostContainer> = ({image, groupImage, title,groupName,date,description,likes}) => {
     let dateCreated = new Date(date);
     return (<div className="post-box">
-        <img src={defaultImage + "Post/" +image} alt="" className='post-img'></img>
+        {image && 
+            <img src={defaultImage + "Post/" +image} alt="" className='post-img'></img>
+        }
         {/* <h2 className="category">{likes} вподобайок</h2> */}
         <a href="post-page.html" className="post-title">
             {title}

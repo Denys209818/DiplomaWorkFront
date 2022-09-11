@@ -58,10 +58,10 @@ const ProfileMain: React.FC = () => {
 
         let groupPosts = (await axiosService.getPostsByUserSubscribers()).data;
 
-
+        console.log(groupPosts);
             setGroupPosts(groupPosts);
             setData(friendsObj);
-        setDataSource(groups
+            setDataSource(groups
         );
             setUserDataCount(res);
         setLoad(false);

@@ -51,7 +51,7 @@ const RightColumn: React.FC<IRightColumn> = ({ onClickRight, handleAvatarClick, 
                                     <span className='title-of-group'>
                                         {group.title}</span><br />
                                         
-                                    <span className='subscribers'>{group.description}</span></p>
+                                    <span className='subscribers'>{group.meta}</span></p>
 
                             </span>
                         </div>

@@ -173,10 +173,12 @@ const CardGroup: React.FC<ICardGroup> = ({ images, title, description, id, isLik
 
     const {DelPosts} = usePostActions();
 
+
+    const posts = typedSelector(posts => posts.posts);
     const onDelete = async () => {
         
          
-        await DelPosts(id);
+        await DelPosts(posts, id);
         
     }
 
