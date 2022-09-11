@@ -11,7 +11,7 @@ export interface IRegisterModel {
     phone: string,
     email: string,
     password: string
-    passwordConfirmation: string
+    confirmPassword: string
 }
 
 export interface ReturnedData {
@@ -28,7 +28,7 @@ export interface Errors {
     phone: Array<string>,
     email: Array<string>,
     password: Array<string>,
-    passwordConfirmation: Array<string>
+    confirmPassword: Array<string>
 }
 
 export interface IUserDataCount {

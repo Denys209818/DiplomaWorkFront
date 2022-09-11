@@ -37,7 +37,7 @@ const Register : React.FC = () =>
         phone: '',
         email: '',
         password: '',
-        passwordConfirmation: ''
+        confirmPassword: ''
     }
 
     /*const onShowPasswordClicked = () => {
@@ -62,7 +62,8 @@ const Register : React.FC = () =>
                     expires: new Date(time + 30*24*60*60*1000)
                 });
             }
-            navigate("/profile");
+            let item = document.getElementById("toAuth") as HTMLAnchorElement;
+            item.click();
         } catch(ex) {
             const serverError = ex as Errors;
             if(serverError.fitstName && serverError.fitstName.length > 0)
@@ -95,10 +96,10 @@ const Register : React.FC = () =>
                     ...serverError.password
                 ]);
             }
-            if(serverError.passwordConfirmation && serverError.passwordConfirmation.length > 0)
+            if(serverError.confirmPassword && serverError.confirmPassword.length > 0)
             {
                 setErrors([
-                    ...serverError.passwordConfirmation
+                    ...serverError.confirmPassword
                 ]);
             }
         }
@@ -191,12 +192,12 @@ const Register : React.FC = () =>
                         />
 
                         <TextInput
-                            touched={touched.passwordConfirmation}
-                            error={errors.passwordConfirmation}
+                            touched={touched.confirmPassword}
+                            error={errors.confirmPassword}
                             changeHandler={handleChange}
                             label='Підтвердіть пароль' 
-                            id='passwordConfirmation'
-                            name='passwordConfirmation'
+                            id='confirmPassword'
+                            name='confirmPassword'
                             IconElement={LockTwoToneIcon}
                             iconClass="lockIcon"
                             isPassword={true}
@@ -226,6 +227,9 @@ const Register : React.FC = () =>
                 </div>
             </div>
         </div>
+        <Link to="/profile" id='toAuth' target="_top" style={{
+            display:'none'
+        }}/>
         </>);
 }
 
