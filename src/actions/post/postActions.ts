@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 import axiosService from "../../axios/axiosService";
-import { DelPost, POST_TYPES, SetPost } from "../../redux/reducers/types/postTypes";
+import { IPublication } from "../../redux/reducers/types/groupsTypes";
+import { DelPost, IClearPosts, POST_TYPES, SetPost } from "../../redux/reducers/types/postTypes";
 
 
 export const SetPosts =(groupId: Number) => async (dispatch: Dispatch<SetPost>) =>  
@@ -13,12 +14,16 @@ export const SetPosts =(groupId: Number) => async (dispatch: Dispatch<SetPost>) 
     });
 }
 
-export const DelPosts = (postId: Number) => async (dispatch: Dispatch<DelPost>) => {
+export const DelPosts = (posts: Array<IPublication>, postId: Number) => async (dispatch: Dispatch<SetPost | IClearPosts>) => {
     let res = await axiosService.deletePublication(postId);
+    let newPosts = posts.filter(x => x.id != postId);
 
-    dispatch({
-        type: POST_TYPES.DELETE_POST,
-        payload: postId
+    await dispatch({
+        type: POST_TYPES.CLEAR_POSTS
+    });
+    await dispatch({
+        type: POST_TYPES.SET_POSTS,
+        payload: newPosts
     })
 }
 

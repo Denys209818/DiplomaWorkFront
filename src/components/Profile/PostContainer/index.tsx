@@ -17,8 +17,9 @@ const PostContainer : React.FC<IUserSubscribersPosts> = ({id, images, title, des
                         </div>
                         <div className="post-text" dangerouslySetInnerHTML={{ __html: description }}></div>
                         <Link to="#">{tags}</Link>
-
+                        {images && images[0] &&
                         <img src={defaultImage+ "Post/" +images[0]} alt="Np image" className="post-img" />
+                        }
 
                         <div className="post-row">
                             <div className="activity-icons">

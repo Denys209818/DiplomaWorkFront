@@ -31,7 +31,7 @@ const LeftColumn : React.FC<ILeftColumn> = ({onClickLeft, groups, onSearch}) => 
                 return (<Col key={"groupsitem" + index} id={element.id.toString()} span={24} onClick={() => {
                     onClickLeft(element.id);
                 }}>
-                    <GroupLeftColumn  title={element.title} description={element.description}
+                    <GroupLeftColumn  title={element.title} description={element.meta}
                         image={defaultImage + "Group/" + element.image} group_image={defaultImage +"Group/" + element.image} />
                 </Col>);
             })}

@@ -107,7 +107,7 @@ const CreateGroup: React.FC = () => {
                                     name="description"
                                     onChange={handleChange} showCount size='large' style={{
                                         height: '300px'
-                                    }} maxLength={1000} />
+                                    }} maxLength={290} />
 
                                 {touched.description && errors.description && <div style={{color:"#E64848"}}>
                                     {errors.description}

@@ -140,7 +140,7 @@ const Login: React.FC = () => {
 
 
                                 <Link className='link-forgot-password' to="/auth/register">
-                                    Відновити пароль
+                                    Зареєструватися
                                 </Link>
                             </div>
 

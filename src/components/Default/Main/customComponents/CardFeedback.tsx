@@ -44,7 +44,8 @@ const CardFeedback: React.FC<ICardData> = ({title, subscribers, description, ima
             <h3> {title}</h3>
             <h4> {subscribers}</h4>
             <p style={{
-                textAlign: 'center'
+                textAlign: 'center',
+                height:'50px'
             }}> {description}</p>
             <button className={classNames({"card-button": !isSubscribed},
              {'card-button-disabled':isSubscribed})} onClick={onSubscribeGroup} 

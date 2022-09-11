@@ -19,6 +19,7 @@ import axiosService from '../../../axios/axiosService';
 import { Alert } from '@mui/material';
 import ContactUserCard from './CustomComponents/ContactUserCard';
 import { LoaderIs } from '../../../App';
+import { Link } from 'react-router-dom';
 
 
 const Chat : React.FC = () => {
@@ -60,7 +61,14 @@ const Chat : React.FC = () => {
 
 
     useEffect(() => {
-        setFriends();
+        let token = localStorage.getItem("token");
+        if(token) {
+
+            setFriends();
+        }else {
+            let item=  document.getElementById("toAuth") as HTMLAnchorElement;
+            item.click();
+        }
 
         return () => {
             closeConnection();
@@ -415,6 +423,9 @@ const Chat : React.FC = () => {
             </div>
         </div>
         </div>
+        <Link id='toAuth' to="/auth/login" target="_top" style={{
+            display:'none'
+        }}/>
     </>);
 }
 

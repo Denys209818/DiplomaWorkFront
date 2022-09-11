@@ -39,7 +39,6 @@ const Blog: React.FC = () => {
 
     const onChangeValue = (page: number) => {
         setPostsOnPage((page-1));
-
         setCurrent(page);
     }
 
@@ -49,7 +48,6 @@ const Blog: React.FC = () => {
 
         <div className="post-filter container">
             <Pagination current={current} pageSize={6} total={count} showSizeChanger={false} onChange={onChangeValue} />
-
         </div>
 
         <section className="post coutainer">
