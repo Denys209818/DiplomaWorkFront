@@ -166,6 +166,9 @@ const Navbar: React.FC = () => {
           })
 
           Logout(removeCookie, cookies.token != null);
+
+          let link = document.getElementById("toMain") as HTMLAnchorElement;
+          link.click();
         }}>Вийти</MenuItem>}
     </Menu>
   );
@@ -361,6 +364,10 @@ const Navbar: React.FC = () => {
     <Link id="toAuth" style={{
             display:'none'
         }} to="/auth/login" target="_top"/>
+
+<Link id="toMain" style={{
+            display:'none'
+        }} to="/" target="_top"/>
   </>);
 }
 

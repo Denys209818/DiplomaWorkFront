@@ -1,4 +1,6 @@
 import { combineReducers } from "redux";
+import { friendPageReducer } from "./friendPageReducer";
+import { friendRequestReducer } from "./friendRequestReducer";
 import groupReducer from "./groupsReducer";
 import imageReducer from "./imageReducer";
 import messageReducer from "./messageReducer";
@@ -12,7 +14,9 @@ export const rootReducer = combineReducers({
     groups: groupReducer,
     images: imageReducer,
     posts: postReducer,
-    messages: messageReducer
+    messages: messageReducer,
+    friends: friendPageReducer,
+    friendRequests: friendRequestReducer
 });
 
 export type RootReducer = ReturnType<typeof rootReducer>

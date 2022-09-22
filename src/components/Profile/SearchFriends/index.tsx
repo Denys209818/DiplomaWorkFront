@@ -3,32 +3,24 @@ import { Col, Input, Row } from "antd";
 import SearchFriendsUI from "../Components/SearchFriendsUI";
 import "./styles/style.css";
 import { getSuggestedQuery } from "@testing-library/react";
+import { DataType } from "./types";
+import axiosService from "../../../axios/axiosService";
+import { useFriendPageActions } from "../../../actions/friends/useFriendPageActions";
+import { typedSelector } from "../../../redux/services/useTypedSelector";
 
 const { Search } = Input;
 
 const SearchFriends: React.FC = () => {
     const [tableName, setTableName] = useState<String>("Ваші друзі");
-    const onSearch = (value: string) => {
-        value.length > 0 ? setTableName("Знайдені друзі") : setTableName("Ваші друзі");
-        let searchParam = (document.getElementById("search") as HTMLInputElement).name;
 
-        setTableName(searchParam);
-    }
+
+    const { SetFriendsOnPage } = useFriendPageActions();
+
     return (<>
         <div className="main-for-searchFriends">
 
             <Row id='createFriendsRow'>
                 <Col span={24}>
-                    
-                    <Search
-                        placeholder="Ведіть ім'я користувача"
-                        allowClear
-                        enterButton="Пошук"
-                        size="large"
-                        className="searchUser"
-                        onSearch={onSearch}
-                    />
-                    <h1 className='friendsText'>{tableName}</h1>
                     <SearchFriendsUI />
                 </Col>
 

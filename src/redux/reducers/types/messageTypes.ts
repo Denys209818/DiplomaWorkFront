@@ -59,7 +59,8 @@ export interface IUserFriend {
     email: string,
     phone: string,
     image: string,
-    id: number
+    id: number,
+    isFriend?:boolean
 }
 
 
