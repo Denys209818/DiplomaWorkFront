@@ -3,7 +3,7 @@ import { IMessageReturned } from "../components/Default/Chat/types/chatTypes";
 import { IEditDynamicImage, IEditPost, IEditPostModal, IPostDataReturned } from "../components/Default/Groups/CustomComponents/types/EditPostModalTypes";
 import { IGroup, IGroupDataMain, IGroupDelete, IGroupInfo } from "../components/Default/Groups/types/groupTypes";
 import axios from "axios";
-import { IRegisterModel, ILoginModel, ReturnedData, IUserDataCount } from "../actions/types/AuthTypes";
+import { IRegisterModel, ILoginModel, ReturnedData, IUserDataCount, ILoginGoogle, ReturnedLoginGoogle, GetUserInfo } from "../actions/types/AuthTypes";
 import { IFriendAdd, IFriendDelete } from "../components/Profile/Components/SearchFriendsUI/types/SelectTypes";
 import { IDelImageRequest, ISendImage } from "../components/Profile/Components/SelectImage/types/SelectTypes";
 import { IGroupCreate, IGroupForm } from "../components/Profile/CreateGroup/types";
@@ -19,6 +19,7 @@ import { RequestFriendId } from "../redux/reducers/types/friendTypes";
 
 
 import createAxios from "./createAxios";
+import { FriendData } from "../components/Profile/SearchFriends/types";
 
 
 
@@ -132,7 +133,10 @@ class AxiosService {
         return createAxios.get<Array<IMessageReturned>>(`/api/chat/getbygroupid?groupId=${groupId.toString()}`);
     }
     
-    getFriends = () => {
+    getFriends = (page?: string) => {
+        if(page) {
+            return createAxios.get<Array<IUserFriend>>(`/api/account/friends?page=${page}`)
+        }
         return createAxios.get<Array<IUserFriend>>("/api/account/friends");
     }
 
@@ -179,6 +183,49 @@ class AxiosService {
 
     deleteFriend = (friendId: IFriendDelete) => {
         return createAxios.post("/api/friend/delete",friendId);
+    }
+
+    googleAuth = (googleAuth: ILoginGoogle) => {
+        return createAxios.post<string|ReturnedLoginGoogle>("/api/account/googlelogin", googleAuth);
+    }
+
+    getUserInfoByEmail = (email: string) => {
+        return createAxios.post<GetUserInfo>("/api/account/getuserinfo", email);
+    }
+
+    addFriendToUser = (email: string) => {
+        return createAxios.post("/api/account/addfriend", email);
+    }
+
+    getSearchFriends = (param: string, page: string) => {
+        return createAxios.get<Array<FriendData>>(`/api/account/searchfriend?param=${param}&page=${page}`);
+    }
+
+    getSearchFriendsCount = (param: string) => {
+        return createAxios.get<number>(`/api/account/searchfriendcount?param=${param}`);
+    }
+
+    getFriendsRequest = (page?: string) => {
+        if(page){
+            return createAxios.get<Array<IUserFriend>>(`/api/account/friendsrequest?page=${page}`);
+        }
+        return createAxios.get<Array<IUserFriend>>("/api/account/friendsrequest");
+    }
+
+    claimUserFriend = (email: string) => {
+        return createAxios.get(`/api/account/claimrequest?email=${email}`)
+    }
+
+    deleteUserFriend = (email: string) => {
+        return createAxios.get(`/api/account/deletefriend?email=${email}`);
+    }
+
+    getFriendsCount = () => {
+        return createAxios.get("/api/account/getfriendscount");
+    }
+
+    getFriendsRequestCount =() => {
+        return createAxios.get("/api/account/getfriendsrequestcount"); 
     }
 }
 

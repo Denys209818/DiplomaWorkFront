@@ -1,3 +1,6 @@
+import { IFriendData, IFriendDataArray } from "../../components/Profile/FriendsCard/types/friendsCardInterfaces"
+import { IGetGroup, IUserSubscribersPosts } from "../../components/Profile/types/IProfileTypes"
+import { IUserFriend } from "../../redux/reducers/types/messageTypes"
 
 
 export interface ILoginModel {
@@ -16,6 +19,18 @@ export interface IRegisterModel {
 
 export interface ReturnedData {
     token: string
+}
+
+export interface GetUserInfo {
+    image: string,
+    fullName: string,
+    email: string,
+    groupsCount: number,
+    postsCount: number,
+    friendsCount: number,
+    friends: Array<IUserFriend>,
+    groups: Array<IGetGroup>,
+    posts: Array<IUserSubscribersPosts>
 }
 
 export interface ErrorServer {
@@ -37,4 +52,15 @@ export interface IUserDataCount {
     friendsCount: Number,
     password: Array<string>,
     passwordConfirmation: Array<string>
+}
+
+
+export interface ILoginGoogle {
+    token: string,
+    provider: string,
+}
+
+export interface ReturnedLoginGoogle {
+    token: string,
+    tempPassword:string
 }

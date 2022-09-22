@@ -1,208 +1,267 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { InputRef, Modal } from 'antd';
-import { Button, Input, Space, Table } from 'antd';
-import type { ColumnsType, ColumnType } from 'antd/es/table';
-import type { FilterConfirmProps } from 'antd/es/table/interface';
-import React, { startTransition, useRef, useState } from 'react';
-import { DataIndex, DataType } from '../../SearchFriends/types';
-import Highlighter from 'react-highlight-words';
-import { Avatar } from '@mui/material';
-import { MessageOutlined } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import MenuForPhone from '../../SearchFriends/MenuForPhone';
+import { Input, Tabs } from 'antd';
+import { Table } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { DataType } from '../../SearchFriends/types';
+import './styles/style.css';
+import { columns, columnsRequest } from './common/ColumsTable';
+import axiosService from '../../../../axios/axiosService';
+import { typedSelector } from '../../../../redux/services/useTypedSelector';
+import { useFriendPageActions } from '../../../../actions/friends/useFriendPageActions';
+import { IUserFriend } from '../../../../redux/reducers/types/messageTypes';
+const { Search } = Input;
+
 
 const SearchFriendsUI: React.FC = () => {
-    const [data, setData] = useState<DataType[]>([
-        {
-            key: '1',
-            name: 'John Brown',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-        {
-            key: '2',
-            name: 'Joe Black',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-        {
-            key: '3',
-            name: 'Jim Green',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-        {
-            key: '4',
-            name: 'Jim Red',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
 
-        {
-            key: '5',
-            name: 'John Brown',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-        {
-            key: '6',
-            name: 'Joe Black',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-        {
-            key: '7',
-            name: 'Jim Green',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-        {
-            key: '8',
-            name: 'Jim Red',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
+    const data = typedSelector(x => x.friends);
 
-        {
-            key: '9',
-            name: 'John Brown',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-        {
-            key: '10',
-            name: 'Joe Black',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-        {
-            key: '11',
-            name: 'Jim Green',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-        {
-            key: '12',
-            name: 'Jim Red',
-            lastPosts: 'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s',
-            url: 'https://mui.com/static/images/avatar/1.jpg'
-        },
-    ]);
-    const [visible, setVisible] = useState(false);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [key, setKey] = useState<string>("");
+    const friendRequest = typedSelector(x => x.friendRequests);
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const { SetFriendsOnPage, SetFriendsOnRequest, ClearFriendsOnPage, ClearFriendsOnRequest } = useFriendPageActions();
 
-    const hideModal = () => {
-        setVisible(false);
-    };
+    const initializeFriend = async (page: number) => {
+            let data = (await axiosService.getFriends((page - 1).toString())).data;
+            await ClearFriendsOnPage();
+            await SetFriendsOnPage(data.map((element, index) => {
+                return {
+                    key: element.email + index,
+                    fullName: element.firstName + " " + element.secondName,
+                    email: element.email,
+                    image: element.image,
+                    isFriend: true,
+                }
+            }));
 
-    const onOkClick = () => {
-        setVisible(false);
-        setData(data.filter(x => x.key != key));
+            let count = (await axiosService.getFriendsCount()).data;
+            setTotal(count);
+        
     }
 
-
-    const onDeleteFriend = async (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
-        var el = (e.target as HTMLElement).closest("tr.ant-table-row") as HTMLTableElement;
-        let key:string = el.getAttribute("data-row-key") as string;
-        startTransition(() => {
-
-            setKey(key);
-            setVisible(true);
-        });
-    }
-
-    const onDeleteFriendRemote = async (key: string) => {
-        await startTransition(() => {
-            setKey(key);
-            setVisible(true);
-        });
-    }
-
-    const columns: ColumnsType<DataType> = [
-        {
-            title: 'Ім\'я',
-            dataIndex: 'name',
-            key: 'name',
-            width: '20%',
-            render: ((value, record: DataType, index) => {
-                return (<div className="avatar-block">
-                    <Avatar src={record.url} />
-                    <span>{value}</span>
-                    <MessageOutlined />
-                </div>);
-            }),
-        },
-        {
-            title: 'Інструменти',
-            dataIndex: 'settings',
-            key: 'settings',
-            width: '20%',
-            render: ((value, record: DataType, index) => {
-                return (<div className='command-block'>
-                    <Link to="/" onClick={onDeleteFriend}>Видалити друга</Link>
-                    <span> | </span>
-                    <Link to="/">Перейти на профіль</Link>
-
-                </div>);
-            })
-        },
-        {
-            title: 'Останні повідомлення',
-            dataIndex: 'lastPosts',
-            key: 'lastPosts',
-            render: ((value, record: DataType, index) => {
-                return (<div className='message-block'>
-                    <b>Повідомлення: </b><span>{record.lastPosts}</span>
-                </div>);
-            })
-        },
-    ];
-
-    const columnsForPhone: ColumnsType<DataType> = [
-        {
-            title: 'Ім\'я',
-            dataIndex: 'name',
-            key: 'name',
-            width: '20%',
-            render: ((value, record: DataType, index) => {
-                return (<div className="avatar-block">
-                    
-                    <Avatar src={record.url} onClick={handleClick} />
-                    <span>{value}</span>
-                    <MessageOutlined />
-                    <span>{record.lastPosts}</span>
-                </div>);
-            }),
-        },
-    ];
-
-    return (<>
-        <Table locale={{ emptyText: "Немає співпадінь" }} className='table-of-friends'
-            bordered={true} columns={window.innerWidth > 700 ? columns : columnsForPhone} dataSource={data} />
-
-        <Modal
-            title="Підтвердження"
-            visible={visible}
-            onOk={onOkClick}
-            onCancel={hideModal}
-            okText="Підтвердити"
-            cancelText="Скасувати"
-        >
-            <p>Ви точно хочете видалити друга?</p>
+    const initializeFriendRequest = async (page: number) => {
             
-        </Modal>
+            let requests = (await axiosService.getFriendsRequest((page).toString())).data;
+            await ClearFriendsOnRequest();
+            await SetFriendsOnRequest(requests.map((element, index) => {
+                return {
+                    email: element.email,
+                    fullName: element.firstName + " " + element.secondName,
+                    image: element.image,
+                    isFriend: element.isFriend ? element.isFriend : false,
+                    key: element.email + index,
 
-        <MenuForPhone anchorEl={anchorEl} linkToProfile={"/profile"}
-                        handleClose={handleClose} onDeleteFriendRemote={onDeleteFriendRemote}/>
+                };
+            }));
+
+            let countRequest = (await axiosService.getFriendsRequestCount()).data;
+            
+            setTotalRequest(countRequest);
+        
+    }
+
+    const setDataUsers = async () => {
+        await initializeFriend(1);
+        await initializeFriendRequest(0);
+    }
+    const [value, setValue] = useState<string>("");
+    const [totalCount, setTotal] = useState<number>(0);
+    const [totalCountRequest, setTotalRequest] = useState<number>(0);
+    const [page, setPage] = useState<number>(1);
+    const [pageRequest, setPageRequest] = useState<number>(1);
+    const [pageSearch, setPageSearch] = useState<number>(1);
+
+    useEffect(() => {
+        setDataUsers();
+    }, []);
+
+    const onChangePage = async (page: number) => {
+        setPage(page);
+        if(value && value.length > 0){
+            setPageSearch(page);
+            initializeSearch((page-1).toString());
+            
+            return;}
+        await initializeFriend(page);
+    }
+
+    const onChangeRequest = async (page: number) => {
+        setPageRequest(page);
+        await initializeFriendRequest(page-1);
+    }
+
+    const initializeSearch =async (page: string) => {
+        let friends = (await axiosService.getSearchFriends(value, page)).data;
+            await SetFriendsOnPage(friends.map((element, index) => {
+                return {
+                    email: element.email,
+                    key: element.email + index,
+                    fullName: element.fullName,
+                    image: element.image,
+                    isFriend: element.isFriend
+                }
+            }));
+    }
+
+    const onSearch = async (value: string) => {
+        try {
+        setValue(value);
+        if (value && value.length > 0) {
+
+            let friendsCount = (await axiosService.getSearchFriendsCount(value)).data;
+               setTotal(friendsCount);
+            
+            let friends = (await axiosService.getSearchFriends(value, "0")).data;
+            
+            await SetFriendsOnPage(friends.map((element, index) => {
+                return {
+                    email: element.email,
+                    key: element.email + index,
+                    fullName: element.fullName,
+                    image: element.image,
+                    isFriend: element.isFriend
+                }
+            }));
+            
+            await setPage(1);
+
+        } else {
+            await initializeFriend(1);
+            await setPage(1);
+        }
+        
+    }catch{}
+    }
+
+    const [activeData, setActiveData] = useState<number>(-1);
+    const [activeDataRequest, setActiveDataRequest] = useState<number>(-1);
+
+
+    const setChangeData = async () => {
+        if (value && value.length > 0) {
+            let friendsCount = (await axiosService.getSearchFriendsCount(value)).data;
+            setTotal(friendsCount);
+
+            if(page != 1 && page > friendsCount) {
+                setPage(friendsCount);
+            }
+            initializeSearch((page-1).toString());
+        } 
+        else {
+            let count = (await axiosService.getFriendsCount()).data;
+            await setTotal(count);
+            if (page != 1 && page > count) {
+                await setPage(count);
+            }
+
+            await initializeFriend(page);
+        }
+    }
+
+    const setChangeDataRequest = async () => {
+        let countRequest = (await axiosService.getFriendsRequestCount()).data;
+
+        await setTotalRequest(countRequest);
+        let req = pageRequest;
+        if (pageRequest != 1 && pageRequest > countRequest) {
+            
+            setPageRequest(pageRequest-1);
+        }
+
+        if(req-1 == countRequest) {
+
+            afterSetInitializeRequest(req-2);
+        }else {
+            afterSetInitializeRequest(req-1);
+        }
+    }
+
+    const afterSetInitializeRequest = async (page: number) => {
+        await initializeFriendRequest(page);
+    }
+
+    useEffect(() => {
+        if(tabPage == 1) {
+
+            if(activeData == -1) {
+                setActiveData(data.length);
+                return;
+            }
+            
+            if(activeData != data.length) {
+                setChangeData();
+                setActiveData(-1);
+            }
+        }
+        
+    },[data]);
+
+    useEffect(() => {
+        if (tabPage == 2) {
+
+            if (activeDataRequest == -1) {
+                setActiveDataRequest(friendRequest.length);
+                return;
+            }
+
+            if (activeDataRequest != friendRequest.length) {
+                setChangeDataRequest();
+                setActiveDataRequest(-1);
+            }
+        }
+    },[friendRequest])
+
+
+    const [tabPage, setTabPage] = useState<number>(1);
+    return (<>
+
+        <Search
+            placeholder="Ведіть ім'я користувача"
+            allowClear
+            enterButton="Пошук"
+            size="large"
+            className="searchUser"
+            onSearch={onSearch}
+        />
+        <div className="container-tab">
+  
+            <Tabs defaultActiveKey="1" centered onChange={async (item: string) => {
+                let page: number = parseInt(item);
+                let inputClose = document.getElementsByClassName("anticon-close-circle")[0] as HTMLSpanElement;
+                inputClose.click();
+                
+                setPage(1);
+                await onChangeRequest(1);
+                setTabPage(page);
+
+            }}>
+                <Tabs.TabPane tab="Пошук друзів" key="1">
+                    <Table
+                        columns={columns}
+                        dataSource={data}
+                        bordered
+                        pagination={{
+                            pageSize: 6, showSizeChanger: false,
+                            total: totalCount, onChange: onChangePage,
+                            current: page
+                        }}
+                        locale={{ emptyText: 'Немає результатів!' }}
+                    />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Надіслані запити" key="2">
+                    <Table
+                        columns={columnsRequest}
+                        dataSource={friendRequest}
+                        bordered
+                        pagination={{
+                            pageSize: 6, showSizeChanger: false,
+                            total: totalCountRequest, onChange: onChangeRequest,
+                            current: pageRequest
+                        }}
+                        locale={{ emptyText: 'Немає результатів!' }}
+                    />
+                </Tabs.TabPane>
+            </Tabs>
+        </div>
+
     </>);
 }
 

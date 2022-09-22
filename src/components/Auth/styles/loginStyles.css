@@ -147,3 +147,7 @@
     color: #4070f4;
 }
 
+
+.google-button button {
+    width: 100%;
+}

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useActions } from "../../actions/auth/UseActions";
 import { LoaderIs } from "../../App";
 import axiosService from "../../axios/axiosService";
@@ -10,7 +10,6 @@ import { typedSelector } from "../../redux/services/useTypedSelector";
 
 const LoginLayout: React.FC = () => {
     const { AuthUserWithToken } = useActions();
-    var navigate = useNavigate();
 
     const [cookies, setCookie] = useCookies(['token']);
     const [state, setState] = useState<boolean>(false);
@@ -18,15 +17,21 @@ const LoginLayout: React.FC = () => {
     const authUser = async (token: string) => {
         await AuthUserWithToken(token);
         setState(true);
-        navigate("/profile");
+        let link = document.getElementById("toProfile") as HTMLAnchorElement;
+        link.click();
     }
 
     const {load, setLoad} = useContext(LoaderIs);
 
 
+    const setLocalStorage = async () => {
+        await localStorage.setItem("token", cookies.token);
+    }
+
     useEffect(() => {
         let token = localStorage.getItem("token");
         if (token) {
+
             authUser(token);
             return;
         }else {
@@ -35,7 +40,7 @@ const LoginLayout: React.FC = () => {
 
         if (cookies.token) {
             try {
-                localStorage.setItem("token", cookies.token);
+                setLocalStorage();
                 authUser(cookies.token);
             } catch (ex) {
                 console.log(ex);
@@ -49,6 +54,13 @@ const LoginLayout: React.FC = () => {
             {load && <Loader/>}
         
         <Outlet /> </>: <></>}
+
+
+        <Link to={"/profile"} style={
+            {
+                display: 'none'
+            }
+        } target="_top" id="toProfile"/>
     </>);
 }
 

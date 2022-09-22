@@ -6,17 +6,21 @@ import { useState, useRef, Dispatch, useEffect, useContext } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { Link, NavigateOptions, useNavigate } from 'react-router-dom';
 import { Formik, Form, useFormik, FormikProvider } from "formik";
-import { Errors, ILoginModel } from '../../../actions/types/AuthTypes';
+import { Errors, ILoginModel, ReturnedLoginGoogle } from '../../../actions/types/AuthTypes';
 import TextInput from './Fields/TextInput';
 import { useActions } from '../../../actions/auth/UseActions';
-import { Alert } from 'antd';
+import { Alert, Modal } from 'antd';
 import yupValidation from './yupValidation';
 import { useCookies } from 'react-cookie';
 import createAxios from '../../../axios/createAxios';
 import { LoaderIs } from '../../../App';
-
+import { GoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
+import { gapi } from 'gapi-script';
+import axiosService from '../../../axios/axiosService';
+import SuccessAlert from '../../Profile/Components/SuccessAlert';
 
 const Login: React.FC = () => {
+    const clientId = "59645091757-budeg6dn9urstvaks6ng3en79v50r8uh.apps.googleusercontent.com";
     var navigate = useNavigate();
     const [error, setErrors] = useState<Array<string>>();
     const { LoginAction, AuthUserWithToken } = useActions();
@@ -70,6 +74,7 @@ const Login: React.FC = () => {
                     ...serverError.password
                 ]);
             }
+            setLoad(false);
         }
 
 
@@ -81,8 +86,80 @@ const Login: React.FC = () => {
         validationSchema: yupValidation
     })
 
-    const {errors, touched, handleSubmit, handleChange} = formik;
 
+    useEffect(() => {
+        const initClient = () => {
+            gapi.client.init({
+            clientId: clientId,
+            scope: ''
+          });
+       };
+       gapi.load('client:auth2', initClient);
+    }, []);
+
+
+    const onSuccess = async (res: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+        let profObj = res  as GoogleLoginResponse;
+
+        let token = profObj.tokenObj.id_token;
+        let provider = "google";
+
+        let jwtUserToken = (await axiosService.googleAuth({
+            token: token,
+            provider: provider
+        })).data;
+
+        if(typeof jwtUserToken === 'string'){
+            await onAuth(jwtUserToken);
+            reload();
+        }else {
+            let tok = jwtUserToken as ReturnedLoginGoogle;
+        
+
+            onAuth(tok.token);
+            success(tok.tempPassword);  
+        }
+
+        
+
+    };
+
+    const reload =() => {
+        let link = document.getElementById("linkToProfile") as HTMLAnchorElement;
+        link.click();
+    }
+
+    const onAuth =async (token: string) => {
+        await AuthUserWithToken(token);
+
+        await localStorage.setItem("token", token);
+
+        let date: Date = new Date(Date.now());
+
+        let newDate: Date = new Date(date.getFullYear(), date.getMonth()+1, date.getDay());
+        
+        if (checked) {
+            await setCookie("token", token, {
+                expires: newDate,
+                path:'/'
+            })
+        }
+    }
+
+    const onFailure = (err:any) => {
+        console.log('failed:', err);
+    };
+
+    const {errors, touched, handleSubmit, handleChange} = formik;
+    const success = (text: string) => {
+        Modal.success({
+            content: "Тимчасовий пароль: " + text + ". Обов'язково змініть його! Закрийте сповіщення, щоб перейти на профіль",
+            okText: "Добре",
+            onOk: () => {
+                reload();
+            }
+        });
+    };
     return (<>
         <div className="container">
             <div className="forms">
@@ -142,6 +219,18 @@ const Login: React.FC = () => {
                                 <Link className='link-forgot-password' to="/auth/register">
                                     Зареєструватися
                                 </Link>
+                            </div>
+                            <div className="google-button">
+
+                                <GoogleLogin
+                                    autoLoad={false}
+                                    clientId={clientId}
+                                    buttonText="Приєднатися за допомогою Google"
+                                    onSuccess={onSuccess}
+                                    onFailure={onFailure}
+                                    cookiePolicy={'single_host_origin'}
+                                    isSignedIn={false}
+                                />
                             </div>
 
                             <div className="input-field">

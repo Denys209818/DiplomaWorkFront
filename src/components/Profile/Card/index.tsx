@@ -8,10 +8,11 @@ interface ICardInfo {
     groupsCount: Number,
     friendsCount: Number,
     postsCount: Number,
-    image: string
+    image: string,
+    isFriend: boolean
 }
 
-const Card: React.FC<ICardInfo> = ({name, stage, groupsCount, friendsCount, postsCount,image}) => {
+const Card: React.FC<ICardInfo> = ({name, stage, groupsCount, friendsCount, postsCount,image, isFriend}) => {
 
     const navigate = useNavigate();
     const onClickFriends = () => {
@@ -40,8 +41,12 @@ const Card: React.FC<ICardInfo> = ({name, stage, groupsCount, friendsCount, post
                     </div>
 
                     <div className="actionBtn">
+                        {!isFriend ?<>
                         <button onClick={onClickFriends}>Додати друзів</button>
                         <button onClick={onClickCreatePost}>Створити пост</button>
+                        </> 
+                    : <><br/><br/></>}
+                       
                     </div>
                 </div>
             </div>

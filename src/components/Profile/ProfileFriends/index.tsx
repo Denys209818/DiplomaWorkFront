@@ -41,10 +41,10 @@ const ProfileFriends: React.FC = () => {
             <Col lg={8} md={24}>
 
                 <div className="card-content">
-                    <Card name={user.firstName + " " + user.secondName } stage={user.email}
+                    {/* <Card name={user.firstName + " " + user.secondName } stage={user.email}
                         postsCount={userDataCount ? userDataCount.postsCount : 0} 
                         groupsCount={userDataCount ? userDataCount.groupsCount : 0} 
-                        friendsCount={userDataCount ? userDataCount.friendsCount : 0} image={defaultImage + user.image} />
+                        friendsCount={userDataCount ? userDataCount.friendsCount : 0} image={defaultImage + user.image} /> */}
                 </div>
             </Col>
             <Col lg={16} md={24}>

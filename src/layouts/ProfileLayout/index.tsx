@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Profile/Navbar";
 import 'antd/dist/antd.css';
 import './styles/LayoutStyle.css';
@@ -26,14 +26,12 @@ const ProfileLayout: React.FC = () => {
 
 
     useEffect(() => {
+
         let token = localStorage.getItem("token");
         
         if(token){
             authUser(token);
             return;
-        }else {
-            let item = document.getElementById("toAuth") as HTMLAnchorElement;
-            item.click();
         }
 
         if(cookies.token) {
